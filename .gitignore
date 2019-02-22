@@ -19,7 +19,6 @@
 *.rar
 *.tar
 *.zip
-*.xml
 
 # Logs and databases #
 ######################
@@ -114,5 +113,5 @@ fabric.properties
 [Ss]cripts
 pyvenv.cfg
 .venv
-venv
+venv/
 pip-selfcheck.json
