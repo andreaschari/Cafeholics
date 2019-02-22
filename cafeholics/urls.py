@@ -22,8 +22,9 @@ from cafe import views
 
 
 urlpatterns = [
-    # maps the url /admin to the admin page
-    url(r'^admin/', admin.site.urls),
+    url(r'^$', views.home, name='home'),
     # maps any other URLs to be handled by the cafe application
-    url(r'^$/', include('cafe.urls')),
+    url(r'^cafe/', include('cafe.urls')),
+	# maps the url /admin to the admin page
+    url(r'^admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>
+			Chosen cafe
+		</title>
+	</head>
+	<body>
+	<li><a href="{% url 'write_review' %}">Leave a review for this chosen cafe </a></li>
+	<ul>
+			<li><a href="{% url 'home' %}">Home</a></li>
+			<li><a href="{% url 'cafes' %}">Cafes</a></li>
+			<li><a href="{% url 'my_account' %}">My account</a></li>
+			<li><a href="{% url 'about' %}">About</a></li>
+			<li><a href="{% url 'login' %}">Log in</a></li>
+			<li><a href="{% url 'sign_up' %}">Sign Up</a></li>
+		</ul>
+	</body>
+</html>
