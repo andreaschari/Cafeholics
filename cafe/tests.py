@@ -22,6 +22,9 @@ class CafeModelTest(TestCase):
         cafe_in_database = cafes_in_database[0]
         self.assertEquals(cafe_in_database, cafe)
 
+    def test_verbose_name_plural(self):
+        self.assertEqual(str(Cafe._meta.verbose_name_plural), "Cafes")
+
     def test_str_representation(self):
         # create test cafe
         cafe = Cafe(owner=self.user_profile, name='Cafe One', pricepoint=2)
