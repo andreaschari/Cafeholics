@@ -1,8 +1,11 @@
 from django.test import TestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from cafe.models import *
+from selenium import webdriver
+import os, socket
+import cafe.test_utils as test_utils
 
 
-# Create your tests here.
 class CafeModelTest(TestCase):
 
     def setUp(self):
@@ -22,6 +25,9 @@ class CafeModelTest(TestCase):
         cafe_in_database = cafes_in_database[0]
         self.assertEquals(cafe_in_database, cafe)
 
+    def test_verbose_name_plural(self):
+        self.assertEqual(str(Cafe._meta.verbose_name_plural), "Cafes")
+
     def test_str_representation(self):
         # create test cafe
         cafe = Cafe(owner=self.user_profile, name='Cafe One', pricepoint=2)
@@ -31,3 +37,65 @@ class CafeModelTest(TestCase):
 
     def tearDown(self):
         self.user.delete()
+
+
+class ReviewModelTest(TestCase):
+    def setUp(self):
+        # create test owner
+        self.owner = User.objects.create_user(username='test_owner', password='12345')
+        self.owner_profile = UserProfile.objects.create(user=self.owner, is_owner=True)
+        # create and login with test user
+        self.user = User.objects.create_user('foo', 'bar')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
+        self.client.login(username='foo', password='bar')
+        # create and save test cafe
+        self.cafe = Cafe(owner=self.owner_profile, name='Cafe One', pricepoint=2)
+        self.cafe.save()
+
+    def test_can_create_review(self):
+        # create test review
+        review = Review(cafe=self.cafe, user=self.user_profile,
+                        price=2, service=3, atmosphere=4, quality=2, waiting_time=1)
+        review.save()
+        # check if review exists in database
+        reviews_in_database = Review.objects.all()
+        self.assertEquals(len(reviews_in_database), 1)
+        review_in_database = reviews_in_database[0]
+        self.assertEquals(review_in_database, review)
+
+    def test_verbose_name_plural(self):
+        self.assertEqual(str(Review._meta.verbose_name_plural), "Reviews")
+
+    def test_user_cannot_review_same_cafe_twice(self):
+        from django.db import IntegrityError
+        # create test reviews check if an error is raised
+        with self.assertRaises(IntegrityError):
+            review_one = Review(cafe=self.cafe, user=self.user_profile,
+                            price=2, service=3, atmosphere=4, quality=2, waiting_time=1)
+            review_one.save()
+            review_two = Review(cafe=self.cafe, user=self.user_profile,
+                            price=5, service=1, atmosphere=4, quality=3, waiting_time=1)
+            review_two.save()
+
+
+class AdminPageTest(StaticLiveServerTestCase):
+    def setUp(self):
+        from django.contrib.auth.models import User
+        User.objects.create_superuser(username='admin', password='admin', email='admin@me.com')
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('headless')
+        self.browser = webdriver.Chrome(chrome_options = chrome_options)
+        self.browser.implicitly_wait(3)
+
+    @classmethod
+    def setUpClass(cls):
+        cls.host = socket.gethostbyname(socket.gethostname())
+        super(AdminPageTest, cls).setUpClass()
+
+    def tearDown(self):
+        self.browser.refresh()
+        self.browser.quit()
+    # TODO: write tests for admin page.
+
+    def test_admin_page_contains_cafes_and_reviews(self):
+        pass
