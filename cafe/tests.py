@@ -1,5 +1,9 @@
 from django.test import TestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from cafe.models import *
+from selenium import webdriver
+import os, socket
+import cafe.test_utils as test_utils
 
 
 class CafeModelTest(TestCase):
@@ -72,3 +76,26 @@ class ReviewModelTest(TestCase):
             review_two = Review(cafe=self.cafe, user=self.user_profile,
                             price=5, service=1, atmosphere=4, quality=3, waiting_time=1)
             review_two.save()
+
+
+class AdminPageTest(StaticLiveServerTestCase):
+    def setUp(self):
+        from django.contrib.auth.models import User
+        User.objects.create_superuser(username='admin', password='admin', email='admin@me.com')
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('headless')
+        self.browser = webdriver.Chrome(chrome_options = chrome_options)
+        self.browser.implicitly_wait(3)
+
+    @classmethod
+    def setUpClass(cls):
+        cls.host = socket.gethostbyname(socket.gethostname())
+        super(AdminPageTest, cls).setUpClass()
+
+    def tearDown(self):
+        self.browser.refresh()
+        self.browser.quit()
+    # TODO: write tests for admin page.
+
+    def test_admin_page_contains_cafes_and_reviews(self):
+        pass
