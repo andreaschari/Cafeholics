@@ -8,23 +8,84 @@
 			{% block title_block %}
 			{% endblock %}
 		</title>
-	</head>
-	<body>
-		<h1>Cafeholics</h1>
-		<div>
 
-			{% block body_block %}
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        body {
+          font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        }
+
+        .sidenav {
+          width: 130px;
+          position: fixed;
+          z-index: 1;
+          top: 20px;
+          left: 10px;
+          background: #eee;
+          overflow-x: hidden;
+          padding: 8px 0;
+        }
+
+        .sidenav a {
+          padding: 6px 8px 6px 16px;
+          text-decoration: none;
+          font-size: 23px;
+          color: #000000;
+          display: block;
+        }
+
+        .sidenav a:hover {
+          color: #8B4513;
+        }
+
+        .main {
+          margin-left: 140px; /* Same width as the sidebar + left position in px */
+          font-size: 28px; /* Increased text to enable scrolling */
+          padding: 0px 10px;
+        }
+
+        div.a {
+            text-align: center;
+        }
+
+        @media screen and (max-height: 450px) {
+          .sidenav {padding-top: 15px;}
+          .sidenav a {font-size: 18px;}
+        }
+        </style>
+    </head>
+    <body>
+
+        <div class="sidenav">
+            {% block sidebar_block %}
+            <ul>
+            {% if user.is_authenticated %}
+			    <li><a href="{% url 'my_account' %}">My Account</a></li>
+             <!---{% else %}
+                <li><a href="{% url 'sign_up' %}">Sign Up</a></li>
+			    <li><a href="{% url 'login' %}">Log In</a></li>--->
+            {% endif %}
+                <li><a href="{% url 'home' %}">Home</a></li>
+			    <li><a href="{% url 'cafes' %}">Cafes</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+		    </ul>
+            {% endblock %}
+        </div>
+
+        <div>
+
+        </div>
+        <div class="a">
+            <h1>Cafeholics</h1>
+        </div>
+        <div class="main">
+            <button onclick="window.location.href = 'cafe/login.html';">Log In</button>
+            <button onclick="window.location.href = 'cafe/sign_up.html';">Sign Up</button>
+
+            {% block body_block %}
 			{% endblock %}
-		</div>
+        </div>
 
-		<ul>
-			<li><a href="{% url 'home' %}">Home</a></li>
-			<li><a href="{% url 'cafes' %}">Cafes</a></li>
-			<li><a href="{% url 'my_account' %}">My account</a></li>
-			<li><a href="{% url 'about' %}">About</a></li>
-			<li><a href="{% url 'sign_up' %}">Sign Up</a></li>
-			<li><a href="{% url 'login' %}">Log in</a></li>
-
-		</ul>
 	</body>
 </html>
