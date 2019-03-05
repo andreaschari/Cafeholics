@@ -9,7 +9,7 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         # include the following fields in the form.
-        fields = ('username', 'first_name', 'last_name' 'email', 'password')
+        fields = ('username', 'first_name', 'last_name', 'email', 'password')
 
 
 class UserProfileForm(forms.ModelForm):
