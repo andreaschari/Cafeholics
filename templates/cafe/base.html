@@ -80,9 +80,11 @@
             <h1>Cafeholics</h1>
         </div>
         <div class="main">
-            <button onclick="window.location.href = 'cafe/login.html';">Log In</button>
-            <button onclick="window.location.href = 'cafe/sign_up.html';">Sign Up</button>
-
+            {% if user.is_authenticated %}
+            {% else %}
+                <button onclick="window.location.href = 'cafe/login.html';">Log In</button>
+                <button onclick="window.location.href = 'cafe/sign_up.html';">Sign Up</button>
+            {% endif %}
             {% block body_block %}
 			{% endblock %}
         </div>
