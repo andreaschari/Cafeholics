@@ -1,0 +1,287 @@
+
+body {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	background-color: white;
+	overflow: auto;
+}
+
+/*side navigator*/
+.sidenav {
+	width: 15%;
+	position: fixed;
+	height: 100%;
+	background: #fafafa;
+
+	background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(250,250,250)), color-stop(1, rgb(230,230,230)));
+	background: -moz-linear-gradient( center top, rgb(250,250,250) 0%, rgb(230,230,230) 100%);
+
+	overflow-x: hidden;
+	padding: 8px 0;
+	
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	
+	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
+	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
+	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
+}
+
+.sidenav a {
+	padding: 6px 8px 6px 16px;
+	text-decoration: none;
+	font-size: 23px;
+	color: #000000;
+	text-shadow: -1px -1px 3px rgba(0,0,0,.3);
+	display: block;
+}
+
+.sidenav a:hover {
+	color: #993300;
+	text-shadow: -1px -1px 3px rgba(0,0,0,.3);
+}
+
+
+
+
+/*main content*/
+div.main {
+	position: fixed;
+	width: 80%;
+	height: 100%;
+	top: 350px;
+	overflow-y: scroll; 
+	overflow-x:hidden;
+	margin-left: 17%;
+	font-size: 17px; 
+	padding: 0px 10px;
+}
+
+h1 {
+	font-size: 120px;
+	text-align: center;
+	font-family:"Bradley Hand ITC", "Comic Sans MS", sans-serif; 
+	font-weight: bold; 
+	color: #993300;
+	display: block;
+	float: none;
+	width: 100%
+}
+h2 {
+	width: 100%;
+	float: left;
+	font-size: 22px;
+	text-align: left;
+}
+
+
+
+/* Buttons */
+button{
+	color: #737373;
+	font: 17px;
+	background-color: #eee;
+	background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(243,243,243)), color-stop(1, rgb(225,225,225)));
+	background: -moz-linear-gradient( center top, rgb(243,243,243) 0%, rgb(225,225,225) 100%);
+	font-size: 17px;
+	text-shadow: -1px -1px 2px rgba(0,0,0,.3);
+	padding: 10px 15px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+button:hover {
+	background: #fafafa;
+
+	background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(250,250,250)), color-stop(1, rgb(230,230,230)));
+	background: -moz-linear-gradient( center top, rgb(250,250,250) 0%, rgb(230,230,230) 100%);
+
+}
+
+
+/*submit button for forms*/
+button.submit{
+	margin-bottom: 10px;
+	margin-right:10px;
+	float: right;
+	
+}
+
+
+.aa{
+	position: relative;
+	float: left;
+	font-size: 22px;
+	color: #993300;
+	margin: 10px;
+	text-decoration: none;
+}
+
+.aa:hover{
+	text-decoration: none;
+	font-style: bold;
+	text-shadow: -1px -1px 1px rgba(0,0,0,.2);
+}
+
+
+#login {
+	position: fixed;
+	right: 40px;
+	padding: 0px 40px;
+}
+
+
+
+
+/* Style of the search bar*/
+
+#searchform {
+	background: #e1e1e1;
+	width: 560px;
+	margin: 50px auto;
+	float: left;
+
+	background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(243,243,243)), color-stop(1, rgb(225,225,225)));
+	background: -moz-linear-gradient( center top, rgb(243,243,243) 0%, rgb(225,225,225) 100%);
+
+	border-radius: 17px;
+	-webkit-border-radius: 17px;
+	-moz-border-radius: 17px;
+
+	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
+	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
+	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
+}
+
+.searchbar{
+	background: #fafafa;
+
+	background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(250,250,250)), color-stop(1, rgb(230,230,230)));
+	background: -moz-linear-gradient( center top, rgb(250,250,250) 0%, rgb(230,230,230) 100%);
+	
+	font-size: 16px;
+	margin: 4px 4px;
+	padding: 5px 5px;
+	width: 460px;
+
+	border-radius: 30px;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+
+	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
+	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
+	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
+	
+}
+
+.searchbar:focus{
+	background: #fff;
+
+	background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(255,255,255)), color-stop(1, rgb(235,235,235)));
+	background: -moz-linear-gradient( center top, rgb(255,255,255) 0%, rgb(235,235,235) 100%);
+	outline: none;
+}
+
+.searchButton{
+	background-color: #eee;
+	background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(243,243,243)), color-stop(1, rgb(225,225,225)));
+	background: -moz-linear-gradient( center top, rgb(243,243,243) 0%, rgb(225,225,225) 100%);
+	
+	position: relative;
+	float: right;
+	border: 0;
+	color: #737373;
+	cursor: pointer;
+	font: 17px 'Raleway', sans-serif;
+	height: 30px;
+	margin: 4px 4px 0;
+	text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+	width: 84px;
+	outline: none;
+
+	border-radius: 30px;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+
+	box-shadow: -1px -1px 1px rgba(255,255,255,.5), 2px 2px 0 rgba(0,0,0,.4);
+	-moz-box-shadow: -1px -1px 1px rgba(255,255,255,.5), 2px 2px 0 rgba(0,0,0,.2);
+	-webkit-box-shadow: -1px -1px 1px rgba(255,255,255,.5), 2px 2px 0 rgba(0,0,0,.4);
+}
+
+.searchButton:hover {
+	background: #fafafa;
+
+	background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(250,250,250)), color-stop(1, rgb(230,230,230)));
+	background: -moz-linear-gradient( center top, rgb(250,250,250) 0%, rgb(230,230,230) 100%);
+}
+
+
+
+
+/* Style for input boxes*/
+
+input[type=text], input[type=password] {
+
+	box-sizing: border-box;
+	background: #fff;
+
+	background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(255,255,255)), color-stop(1, rgb(235,235,235)));
+	background: -moz-linear-gradient( center top, rgb(255,255,255) 0%, rgb(235,235,235) 100%);
+	outline: none;
+	
+}
+
+input:focus{
+	background: #fff;
+
+	background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(255,255,255)), color-stop(1, rgb(235,235,235)));
+	background: -moz-linear-gradient( center top, rgb(255,255,255) 0%, rgb(235,235,235) 100%);
+	outline: none;
+	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
+	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
+	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
+}
+
+input.mainforms{
+	margin: 20px 20px;
+	padding: 10px 10px;
+}
+
+#mainform{
+	background: #fff;
+	margin: 20px auto;
+	padding: 20px 20px;
+	float: left;
+	outline: none;
+	width: 900px;
+	
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	
+	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
+	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
+	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
+}
+
+#dropdown{
+	background: #e1e1e1;
+
+	background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(243,243,243)), color-stop(1, rgb(225,225,225)));
+	background: -moz-linear-gradient( center top, rgb(243,243,243) 0%, rgb(225,225,225) 100%);
+	
+	padding: 5px 5px;
+	color: #737373;
+	font-size: 17px;
+	
+	border-radius: 17px;
+	-webkit-border-radius: 17px;
+	-moz-border-radius: 17px;
+
+	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
+	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
+	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
+}
+#dropdown:focus{
+	outline: none;
+}

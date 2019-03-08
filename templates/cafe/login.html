@@ -8,14 +8,17 @@
 {% endblock %}
 
 {% block body_block %}
-<h1><b>Login to Cafeholics</b></h1>
-<form id="login_form" method="post" action="{% url 'login' %}">
-{% csrf_token %}
-Username: <input type="text" name="username" value="" size="50" />
-<br />
-Password: <input type="password" name="password" value="" size="50" />
-<br />
-<input type="submit" value="submit" />
-</form>
+	<h2>Register for Cafeholics</h2>
+	
+	<form id="mainform" method="post" action="{% url 'login' %}">
+		{% csrf_token %}
+		<strong>Log in to your Cafeholics account</strong></br>
+		Username: <input class="mainforms" type="text" name="username" value=""/><br/>
+		Password: <input class="mainforms" type="password" name="password" value=""/><br/>
+		<button class="submit" type="submit"/>Log In</button><br/>
+		<!-- <input type="submit" value="submit" /> -->
+	</form></br>
+	
+	<p>Don't have an account? <a href="{% url 'sign_up' %}"> Register here!</a></p>
 		
 {% endblock %}
