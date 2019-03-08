@@ -8,6 +8,28 @@
 {% endblock %}
 
 {% block body_block %}
+Register
+{% endblock %}
+
+{% block body_block %}
+<h1>Register for Cafeholics</h1>
+{% if registered %}
+<strong>Thank you for signing up!</strong>
+<a href="{% url 'home' %}">Return to the homepage.</a><br />
+{% else %}
+<strong>Please sign up here!</strong><br />
+<form id="user_form" method="post" action="{% url 'sign_up' %}"
+enctype="multipart/form-data">
+
+{% csrf_token %}
+<!-- Display each form -->
+{{ user_form.as_p }}
+{{ profile_form.as_p }}
+
+<!-- Provide a button to click to submit the form. -->
+<input type="submit" name="submit" value="submit" />
+</form>
+{% endif %}
 
 {% endblock %}
 

@@ -3,11 +3,16 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	Cafes
+	{{cafe.name}}
 {% endblock %}
 
 {% block body_block %}
-
-	<p> top cafes sorfed by default here..? (choose what to sort by) </p>
+{% if cafe %}
+               
+               {{ cafe.owner }} 
+              {{ cafe.name }} 
+{{ cafe.picture }} 
+{{ cafe.pricepoint}} 
+                                           
 	
 {% endblock %}
