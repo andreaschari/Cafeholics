@@ -20,7 +20,8 @@ def about(request):
 
 
 def cafes(request):
-    context_dict = {}
+    cafe = Cafe.objects.all()
+    context_dict = {'cafe' : cafe}
 
     return render(request, 'cafe/cafes.html', context=context_dict)
 
@@ -44,9 +45,10 @@ def add_cafe(request):
         form = CafeForm(request.POST)
 
         if form.is_valid():
-            stock = form.save(commit=False)
-            stock.user = request.user
-            stock.save()
+            form.save(commit=False)
+            #stock = form.save(commit=False)
+            #stock.user = request.user
+            #stock.save()
 
             form.save(commit=True)
             return home(request)
