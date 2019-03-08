@@ -3,10 +3,63 @@
 {% extends 'cafe/base.html' %}
 {% load staticfiles %}
 
+<!-- JS script for dropdown menu:
+
+$(function() {
+  // choose target dropdown
+  var select = $('select');
+  select.html(select.find('option').sort(function(x, y) {
+    // to change to descending order switch "<" for ">"
+    return $(x).text() > $(y).text() ? 1 : -1;
+  }));
+
+  // select default item after sorting (first item)
+  // $('select').get(0).selectedIndex = 0;
+});
+
+-->
+
 {% block title_block %}
-	{{cafe.name}}
+	Cafes
 {% endblock %}
 
 {% block body_block %}
+
+	<form id="searchform" method="GET" action="">
+			<input class="searchButton" type="submit" value="Search"/>
+			<input class="searchbar" type="text" placeholder="What cafe are you looking for..">		
+	</form>
+	
+	<h2>
+		All Cafes
+		<select id="dropdown">
+			<option selected>Sort by</option>
+			<option value="average_rating">Average rating</option>
+			<option value="price">Price</option>
+			<option value="service">Service</option>
+			<option value="atmosphere">Atmosphere</option>
+			<option value="quality">Quality</option>
+			<option value="waiting_time">Waiting time</option>
+		</select>
+	</h2>
+ 	<div id="displayCafes">
+
+		{% if cafes %}
+			<ol>
+				{% for cafe in cafes %}
+					<li>
+					{{cafe.name}}
+					
+					<a class="aa" href="{% url 'chosen_cafe' cafe_name.slug %}">{{ cafe.name }}</a>
+					<!-- <p class="rating">{{ cafe.average_rating }}</p> -->
+					
+					</li>
+				{% endfor %}
+			</ol>
+		{% else %}
+			<strong>There are no cafes registered.</strong>
+		{% endif %}
+	</div>
+	 -->
 
 {% endblock %}

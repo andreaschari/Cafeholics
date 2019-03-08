@@ -1,0 +1,32 @@
+
+/*cafe description layout*/
+
+#cafedescription{
+	background: #fff;
+	padding: 20px 20px;
+	outline: none;
+	margin: 20px auto;
+	float: left;
+	width: 900px;
+	
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	
+	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
+	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
+	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
+	
+}
+
+.cafedetails{
+	width: 70%;
+	float:left;
+}
+
+img.cafeimage{
+	height: 300px;
+	width: 300px;
+	float: right;
+	margin: 20px auto;	
+}
