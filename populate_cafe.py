@@ -1,6 +1,5 @@
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE','cafeholics.settings')
-
 import django
 django.setup()
 from cafe.models import UserProfile, Cafe, Review
@@ -20,7 +19,6 @@ def populate():
     customers = [ {'username': 'jakehill' ,'first_name': 'Jake' , 'last_name':'Hill', 'email': 'jakehill@gmail.com', 'password': 'Sm&4R8pA', 'owner':False},
                     {'username': 'tomwalker' ,'first_name': 'Tom' , 'last_name':'Walker', 'email': 'tomwalker@gmail.com', 'password': '$pm%5td3', 'owner':False},
                     {'username': 'caroline99' ,'first_name': 'Caroline' , 'last_name':'Mcdonald', 'email': 'carolinemacdonald99@outlook.com', 'password': '2p#mT@!d', 'owner':False},]
-
 
     cafes = {'xeniaskotti': [{'cafe_name' : 'Free Spirit','pricepoint': 1}, {'cafe_name': 'CoffeeRiver', 'pricepoint': 2}],
                 'alisonscott': [{'cafe_name' : 'Starbucks','pricepoint': 3}, {'cafe_name': 'Monza', 'pricepoint': 1}],
@@ -51,19 +49,6 @@ def populate():
             c = add_cafe(o, cafe["cafe_name"], cafe["pricepoint"])
             for review in reviews[cafe["cafe_name"]]:
                 r = add_review(c, users[review["customer_username"]],review["price"],review["service"],review["atmosphere"],review["quality"], review["waiting_time"])
-    print("Users created:")
-    for u in UserProfile.objects.all():
-        print(str(u))
-
-    print()
-    print("Cafes created:")
-    for c in Cafe.objects.all():
-        print(str(c))
-        print("Customers who left a review:")
-        for r in Review.objects.filter(cafe = c):
-            print(str(r))
-        print()
-
 
 
 def add_user(username, first_name, last_name, email, password, owner):
@@ -76,16 +61,32 @@ def add_user(username, first_name, last_name, email, password, owner):
     up.save()
     return up
 
+
 def add_cafe(owner,cafe_name,pricepoint):
     c = Cafe.objects.get_or_create(owner = owner, name = cafe_name, pricepoint = pricepoint)[0]
     c.save()
     return c
+
 
 def add_review(cafe,user,price,service,atmosphere,quality,waiting_time):
     r = Review.objects.get_or_create(cafe=cafe,user=user, price=price, service=service, atmosphere=atmosphere, quality=quality, waiting_time=waiting_time)[0]
     r.save()
     return r
 
+
 if __name__ == '__main__':
-    print("Starting Cafe population scirpt...")
+    print("Starting Cafe population script...")
+    print("Users created:")
+    for u in UserProfile.objects.all():
+        print(str(u))
+
+    print()
+    print("Cafes created:")
+    for c in Cafe.objects.all():
+        print(str(c))
+        print("Customers who left a review:")
+        for r in Review.objects.filter(cafe=c):
+            print(str(r))
+        print()
+
     populate()
