@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from cafe.forms import CafeForm, Cafe, Review, UserForm, UserProfileForm
+from cafe.forms import Cafe, CafeForm, Review, UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.generic import CreateView
 
 
 def home(request):
-    cafe_list = Cafe.objects.order_by('-average rating') [:10]
+    cafe_list = Cafe.objects.order_by('-average_rating')[:10]
     context_dict = {'cafes': cafe_list}
 
     return render(request, 'cafe/home.html', context=context_dict)
@@ -20,7 +21,15 @@ def about(request):
 
 
 def cafes(request):
-    context_dict = {}
+    cafe_list = Cafe.objects.all()
+    price_list = Cafe.objects.order_by('review__price')
+    service_list = Cafe.objects.order_by('review__service')
+    atmosphere_list = Cafe.objects.order_by('review__atmosphere')
+    quality_list = Cafe.objects.order_by('review__quality')
+    waiting_times_list = Cafe.objects.order_by('review__waiting_time')
+    context_dict = {'cafes': cafe_list, 'byPrice': price_list, 'byService': service_list,
+                    'byAtmosphere': atmosphere_list, 'byQuality': quality_list,
+                    'byWaitingTimes': waiting_times_list}
 
     return render(request, 'cafe/cafes.html', context=context_dict)
 
@@ -30,27 +39,38 @@ def chosen_cafe(request, cafe_name_slug):
     try:
         cafe = Cafe.objects.get(slug=cafe_name_slug)
         reviews = Review.objects.filter(cafe=cafe)
+        name = Cafe.name
+        pricepoint = Cafe.pricepoint
+        owner = Cafe.owner
+        picture = Cafe.picture
+        context_dict['name'] = name
         context_dict['reviews'] = reviews
         context_dict['cafe'] = cafe
+        context_dict['pricepoint'] = pricepoint
+        context_dict['owner'] = owner
+        context_dict['picture'] = picture
     except Cafe.DoesNotExist:
+        context_dict['name'] = None
         context_dict['cafe'] = None
         context_dict['review'] = None
+        context_dict['pricepoint'] = None
+        context_dict['owner'] = None
+        context_dict['picture'] = None
     return render(request, 'cafe/chosen_cafe.html', context=context_dict)
 
 
 def add_cafe(request):
     form = CafeForm()
     if request.method == 'POST':
-        form = CafeForm(request.POST)
+        form = CafeForm(data=request.POST)
 
         if form.is_valid():
-            stock = form.save(commit=False)
-            stock.user = request.user
-            stock.save()
-
-            form.save(commit=True)
+            cafe = form.save(commit=False)
+            cafe.owner = request.user
+            if 'picture' in request.FILES:
+                cafe.picture = request.FILES['picture']
+            cafe.save()
             return home(request)
-
         else:
             print(form.errors)
 
@@ -70,7 +90,6 @@ def sign_up(request):
 
             profile = profile_form.save(commit=False)
             profile.user = user
-
             profile.save()
             registered = True
 
@@ -96,8 +115,7 @@ def user_login(request):
             return HttpResponseRedirect(reverse('home'))
         else:
             print("Invalid login details: {0}, {1}".format(username, password))
-            return HttpResponse("Invalid login details supplied.")
-            return HttpResponseRedirect(reverse('login'))
+            return HttpResponse("Invalid login details supplied."), HttpResponseRedirect(reverse('login'))
 
     else:
         return render(request, 'cafe/login.html', {})
@@ -113,3 +131,10 @@ def my_account(request):
     context_dict = {}
 
     return render(request, 'cafe/my_account.html', context=context_dict)
+
+
+# class CreateDropdownView(CreateView):
+#     model = Dropdown
+#     form_class = DropdownForm
+#     template_name = 'cafe/cafes.html'
+#     success_url = ''
