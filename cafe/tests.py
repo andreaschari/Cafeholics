@@ -1,9 +1,12 @@
 from django.test import TestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.urls import reverse
 from cafe.models import *
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.keys import Keys
 import os, socket
-import cafe.test_utils as test_utils
+import populate_cafe
 
 
 class CafeModelTest(TestCase):
@@ -84,7 +87,7 @@ class AdminPageTest(StaticLiveServerTestCase):
         User.objects.create_superuser(username='admin', password='admin', email='admin@me.com')
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('headless')
-        self.browser = webdriver.Chrome(chrome_options = chrome_options)
+        self.browser = webdriver.Chrome(chrome_options=chrome_options)
         self.browser.implicitly_wait(3)
 
     @classmethod
@@ -95,7 +98,104 @@ class AdminPageTest(StaticLiveServerTestCase):
     def tearDown(self):
         self.browser.refresh()
         self.browser.quit()
-    # TODO: write tests for admin page.
 
-    def test_admin_page_contains_cafes_and_reviews(self):
+    def test_population_script(self):
+        # Populate database
+        populate_cafe.populate()
+        url = self.live_server_url
+        self.browser.get(url + reverse('admin:index'))
+
+        # Log in the admin page
+        self.browser.get(self.live_server_url + '/admin/')
+        username_field = self.browser.find_element_by_name('username')
+        username_field.send_keys('admin')
+        password_field = self.browser.find_element_by_name('password')
+        password_field.send_keys('admin')
+        password_field.send_keys(Keys.RETURN)
+
+        # check that the cafes were saved by the population script
+        self.browser.get(self.live_server_url + '/admin/cafe/cafe')
+        self.browser.find_elements_by_partial_link_text('Free Spirit')
+        self.browser.find_elements_by_partial_link_text('Starbucks')
+        self.browser.find_elements_by_partial_link_text('Fika')
+        self.browser.find_elements_by_partial_link_text('CoffeeRiver')
+        self.browser.find_elements_by_partial_link_text('Monza')
+
+        # check that the users were saved by the population script
+        self.browser.get(self.live_server_url + '/admin//auth/user/')
+        self.browser.find_elements_by_partial_link_text('jakehill')
+        self.browser.find_elements_by_partial_link_text('tomwalker')
+        self.browser.find_elements_by_partial_link_text('caroline99')
+
+        # check that the owners were saved by the population script
+        self.browser.find_elements_by_partial_link_text('xeniaskotti')
+        self.browser.find_elements_by_partial_link_text('alisonscott')
+        self.browser.find_elements_by_partial_link_text('jonathan23')
+
+    def test_admin_page_contains_cafes(self):
+        populate_cafe.populate()
+        url = self.live_server_url
+        url = url.replace('localhost', '127.0.0.1')
+        self.browser.get(url + reverse('admin:index'))
+
+        # login to admin page
+        self.browser.get(self.live_server_url + '/admin/')
+        username_field = self.browser.find_element_by_name('username')
+        username_field.send_keys('admin')
+        password_field = self.browser.find_element_by_name('password')
+        password_field.send_keys('admin')
+        password_field.send_keys(Keys.RETURN)
+
+        # Click in Cafes
+        pages_link = self.browser.find_element_by_link_text('Cafes')
+        pages_link.click()
+
+        body = self.browser.find_element_by_tag_name('body')
+
+        # Get all cafes
+        cafes = Cafe.objects.all()
+
+        # Check that all cafes owner, name and pricepoint are displayed
+        for cafe in cafes:
+            self.assertIn(str(cafe.owner), body.text)
+            self.assertIn(str(cafe.name), body.text)
+            self.assertIn(str(cafe.pricepoint), body.text)
+
+    def test_admin_page_contains_reviews(self):
+        populate_cafe.populate()
+        url = self.live_server_url
+        url = url.replace('localhost', '127.0.0.1')
+        self.browser.get(url + reverse('admin:index'))
+
+        # login to admin page
+        self.browser.get(self.live_server_url + '/admin/')
+        username_field = self.browser.find_element_by_name('username')
+        username_field.send_keys('admin')
+        password_field = self.browser.find_element_by_name('password')
+        password_field.send_keys('admin')
+        password_field.send_keys(Keys.RETURN)
+
+        # Click in Cafes
+        pages_link = self.browser.find_element_by_link_text('Reviews')
+        pages_link.click()
+
+        body = self.browser.find_element_by_tag_name('body')
+
+        reviews = Review.objects.all()
+        # check that all review cafe, user and comments are displayed
+        for review in reviews:
+            self.assertIn(str(review.cafe), body.text)
+            self.assertIn(str(review.user), body.text)
+            self.assertIn(str(review.comments), body.text)
+
+    # TODO: add test for new cafe, new review,
+    #  check that population script changes the database
+
+    def test_can_create_new_cafe_via_admin_page(self):
+        pass
+
+    def test_can_create_new_review_via_admin_page(self):
+        pass
+
+    def test_population_script_changes_database(self):
         pass
