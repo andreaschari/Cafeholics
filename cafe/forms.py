@@ -32,7 +32,7 @@ class CafeForm(forms.ModelForm):
     class Meta:
         model = Cafe
         # include the following fields in the form.
-        fields = ('name', 'picture', 'pricepoint')
+        fields = ('name', 'picture', 'pricepoint', 'description')
 
 
 class ReviewForm(forms.ModelForm):
