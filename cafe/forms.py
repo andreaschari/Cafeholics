@@ -23,11 +23,11 @@ class UserProfileForm(forms.ModelForm):
 
 class CafeForm(forms.ModelForm):
     # the owner is input by the view
-    owner = forms.CharField(widget=forms.HiddenInput(), required=False)
-    name = forms.CharField(max_length=128, unique=True, required=True)
-    picture = forms.ImageField(upload_to='cafe_images', blank=True)
-    pricepoint = forms.IntegerField(max_length=3, help_text='Enter a price average for your cafe.')
-    slug = models.SlugField(widget=forms.HiddenInput(), required=False, unique=True)
+    # owner = forms.CharField(widget=forms.HiddenInput(), required=False)
+    name = forms.CharField(required=True)
+    # picture = forms.ImageField(upload_to='cafe_images', required=False)
+    pricepoint = forms.IntegerField(help_text='Enter a price average for your cafe.')
+    # slug = models.SlugField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = Cafe
@@ -41,7 +41,7 @@ class ReviewForm(forms.ModelForm):
     atmosphere = forms.IntegerField(help_text='Enter a value from 1 out of 5')
     quality = forms.IntegerField(help_text='Enter a value from 1 out of 5')
     waiting_time = forms.IntegerField(help_text='Enter a value from 1 out of 5')
-    comments = forms.CharField(max_length=500, blank=True)
+    comments = forms.CharField(required=False)
 
     class Meta:
         model = Review

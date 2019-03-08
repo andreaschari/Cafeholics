@@ -21,6 +21,7 @@ class Cafe(models.Model):
     name = models.CharField(max_length=20, unique=True)
     picture = models.ImageField(upload_to='cafe_images', blank=True)
     pricepoint = models.IntegerField(validators=[MaxValueValidator(3), MinValueValidator(1)])
+    description = models.TextField(blank=True)
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
@@ -50,3 +51,6 @@ class Review(models.Model):
         # joins cafe and user as primary keys
         unique_together = ('cafe', 'user')
         verbose_name_plural = "Reviews"
+
+    def __str__(self):
+        return self.user.user.username
