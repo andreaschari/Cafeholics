@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.urls import reverse
 from cafe.models import *
+from django.conf import settings
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
@@ -37,6 +38,13 @@ class CafeModelTest(TestCase):
         cafe.save()
         # check if the __str__ method return the cafe's name
         self.assertEqual(str(cafe), cafe.name)
+
+    def test_cafe_contains_slug_field(self):
+        # create test cafe
+        cafe = Cafe(owner=self.user_profile, name='Cafe One', pricepoint=2)
+        cafe.save()
+        # check if slug was indeed saved
+        self.assertEquals(cafe.slug, 'cafe-one')
 
     def tearDown(self):
         self.user.delete()
@@ -188,6 +196,39 @@ class AdminPageTest(StaticLiveServerTestCase):
             self.assertIn(str(review.user), body.text)
             self.assertIn(str(review.comments), body.text)
 
+    def test_admin_contains_user_profile(self):
+        # Access admin page
+        url = self.live_server_url
+        url = url.replace('localhost', '127.0.0.1')
+        self.browser.get(url + reverse('admin:index'))
+
+        # Log in the admin page
+        self.browser.get(self.live_server_url + '/admin/')
+
+        # Types username and password
+        username_field = self.browser.find_element_by_name('username')
+        username_field.send_keys('admin')
+        password_field = self.browser.find_element_by_name('password')
+        password_field.send_keys('admin')
+        password_field.send_keys(Keys.RETURN)
+
+        # Check exists a link to user profiles
+        self.browser.find_element_by_link_text('Users').click()
+
+        # Create a user
+        user = User.objects.get_or_create(username="johndoe", password="test1234",
+                                          first_name="John", last_name="Doe")[0]
+        user.set_password(user.password)
+        user.save()
+        # Create a user profile
+        user_profile = UserProfile.objects.get_or_create(user=user, is_owner=False)[0]
+        user_profile.save()
+        self.browser.refresh()
+
+        # Check there is one profile
+        body = self.browser.find_element_by_tag_name('body')
+        self.assertIn(user.username, body.text)
+
     def test_can_create_new_cafe_via_admin_page(self):
         # Access admin page
         url = self.live_server_url
@@ -338,3 +379,41 @@ class PopulationScriptTest(TestCase):
         self.assertEquals(cafe.owner.user.username, "jonathan23")
         self.assertEquals(cafe.pricepoint, 2)
 
+
+class ViewTest(TestCase):
+    # TODO: test views
+    def test_base_template_exists(self):
+        # Check base.html exists inside template folder
+        path_to_base = settings.TEMPLATE_DIR + '/cafe/base.html'
+        print(path_to_base)
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_home_using_template(self):
+        response = self.client.get(reverse('home'))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/home.html')
+
+    def test_about_using_template(self):
+        response = self.client.get(reverse('about'))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/about.html')
+
+    def test_cafes_using_template(self):
+        response = self.client.get(reverse('cafes'))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/cafes.html')
+
+    def test_login_using_template(self):
+        response = self.client.get(reverse('login'))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/login.html')
+
+    def test_sign_up_using_template(self):
+        response = self.client.get(reverse('sign_up'))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/sign_up.html')
+
+    def test_my_account_using_template(self):
+        response = self.client.get(reverse('my_account'))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/my_account.html')
