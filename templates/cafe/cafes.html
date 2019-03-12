@@ -47,11 +47,8 @@ $(function() {
 		{% if cafes %}
 			<ol>
 				{% for cafe in cafes %}
-					<li>
-					<a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<!-- <p class="rating">{{ cafe.average_rating }}</p> -->
-					
-					</li>
+					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+					<!-- <p class="rating">{{ cafe.average_rating }}</p> --></li>
 				{% endfor %}
 			</ol>
 		{% else %}
