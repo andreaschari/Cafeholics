@@ -13,7 +13,7 @@ class UserForm(forms.ModelForm):
 
 
 class UserProfileForm(forms.ModelForm):
-    is_owner = forms.BooleanField(help_text='Check if you are an owner of a cafe.')
+    is_owner = forms.BooleanField(help_text='Check if you are an owner of a cafe.', required=False)
 
     class Meta:
         model = UserProfile
