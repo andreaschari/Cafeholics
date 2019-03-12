@@ -171,6 +171,7 @@ def write_review(request):
 
     return render(request, 'cafe/write_review.html', {'form':form})
 
+
 def search(request):
     if request.method == 'GET':
         cafe_name = request.GET.get('search')
