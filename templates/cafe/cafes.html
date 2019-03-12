@@ -3,6 +3,22 @@
 {% extends 'cafe/base.html' %}
 {% load staticfiles %}
 
+<!-- JS script for dropdown menu:
+
+$(function() {
+  // choose target dropdown
+  var select = $('select');
+  select.html(select.find('option').sort(function(x, y) {
+    // to change to descending order switch "<" for ">"
+    return $(x).text() > $(y).text() ? 1 : -1;
+  }));
+
+  // select default item after sorting (first item)
+  // $('select').get(0).selectedIndex = 0;
+});
+
+-->
+
 {% block title_block %}
 	Cafes
 {% endblock %}
@@ -13,7 +29,6 @@
 			<input class="searchButton" type="submit" value="Search"/>
 			<input class="searchbar" type="text" placeholder="What cafe are you looking for..">		
 	</form>
-	 	<div id="displayCafes">
 	
 	<h2>
 		All Cafes
@@ -27,17 +42,14 @@
 			<option value="waiting_time">Waiting time</option>
 		</select>
 	</h2>
-
-	
-	<div id="displayCafes">
+ 	<div id="displayCafes">
 
 		{% if cafes %}
 			<ol>
 				{% for cafe in cafes %}
 					<li>
-					
 					<a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<p class="rating">{{ cafe.average_rating }}</p>
+					<!-- <p class="rating">{{ cafe.average_rating }}</p> -->
 					
 					</li>
 				{% endfor %}
@@ -46,5 +58,4 @@
 			<strong>There are no cafes registered.</strong>
 		{% endif %}
 	</div>
-
 {% endblock %}

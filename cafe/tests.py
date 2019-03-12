@@ -1,3 +1,6 @@
+import os
+import socket
+import populate_cafe
 from django.test import TestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.urls import reverse
@@ -6,8 +9,6 @@ from django.conf import settings
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
-import os, socket
-import populate_cafe
 
 
 class CafeModelTest(TestCase):
