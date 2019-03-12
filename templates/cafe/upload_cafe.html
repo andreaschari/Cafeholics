@@ -9,7 +9,20 @@
 
 {% block body_block %}
 
-	<p> Upload a new cafe</p>
-	
+	<h1> Add a new Cafe </h1>
+ <div> 
+   <form id = "add_cafe" method = "post" action="my_cafes/upload_cafe/">
+{% csrf_token %}
+
+	{% for hidden in form.hidden_fields %}
+                                   {{ hidden }}
+                        {% endfor %}
+                        {% for field in form.visible_fields %}
+                                   {{ field.errors }}
+                                   {{ field.help_text }}
+                                   {{ field }}
+                        {% endfor %}
+                        <input type="submit" name="submit" value="Add Cafe" />
+                 </form>
 {% endblock %}
 
