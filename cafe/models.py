@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.template.defaultfilters import slugify
+import datetime
 
 
 class UserProfile(models.Model):
@@ -47,7 +48,7 @@ class Review(models.Model):
     waiting_time = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
     comments = models.CharField(max_length=500, blank=True)
     pub_date = models.DateTimeField(default=datetime.datetime.now)
-    avg_rating = models.IntegerField(blank=True)
+    avg_rating = models.IntegerField(blank=True, default=0)
 
     class Meta:
         # joins cafe and user as primary keys
