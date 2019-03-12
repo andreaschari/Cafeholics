@@ -46,9 +46,9 @@ class Review(models.Model):
     quality = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
     waiting_time = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
     comments = models.CharField(max_length=500, blank=True)
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField(default=datetime.datetime.now)
     avg_rating = models.IntegerField(blank=True)
-    
+
     class Meta:
         # joins cafe and user as primary keys
         unique_together = ('cafe', 'user')
