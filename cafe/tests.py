@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.urls import reverse
 from cafe.models import *
+from django.conf import settings
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
@@ -37,6 +38,13 @@ class CafeModelTest(TestCase):
         cafe.save()
         # check if the __str__ method return the cafe's name
         self.assertEqual(str(cafe), cafe.name)
+
+    def test_cafe_contains_slug_field(self):
+        # create test cafe
+        cafe = Cafe(owner=self.user_profile, name='Cafe One', pricepoint=2)
+        cafe.save()
+        # check if slug was indeed saved
+        self.assertEquals(cafe.slug, 'cafe-one')
 
     def tearDown(self):
         self.user.delete()
@@ -188,14 +196,224 @@ class AdminPageTest(StaticLiveServerTestCase):
             self.assertIn(str(review.user), body.text)
             self.assertIn(str(review.comments), body.text)
 
-    # TODO: add test for new cafe, new review,
-    #  check that population script changes the database
+    def test_admin_contains_user_profile(self):
+        # Access admin page
+        url = self.live_server_url
+        url = url.replace('localhost', '127.0.0.1')
+        self.browser.get(url + reverse('admin:index'))
+
+        # Log in the admin page
+        self.browser.get(self.live_server_url + '/admin/')
+
+        # Types username and password
+        username_field = self.browser.find_element_by_name('username')
+        username_field.send_keys('admin')
+        password_field = self.browser.find_element_by_name('password')
+        password_field.send_keys('admin')
+        password_field.send_keys(Keys.RETURN)
+
+        # Check exists a link to user profiles
+        self.browser.find_element_by_link_text('Users').click()
+
+        # Create a user
+        user = User.objects.get_or_create(username="johndoe", password="test1234",
+                                          first_name="John", last_name="Doe")[0]
+        user.set_password(user.password)
+        user.save()
+        # Create a user profile
+        user_profile = UserProfile.objects.get_or_create(user=user, is_owner=False)[0]
+        user_profile.save()
+        self.browser.refresh()
+
+        # Check there is one profile
+        body = self.browser.find_element_by_tag_name('body')
+        self.assertIn(user.username, body.text)
 
     def test_can_create_new_cafe_via_admin_page(self):
-        pass
+        # Access admin page
+        url = self.live_server_url
+        url = url.replace('localhost', '127.0.0.1')
+        self.browser.get(url + reverse('admin:index'))
+
+        # Check if it displays admin message
+        body = self.browser.find_element_by_tag_name('body')
+        self.assertIn('Django administration', body.text)
+
+        # login to admin page
+        self.browser.get(self.live_server_url + '/admin/')
+        username_field = self.browser.find_element_by_name('username')
+        username_field.send_keys('admin')
+        password_field = self.browser.find_element_by_name('password')
+        password_field.send_keys('admin')
+        password_field.send_keys(Keys.RETURN)
+
+        # check the Site Administration page exists
+        body = self.browser.find_element_by_tag_name('body')
+        self.assertIn('Site administration', body.text)
+
+        # Check if is there link to Cafes and click it.
+        cafe_link = self.browser.find_elements_by_partial_link_text('Caf')
+        self.assertEquals(len(cafe_link), 1)
+        cafe_link[0].click()
+
+        # it's empty, so check for the empty message
+        body = self.browser.find_element_by_tag_name('body')
+        self.assertIn('0 caf', body.text.lower())
+
+        # Add a cafe by clicking on 'Add cafe'
+        new_cafe_link = self.browser.find_element_by_class_name('addlink')
+        new_cafe_link.click()
+
+        # Check for input field
+        body = self.browser.find_element_by_tag_name('body')
+        self.assertIn('Name:'.lower(), body.text.lower())
+
+        # Input cafe name
+        category_field = self.browser.find_element_by_name('name')
+        category_field.send_keys("Cafe Test")
+
+        # Create cafe owner
+        self.user = User.objects.create_user(username='test_owner', password='12345')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=True)
+
+        # Input cafe owner
+        category_field = self.browser.find_element_by_name('owner')
+        category_field.send_keys("test_owner")
+        # input price-point
+        category_field = self.browser.find_element_by_name('pricepoint')
+        category_field.send_keys(1)
+        # save cafe
+        save_button = self.browser.find_element_by_css_selector("input[value='Save']")
+        save_button.click()
 
     def test_can_create_new_review_via_admin_page(self):
-        pass
+        # Access admin page
+        url = self.live_server_url
+        url = url.replace('localhost', '127.0.0.1')
+        self.browser.get(url + reverse('admin:index'))
 
+        # Check if it displays admin message
+        body = self.browser.find_element_by_tag_name('body')
+        self.assertIn('Django administration', body.text)
+
+        # login to admin page
+        self.browser.get(self.live_server_url + '/admin/')
+        username_field = self.browser.find_element_by_name('username')
+        username_field.send_keys('admin')
+        password_field = self.browser.find_element_by_name('password')
+        password_field.send_keys('admin')
+        password_field.send_keys(Keys.RETURN)
+
+        # check the Site Administration page exists
+        body = self.browser.find_element_by_tag_name('body')
+        self.assertIn('Site administration', body.text)
+
+        # Check if is there link to Reviews and click it.
+        cafe_link = self.browser.find_elements_by_partial_link_text('Rev')
+        self.assertEquals(len(cafe_link), 1)
+        cafe_link[0].click()
+
+        # it's empty, so check for the empty message
+        body = self.browser.find_element_by_tag_name('body')
+        self.assertIn('0 rev', body.text.lower())
+
+        # Add a review by clicking on 'Add review'
+        new_review_link = self.browser.find_element_by_class_name('addlink')
+        new_review_link.click()
+
+        # Check for input field
+        body = self.browser.find_element_by_tag_name('body')
+        self.assertIn('Cafe:'.lower(), body.text.lower())
+
+        # Create cafe user
+        self.user = User.objects.create_user(username='test_user', password='12345')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
+        # Create cafe owner
+        self.owner = User.objects.create_user(username='test_owner', password='12345')
+        self.owner_profile = UserProfile.objects.create(user=self.owner, is_owner=True)
+        # create cafe
+        cafe = Cafe(owner=self.owner_profile, name='Cafe One', pricepoint=2)
+        cafe.save()
+
+        # Input cafe name
+        category_field = self.browser.find_element_by_name('cafe')
+        category_field.send_keys("Cafe One")
+        # Input cafe owner
+        category_field = self.browser.find_element_by_name('user')
+        category_field.send_keys("test_user")
+        # input price-point
+        category_field = self.browser.find_element_by_name('comments')
+        category_field.send_keys('Excellent cafe.')
+        # save cafe
+        save_button = self.browser.find_element_by_css_selector("input[value='Save']")
+        save_button.click()
+
+
+class PopulationScriptTest(TestCase):
     def test_population_script_changes_database(self):
-        pass
+        # Populate database
+        populate_cafe.populate()
+
+        # Check if the cafe has correct owner and pricepoint
+        cafe = Cafe.objects.get(name='Free Spirit')
+        self.assertEquals(cafe.owner.user.username, "xeniaskotti")
+        self.assertEquals(cafe.pricepoint, 1)
+
+        # Check if the cafe has correct owner and pricepoint
+        cafe = Cafe.objects.get(name='CoffeeRiver')
+        self.assertEquals(cafe.owner.user.username, "xeniaskotti")
+        self.assertEquals(cafe.pricepoint, 2)
+
+        # Check if the cafe has correct owner and pricepoint
+        cafe = Cafe.objects.get(name='Starbucks')
+        self.assertEquals(cafe.owner.user.username, "alisonscott")
+        self.assertEquals(cafe.pricepoint, 3)
+
+        # Check if the cafe has correct owner and pricepoint
+        cafe = Cafe.objects.get(name='Monza')
+        self.assertEquals(cafe.owner.user.username, "alisonscott")
+        self.assertEquals(cafe.pricepoint, 1)
+
+        # Check if the cafe has correct owner and pricepoint
+        cafe = Cafe.objects.get(name='Fika')
+        self.assertEquals(cafe.owner.user.username, "jonathan23")
+        self.assertEquals(cafe.pricepoint, 2)
+
+
+class ViewTest(TestCase):
+    # TODO: test views
+    def test_base_template_exists(self):
+        # Check base.html exists inside template folder
+        path_to_base = settings.TEMPLATE_DIR + '/cafe/base.html'
+        print(path_to_base)
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_home_using_template(self):
+        response = self.client.get(reverse('home'))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/home.html')
+
+    def test_about_using_template(self):
+        response = self.client.get(reverse('about'))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/about.html')
+
+    def test_cafes_using_template(self):
+        response = self.client.get(reverse('cafes'))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/cafes.html')
+
+    def test_login_using_template(self):
+        response = self.client.get(reverse('login'))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/login.html')
+
+    def test_sign_up_using_template(self):
+        response = self.client.get(reverse('sign_up'))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/sign_up.html')
+
+    def test_my_account_using_template(self):
+        response = self.client.get(reverse('my_account'))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/my_account.html')

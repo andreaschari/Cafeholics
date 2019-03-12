@@ -22,12 +22,8 @@ class UserProfileForm(forms.ModelForm):
 
 
 class CafeForm(forms.ModelForm):
-    # the owner is input by the view
-    # owner = forms.CharField(widget=forms.HiddenInput(), required=False)
     name = forms.CharField(required=True)
-    # picture = forms.ImageField(upload_to='cafe_images', required=False)
     pricepoint = forms.IntegerField(help_text='Enter a price average for your cafe.')
-    # slug = models.SlugField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = Cafe
