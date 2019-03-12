@@ -82,8 +82,8 @@
         <div class="main">
             {% if user.is_authenticated %}
             {% else %}
-                <button onclick="window.location.href = 'cafe/login.html';">Log In</button>
-                <button onclick="window.location.href = 'cafe/sign_up.html';">Sign Up</button>
+                <button onclick="window.location.href =  'login.html' >Log In</button>
+                <button onclick="window.location.href = 'sign_up.html';">Sign Up</button>
             {% endif %}
             {% block body_block %}
 			{% endblock %}

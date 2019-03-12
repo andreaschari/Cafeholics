@@ -8,6 +8,14 @@
 {% endblock %}
 
 {% block body_block %}
-
+<h1> My Account </h1>
+    {{ user. username }}
+     {{ user.first_name }}
+   {{ user.last_name }}
+ {{ user.email }}
+{% if user.is_owner %}
+  <a href="{% url 'add_cafe'  %}">Add a Cafe</a>
+{% endif %}
+ 
 {% endblock %}
 
