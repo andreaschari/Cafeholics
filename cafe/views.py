@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 def home(request):
     cafe_list = Cafe.objects.all()
+
     #Cafe.objects.order_by('-average_rating')[:10]
     context_dict = {'cafes': cafe_list}
     # for cafe in cafe_list:
@@ -165,7 +166,10 @@ def write_review(request):
     if request.method == 'POST':
         form = ReviewForm(data=request.POST)
         if form.is_valid():
+            #form.avg_rating = form.price + form.quality + form.waiting_time + form.service
+            #form.user
             form.save()
+
         else:
             print(form.errors)
 
