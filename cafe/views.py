@@ -9,7 +9,7 @@ from django.views.generic import CreateView
 
 def home(request):
     cafe_list = Cafe.objects.all() #order_by('-average_rating')[:10]
-    context_dict = {}#'cafes': cafe_list}
+    context_dict = {'cafes': cafe_list}
 
     return render(request, 'cafe/home.html', context=context_dict)
 
