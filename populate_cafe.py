@@ -70,6 +70,7 @@ def add_cafe(owner,cafe_name,pricepoint):
 
 def add_review(cafe,user,price,service,atmosphere,quality,waiting_time):
     r = Review.objects.get_or_create(cafe=cafe,user=user, price=price, service=service, atmosphere=atmosphere, quality=quality, waiting_time=waiting_time)[0]
+    r.avg_rating = int((r.price + r.service + r.atmosphere + r.waiting_time + r.quality)/5)
     r.save()
     return r
 
