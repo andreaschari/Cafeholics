@@ -1,15 +1,18 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from cafe.forms import Cafe, CafeForm, Review, UserForm, UserProfileForm
+from cafe.forms import Cafe, CafeForm, ReviewForm, UserForm, UserProfileForm, Review
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from django.views.generic import CreateView
+
 
 
 def home(request):
-    cafe_list = Cafe.objects.all() #order_by('-average_rating')[:10]
-    context_dict = {}#'cafes': cafe_list}
+    cafe_list = Cafe.objects.all()
+    #Cafe.objects.order_by('-average_rating')[:10]
+    context_dict = {'cafes': cafe_list}
+    # for cafe in cafe_list:
+    #    Review.atmosphere + Review.service +
 
     return render(request, 'cafe/home.html', context=context_dict)
 
@@ -38,18 +41,18 @@ def chosen_cafe(request, cafe_name_slug):
     context_dict = {}
     try:
         cafe = Cafe.objects.get(slug=cafe_name_slug)
-        reviews = Review.objects.filter(cafe=cafe)
-        name = Cafe.name
-        pricepoint = Cafe.pricepoint
-        owner = Cafe.owner
-        picture = Cafe.picture
+        reviews = Review.objects.order_by().filter(cafe=cafe) #order by time but no time parameter?
+        name = cafe.name
+        pricepoint = cafe.pricepoint
+        owner = cafe.owner
+        picture = cafe.picture
         context_dict['name'] = name
         context_dict['reviews'] = reviews
         context_dict['cafe'] = cafe
         context_dict['pricepoint'] = pricepoint
         context_dict['owner'] = owner
         context_dict['picture'] = picture
-    except Cafe.DoesNotExist:
+    except cafe.DoesNotExist:
         context_dict['name'] = None
         context_dict['cafe'] = None
         context_dict['review'] = None
@@ -126,15 +129,57 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('home'))
 
-
+@login_required
 def my_account(request):
     context_dict = {}
+    try:
+        user = UserForm.objects.get(user=request.user)
+        context_dict["username"] = user.username
+        context_dict["first_name"] = user.first_name
+        context_dict["last_name"] = user.last_name
+        context_dict["email"] = user.email
+
+    except user.DoesNotExist:
+        context_dict["username"] = None
+        context_dict["first_name"] = None
+        context_dict["last_name"] = None
+        context_dict["email"] = None
 
     return render(request, 'cafe/my_account.html', context=context_dict)
 
+@login_required
+def my_reviews(request):
+    reviews_list = Review.objects.filter(user=request.user)
+    return render(request, 'cafe/my_review.html', {'reviews_list':reviews_list})
 
-# class CreateDropdownView(CreateView):
-#     model = Dropdown
-#     form_class = DropdownForm
-#     template_name = 'cafe/cafes.html'
-#     success_url = ''
+@login_required
+def my_cafes(request):
+    if request.user.is_owner:
+        cafe_list = Cafe.objects.filter(user=request.user)
+
+    return render(request, 'cafe/my_cafes.html', {'cafe_list':cafe_list})
+
+@login_required
+def write_review(request):
+    form = ReviewForm()
+    if request.method == 'POST':
+        form = ReviewForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            print(form.errors)
+
+    return render(request, 'cafe/write_review.html', {'form':form})
+
+def search(request):
+    if request.method == 'GET':
+        cafe_name = request.GET.get('search')
+
+        try:
+            status = Cafe.objects.get((Cafe.name)__icontains)
+
+        except:
+
+
+
+
