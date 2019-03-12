@@ -38,10 +38,9 @@ class ReviewForm(forms.ModelForm):
     quality = forms.IntegerField(help_text='Enter a value from 1 out of 5')
     waiting_time = forms.IntegerField(help_text='Enter a value from 1 out of 5')
     comments = forms.CharField(required=False)
-    pub_date = forms.DateTimeField(widget = forms.HiddenInput())
     avg_rating = forms.IntegerField(widget = forms.HiddenInput())
 
     class Meta:
         model = Review
         # include all fields in the form.
-        exclude = ("user","cafe",)
+        exclude = ("user","cafe","pub_date",)
