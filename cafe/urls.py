@@ -1,5 +1,5 @@
 from django.contrib import admin
-#from django.urls import path
+from django.urls import path
 from cafe import views
 from django.conf.urls import url
 
@@ -7,7 +7,7 @@ urlpatterns = [
    url(r'^$', views.home, name='home'),
    url(r'^about/$', views.about, name='about'),
    url(r'^cafes/$', views.cafes, name='cafes'),
-   # url(r'^cafes/(?P<cafe_name_slug>[\w\-]+)/$', views.chosen_cafe, name='chosen_cafe'),
+   url(r'^cafes/(?P<cafe_name_slug>[\w\-]+)/$', views.chosen_cafe, name='chosen_cafe'),
    # url(r'^cafes/(?P<cafe_name_slug>[\w\-]+)/edit_review/$', views.edit_review, name='edit_review'),
    # url(r'^cafes/(?P<cafe_name_slug>[\w\-]+)/write_review/$', views.write_review, name='write_review'),
    # url(r'^cafes/(?P<cafe_name_slug>[\w\-]+)/edit_cafe/$', views.edit_cafe, name='edit_cafe'),

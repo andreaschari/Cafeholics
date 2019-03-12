@@ -188,7 +188,3 @@ def search(request):
             print("Can't get cafe names")
     else:
         return render(request, 'cafe/search.html', {})
-
-
-
-
