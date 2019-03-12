@@ -176,9 +176,13 @@ def search(request):
         cafe_name = request.GET.get('search')
 
         try:
-            status = Cafe.objects.get((Cafe.name)__icontains)
-
-        except:
+            #name = Cafe.name
+            status = Cafe.objects.get(name__icontains=cafe_name)
+            return render(request, 'cafe/search.html', {'cafes': status})
+        except Exception:
+            print("Can't get cafe names")
+    else:
+        return render(request, 'cafe/search.html', {})
 
 
 
