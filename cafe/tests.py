@@ -414,7 +414,36 @@ class ViewTest(TestCase):
         # Check the template used to render page
         self.assertTemplateUsed(response, 'cafe/sign_up.html')
 
+    def test_chosen_cafe_using_template(self):
+        populate_cafe.populate()
+        response = self.client.get(reverse('chosen_cafe', kwargs={'cafe_name_slug': 'monza'}))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/chosen_cafe.html')
+
     def test_my_account_using_template(self):
+        # create test user
+        self.user = User.objects.create_user(username='test_user', password='12345')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
+        # login as test owner
+        self.client.login(username='test_user', password='12345')
+
         response = self.client.get(reverse('my_account'))
         # Check the template used to render page
         self.assertTemplateUsed(response, 'cafe/my_account.html')
+
+    def test_add_cafe_using_template(self):
+        response = self.client.get(reverse('add_cafe'))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/upload_cafe.html')
+
+    def test_write_review_using_template(self):
+        populate_cafe.populate()
+        # create test owner
+        self.user = User.objects.create_user(username='test_owner', password='12345')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
+        # login as test owner
+        self.client.login(username='test_owner', password='12345')
+
+        response = self.client.get(reverse('write_review', kwargs={'cafe_name_slug': 'monza'}))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/write_review.html')

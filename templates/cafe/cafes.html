@@ -29,7 +29,6 @@ $(function() {
 			<input class="searchButton" type="submit" value="Search"/>
 			<input class="searchbar" type="text" placeholder="What cafe are you looking for..">		
 	</form>
-	
 	<h2>
 		All Cafes
 		<select id="dropdown">
@@ -43,7 +42,9 @@ $(function() {
 		</select>
 	</h2>
  	<div id="displayCafes">
-
+    {% if errors %}
+    			<strong>These are not the Cafes you are looking for.</strong>
+    {%  else %}
 		{% if cafes %}
 			<ol>
 				{% for cafe in cafes %}
@@ -52,7 +53,8 @@ $(function() {
 				{% endfor %}
 			</ol>
 		{% else %}
-			<strong>There are no cafes registered.</strong>
+			<strong>There aren't any cafes registered.</strong>
 		{% endif %}
+    {%  endif %}
 	</div>
 {% endblock %}

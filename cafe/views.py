@@ -5,11 +5,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from cafe.models import *
+import django.core.exceptions
 
 
 def home(request):
     cafe_list = Cafe.objects.all()
-
     Cafe.objects.order_by('-avg_rating')[:10]
     context_dict = {'cafes': cafe_list}
 
@@ -51,14 +51,10 @@ def chosen_cafe(request, cafe_name_slug):
         context_dict['pricepoint'] = pricepoint
         context_dict['owner'] = owner
         context_dict['picture'] = picture
-    except cafe.DoesNotExist:
-        context_dict['name'] = None
-        context_dict['cafe'] = None
-        context_dict['review'] = None
-        context_dict['pricepoint'] = None
-        context_dict['owner'] = None
-        context_dict['picture'] = None
-    return render(request, 'cafe/chosen_cafe.html', context=context_dict)
+        return render(request, 'cafe/chosen_cafe.html', context=context_dict)
+    except Cafe.DoesNotExist:
+        context_dict['errors'] = 'This Cafe Does Not Exist'
+        return render(request, 'cafe/cafes.html', context=context_dict)
 
 
 def add_cafe(request):
@@ -132,19 +128,16 @@ def user_logout(request):
 def my_account(request):
     context_dict = {}
     try:
-        user = UserForm.objects.get(user=request.user)
+        user = User.objects.get(username=request.user)
         context_dict["username"] = user.username
         context_dict["first_name"] = user.first_name
         context_dict["last_name"] = user.last_name
         context_dict["email"] = user.email
+        context_dict["is_owner"] = user.userprofile.is_owner
+        return render(request, 'cafe/my_account.html', context=context_dict)
+    except User.DoesNotExist:
+        return redirect('/')
 
-    except user.DoesNotExist:
-        context_dict["username"] = None
-        context_dict["first_name"] = None
-        context_dict["last_name"] = None
-        context_dict["email"] = None
-
-    return render(request, 'cafe/my_account.html', context=context_dict)
 
 @login_required
 def delete_account(request):
@@ -190,7 +183,7 @@ def delete_cafe(request, cafe_name_slug):
 @login_required
 def write_review(request, cafe_name_slug):
     try:
-        cafe =Cafe.objects.get(slug=cafe_name_slug)
+        cafe = Cafe.objects.get(slug=cafe_name_slug)
     except Cafe.DoesNotExist:
         cafe = None
     form = ReviewForm()

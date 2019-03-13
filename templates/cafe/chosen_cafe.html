@@ -9,14 +9,13 @@
 {% block body_block %}
 
 	<h2>{{cafe.name}}</h2>
-	
 	<div id = "cafedescription">
 		<img class = "cafeimage" src="{{ MEDIA_URL }}cafe_images/{{ cafe.picture }}" alt="Picture of {{ cafe.name }}" width="30%"/>
 		<div class="cafedetails">
-			Price point: {{cafe.pricepoint}}</br>
+			Price point: {{cafe.pricepoint}}<br>
 			<p>{{cafe.description}}</p>
-			Address: {{cafe.address}}</br>
-			Opening hours: {{cafe.opening_hours}}</br>
+			Address: {{cafe.address}}<br>
+			Opening hours: {{cafe.opening_hours}}<br>
 			<a class="aa" href="{% url 'write_review' cafe.slug%}">Leave a review for {{cafe.name}} </a>
 		</div>
 	</div>
@@ -26,15 +25,15 @@
 	<ul>
 		{% for review in reviews %}
 			<li>
-			Price:{{ review.price }}</br>
-			Service:{{ review.service }}</br>
-			Atmosphere:{{ review.atmosphere }}</br>
-			Quality:{{ review.quality }}</br>
-			Waiting time: {{ review.waiting_time }}</br>
+			Price:{{ review.price }}<br>
+			Service:{{ review.service }}<br>
+			Atmosphere:{{ review.atmosphere }}<br>
+			Quality:{{ review.quality }}<br>
+			Waiting time: {{ review.waiting_time }}<br>
 			
 			{% if review.comments %}
 				Review:
-				{{ review.comments }}</br>
+				{{ review.comments }}<br>
 			{% endif %}
 			{{ review.user }}
 			</li>
