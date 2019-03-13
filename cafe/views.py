@@ -1,19 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from cafe.forms import Cafe, CafeForm, ReviewForm, UserForm, UserProfileForm, Review
+from cafe.forms import CafeForm, ReviewForm, UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-
+from cafe.models import *
 
 
 def home(request):
     cafe_list = Cafe.objects.all()
 
-    #Cafe.objects.order_by('-average_rating')[:10]
+    Cafe.objects.order_by('-avg_rating')[:10]
     context_dict = {'cafes': cafe_list}
-    # for cafe in cafe_list:
-    #    Review.atmosphere + Review.service +
 
     return render(request, 'cafe/home.html', context=context_dict)
 
@@ -42,7 +40,7 @@ def chosen_cafe(request, cafe_name_slug):
     context_dict = {}
     try:
         cafe = Cafe.objects.get(slug=cafe_name_slug)
-        reviews = Review.objects.order_by().filter(cafe=cafe) #order by time but no time parameter?
+        reviews = Review.objects.order_by('-pub_date').filter(cafe=cafe)
         name = cafe.name
         pricepoint = cafe.pricepoint
         owner = cafe.owner
@@ -149,6 +147,12 @@ def my_account(request):
     return render(request, 'cafe/my_account.html', context=context_dict)
 
 @login_required
+def delete_account(request):
+    UserProfile.objects.filter.get(request.user.get_username()).delete()
+    return redirect('/')
+
+
+@login_required
 def my_reviews(request):
     reviews_list = Review.objects.filter(user=request.user)
     return render(request, 'cafe/my_review.html', {'reviews_list':reviews_list})
@@ -159,21 +163,73 @@ def my_cafes(request):
         cafe_list = Cafe.objects.filter(user=request.user)
 
     return render(request, 'cafe/my_cafes.html', {'cafe_list':cafe_list})
+@login_required
+def edit_cafe(request, cafe_name_slug):
+    context_dict ={}
+    try:
+        cafe = Cafe.objects.get(slug=cafe_name_slug)
+    except Cafe.DoesNotExist:
+        cafe = None
+
+    if cafe:
+        context_dict={'cafe.owner':cafe.owner,'cafe.name':cafe.name,'cafe.picture':cafe.picture,
+                      'cafe.pricepoint.':cafe.pricepoint, 'cafe.description':cafe.description}
+
+    return render(request, 'cafe/edit_cafe.html', context=context_dict)
+
+
+def delete_cafe(request, cafe_name_slug):
+    try:
+        cafe =Cafe.objects.get(slug=cafe_name_slug)
+    except Cafe.DoesNotExist:
+        cafe = None
+    if cafe:
+        cafe.delete()
+    return redirect('/')
 
 @login_required
-def write_review(request):
+def write_review(request, cafe_name_slug):
+    try:
+        cafe =Cafe.objects.get(slug=cafe_name_slug)
+    except Cafe.DoesNotExist:
+        cafe = None
     form = ReviewForm()
     if request.method == 'POST':
         form = ReviewForm(data=request.POST)
         if form.is_valid():
-            #form.avg_rating = form.price + form.quality + form.waiting_time + form.service
-            #form.user
-            form.save()
-
+            if cafe:
+                review = form.save(commit=False)
+                review.cafe = cafe
+                review.avg_rating = int((review.price+review.quality+review.waiting_time+review.service+review.atmosphere )/5)
+                review.user = request.user
         else:
             print(form.errors)
 
-    return render(request, 'cafe/write_review.html', {'form':form})
+    return render(request, 'cafe/write_review.html', {'form': form})
+
+@login_required
+def edit_review(request, cafe_name_slug):
+    try:
+        cafe =Cafe.objects.get(slug=cafe_name_slug)
+    except Cafe.DoesNotExist:
+        cafe = None
+    if cafe:
+        toedit = Review.objects.get(cafe=cafe_name_slug,user=request.user)
+        context_dict={'toedit.atmosphere':toedit.atmosphere, 'toedit.service':toedit.service,
+                      'toedit.quality':toedit.quality, 'toedit.price':toedit.price,
+                      'toedit.waiting_time':toedit.waiting_time}
+    return render(request, 'cafe/edit_review.html', context=context_dict)
+
+
+@login_required
+def delete_review(request, cafe_name_slug):
+    try:
+        cafe =Cafe.objects.get(slug=cafe_name_slug)
+    except Cafe.DoesNotExist:
+        cafe = None
+    if cafe:
+        Review.objects.get(cafe=cafe,user=request.user).delete()
+    return redirect('/')
 
 
 def search(request):
