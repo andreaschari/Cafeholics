@@ -424,7 +424,7 @@ class ViewTest(TestCase):
         # create test user
         self.user = User.objects.create_user(username='test_user', password='12345')
         self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
-        # login as test owner
+        # login as test user
         self.client.login(username='test_user', password='12345')
 
         response = self.client.get(reverse('my_account'))
@@ -447,3 +447,26 @@ class ViewTest(TestCase):
         response = self.client.get(reverse('write_review', kwargs={'cafe_name_slug': 'monza'}))
         # Check the template used to render page
         self.assertTemplateUsed(response, 'cafe/write_review.html')
+
+
+class TemplateTest(TestCase):
+    def test_home_shows_search_bar(self):
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, '<input class="searchButton" type="submit" value="Search"/>', html=True)
+
+    def test_home_shows_log_in_when_not_logged_in(self):
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, """<button onclick="window.location.href = '/cafe/login/';">Log In</button>""", html=True)
+
+    def test_home_shows_log_out_when_logged_in(self):
+        # create test user
+        self.user = User.objects.create_user(username='test_user', password='12345')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
+        # login as test user
+        self.client.login(username='test_user', password='12345')
+        response = self.client.get(reverse("home"))
+        self.assertContains(response,"""<button onclick="window.location.href = '/cafe/logout/';">Log out</button>""", html=True)
+
+
+
+
