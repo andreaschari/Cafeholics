@@ -195,6 +195,7 @@ def write_review(request, cafe_name_slug):
                 review.cafe = cafe
                 review.avg_rating = int((review.price+review.quality+review.waiting_time+review.service+review.atmosphere )/5)
                 review.user = request.user
+                review.save()
         else:
             print(form.errors)
 
