@@ -13,8 +13,8 @@
 	<form id="mainform" method="post" action="{% url 'login' %}">
 		{% csrf_token %}
 		<strong>Log in to your Cafeholics account</strong><br/>
-		Username: <input class="mainforms" type="text" name="username" value=""/><br/>
-		Password: <input class="mainforms" type="password" name="password" value=""/><br/>
+		Username: <input class="mainforms" type="text" name="username" value=""/><br>
+		Password: <input class="mainforms" type="password" name="password" value=""/><br>
 		<button class="submit" type="submit">Log In</button><br/>
 		<!-- <input type="submit" value="submit" /> -->
 	</form>
