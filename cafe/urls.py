@@ -15,6 +15,6 @@ urlpatterns = [
    url(r'^my_account/$', views.my_account, name='my_account'),
    # url(r'^my_account/my_cafes/$', views.my_cafes, name='my_cafes'),
    url(r'^my_account/my_cafes/add_cafe/$', views.add_cafe, name='add_cafe'),
-   # url(r'^my_account/my_reviews/$', views.my_reviews, name='my_reviews'),
+   url(r'^my_account/my_reviews/$', views.my_reviews, name='my_reviews'),
    url(r'^logout/$', views.user_logout, name='logout'),
     ]

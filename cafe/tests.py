@@ -479,4 +479,8 @@ class TemplateTest(TestCase):
         response = self.client.get(reverse("home"))
         self.assertContains(response, """<button onclick="window.location.href = '/cafe/sign_up/';">Sign Up</button>""", html=True)
 
+    def test_cafe_page_displays_error_for_non_existing_cafe(self):
+        response = self.client.get(reverse("chosen_cafe", kwargs={'cafe_name_slug': 'i-dont-exist'}))
+        self.assertContains(response, '<strong>These are not the Cafes you are looking for.</strong>', html=True)
+
 

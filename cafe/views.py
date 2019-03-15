@@ -147,8 +147,9 @@ def delete_account(request):
 
 @login_required
 def my_reviews(request):
-    reviews_list = Review.objects.filter(user=request.user)
-    return render(request, 'cafe/my_review.html', {'reviews_list':reviews_list})
+    user = UserProfile.objects.get(user=request.user)
+    reviews_list = Review.objects.filter(user=user)
+    return render(request, 'cafe/my_review.html', {'reviews_list': reviews_list})
 
 @login_required
 def my_cafes(request):
