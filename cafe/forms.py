@@ -24,11 +24,12 @@ class UserProfileForm(forms.ModelForm):
 class CafeForm(forms.ModelForm):
     name = forms.CharField(required=True)
     pricepoint = forms.IntegerField(help_text='Enter a price average for your cafe.')
+    address = forms.CharField(help_text='Write the address like this: building no#, street name, post code')
 
     class Meta:
         model = Cafe
         # include the following fields in the form.
-        fields = ('name', 'picture', 'pricepoint', 'description')
+        fields = ('name', 'picture', 'pricepoint', 'address', 'description')
 
 
 class ReviewForm(forms.ModelForm):
