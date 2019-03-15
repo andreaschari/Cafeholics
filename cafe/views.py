@@ -185,7 +185,7 @@ def write_review(request, cafe_name_slug):
     try:
         cafe = Cafe.objects.get(slug=cafe_name_slug)
     except Cafe.DoesNotExist:
-        cafe = None
+        return render(request, 'cafe/cafes.html', {'errors': 'One Does not simply review a non-existing page'})
     form = ReviewForm()
     if request.method == 'POST':
         form = ReviewForm(data=request.POST)

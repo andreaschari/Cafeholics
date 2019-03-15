@@ -24,6 +24,7 @@ class Cafe(models.Model):
     pricepoint = models.IntegerField(validators=[MaxValueValidator(3), MinValueValidator(1)])
     description = models.TextField(blank=True)
     slug = models.SlugField(unique=True)
+    address = models.TextField(default='1600 Amphitheatre Parkway, Mountain View, CA 94043')
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
