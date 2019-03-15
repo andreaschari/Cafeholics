@@ -14,8 +14,8 @@
        Last Name: {{ last_name }}<br>
        Email: {{ email }}<br>
     {% if is_owner %}
-		<a href="{% url 'add_cafe'  %}">Add a Cafe</a>
-		<a href="{% url 'my_cafes' %}">My Cafes</a>
+		<a class='aa' href="{% url 'add_cafe'  %}">Add a Cafe</a> <br>
+		<a class='aa' href="{% url 'my_cafes' %}">My Cafes</a>
 	{% else %}
 		<a class='aa' href="{% url 'my_reviews' %}">My Reviews</a>
     {% endif %}
