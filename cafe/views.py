@@ -148,17 +148,25 @@ def my_cafes(request):
 
 @login_required
 def edit_cafe(request, cafe_name_slug):
-    context_dict ={}
     try:
         cafe = Cafe.objects.get(slug=cafe_name_slug)
     except Cafe.DoesNotExist:
         cafe = None
+    if request.method == 'POST':
+        form = CafeForm(data=request.POST, files=request.FILES, instance=cafe)
 
-    if cafe:
-        context_dict = {'cafe.owner':cafe.owner,'cafe.name':cafe.name,'cafe.picture':cafe.picture,
-                        'cafe.pricepoint.':cafe.pricepoint, 'cafe.description':cafe.description}
+        if form.is_valid():
+            cafe = form.save(commit=False)
+            owner = UserProfile.objects.get(user=request.user)
+            cafe.owner = owner
+            if 'picture' in request.FILES:
+                cafe.picture = request.FILES['picture']
+            cafe.save()
+            return home(request)
+        else:
+            form = CafeForm(instance=cafe)
 
-    return render(request, 'cafe/edit_cafe.html', context=context_dict)
+    return render(request, 'cafe/edit_cafe.html', {'form':form})
 
 
 def delete_cafe(request, cafe_name_slug):
@@ -187,7 +195,7 @@ def write_review(request, cafe_name_slug):
             if cafe:
                 review = form.save(commit=False)
                 review.cafe = cafe
-                review.avg_rating = int((review.price+review.quality+review.waiting_time+review.service+review.atmosphere )/5)
+                review.avg_rating = int((review.price+review.quality+review.waiting_time+review.service+review.atmosphere)/5)
                 review.user = request.user
                 review.save()
         else:
@@ -198,15 +206,28 @@ def write_review(request, cafe_name_slug):
 
 @login_required
 def edit_review(request, cafe_name_slug):
+    context_dict = {}
     try:
         cafe =Cafe.objects.get(slug=cafe_name_slug)
     except Cafe.DoesNotExist:
         cafe = None
-    if cafe:
-        toedit = Review.objects.get(cafe=cafe_name_slug,user=request.user)
-        context_dict={'toedit.atmosphere':toedit.atmosphere, 'toedit.service':toedit.service,
-                      'toedit.quality':toedit.quality, 'toedit.price':toedit.price,
-                      'toedit.waiting_time':toedit.waiting_time}
+    context_dict['cafe'] = cafe
+    form = ReviewForm(request.POST, request.FILES, instance=cafe)
+
+    if request.method == 'POST':
+        form = ReviewForm(data=request.POST,files=request.FILES,instance=cafe)
+        if form.is_valid():
+            if cafe:
+                review = form.save(commit=False)
+                review.cafe = cafe
+                review.avg_rating = int(
+                    (review.price + review.quality + review.waiting_time + review.service + review.atmosphere) / 5)
+                review.user = request.user
+                review.save()
+        else:
+            form = ReviewForm(instance=cafe)
+    context_dict['form'] = form
+
     return render(request, 'cafe/edit_review.html', context=context_dict)
 
 
