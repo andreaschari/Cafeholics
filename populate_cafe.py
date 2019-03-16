@@ -4,6 +4,10 @@ import django
 django.setup()
 from cafe.models import UserProfile, Cafe, Review
 from django.contrib.auth.models import User
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MEDIA_DIR = os.path.join(BASE_DIR, 'Cafeholics\\media\\')
+from django.core.files.images import ImageFile
+
 
 
 def populate():
@@ -20,9 +24,11 @@ def populate():
                     {'username': 'tomwalker' ,'first_name': 'Tom' , 'last_name':'Walker', 'email': 'tomwalker@gmail.com', 'password': '$pm%5td3', 'owner':False},
                     {'username': 'caroline99' ,'first_name': 'Caroline' , 'last_name':'Mcdonald', 'email': 'carolinemacdonald99@outlook.com', 'password': '2p#mT@!d', 'owner':False},]
 
-    cafes = {'xeniaskotti': [{'cafe_name' : 'Free Spirit','pricepoint': 1}, {'cafe_name': 'CoffeeRiver', 'pricepoint': 2}],
-                'alisonscott': [{'cafe_name' : 'Starbucks','pricepoint': 3}, {'cafe_name': 'Monza', 'pricepoint': 1}],
-                'jonathan23':[{'cafe_name' : 'Fika','pricepoint': 2}]}
+    cafes = {'xeniaskotti': [{'cafe_name' : 'Free Spirit','pricepoint': 1, 'picture':ImageFile(open(MEDIA_DIR + 'FreeSpirit.jpg','rb')), 'address': '66 Hyndland St, Glasgow G11 5PT'},
+                            {'cafe_name': 'CoffeeRiver', 'pricepoint': 2, 'picture':ImageFile(open(MEDIA_DIR + 'CoffeeRiver.jpg','rb')), 'address': '7 Keith St, Glasgow G11 6QQ'}],
+            'alisonscott': [{'cafe_name' : 'Starbucks','pricepoint': 3,'picture': ImageFile(open(MEDIA_DIR + 'Starbucks.jpg','rb')), 'address': '254 Byres Rd, Glasgow G12 8SH'},
+                            {'cafe_name': 'Monza', 'pricepoint': 1, 'picture': ImageFile(open(MEDIA_DIR + 'Monza.jpg','rb')), 'address': '13 Vine St, Glasgow G11 6BA'}],
+            'jonathan23':[{'cafe_name' : 'Fika','pricepoint': 2, 'picture': ImageFile(open(MEDIA_DIR + 'Fika.jpg','rb')), 'address': '579 Dumbarton Rd, Glasgow G11 6HY'}]}
 
     reviews = {'Free Spirit': [{'customer_username':'jakehill', 'price': 1, 'service' : 2, 'atmosphere' : 3, 'quality': 3, 'waiting_time': 5},
                 {'customer_username':'tomwalker', 'price': 3, 'service' : 3, 'atmosphere' : 3, 'quality': 5, 'waiting_time': 5}],
@@ -46,9 +52,10 @@ def populate():
     for owner_data in cafe_owners:
         o = add_user(owner_data["username"], owner_data["first_name"], owner_data["last_name"], owner_data["email"], owner_data["password"], owner_data["owner"])
         for cafe in cafes[owner_data["username"]]:
-            c = add_cafe(o, cafe["cafe_name"], cafe["pricepoint"])
+            c = add_cafe(o, cafe["cafe_name"], cafe["pricepoint"], cafe['picture'], cafe['address'])
             for review in reviews[cafe["cafe_name"]]:
                 r = add_review(c, users[review["customer_username"]],review["price"],review["service"],review["atmosphere"],review["quality"], review["waiting_time"])
+
 
 
 def add_user(username, first_name, last_name, email, password, owner):
@@ -62,8 +69,12 @@ def add_user(username, first_name, last_name, email, password, owner):
     return up
 
 
-def add_cafe(owner,cafe_name,pricepoint):
+def add_cafe(owner,cafe_name,pricepoint,picture,address):
     c = Cafe.objects.get_or_create(owner = owner, name = cafe_name, pricepoint = pricepoint)[0]
+    # with open(picture, "rb") as imageFile:
+    #     data = base64.b64encode(imageFile.read())
+    c.picture = picture
+    c.address = address
     c.save()
     return c
 
