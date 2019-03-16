@@ -5,7 +5,7 @@ django.setup()
 from cafe.models import UserProfile, Cafe, Review
 from django.contrib.auth.models import User
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MEDIA_DIR = os.path.join(BASE_DIR, 'Cafeholics\\media\\')
+MEDIA_DIR = os.path.join(BASE_DIR, 'Cafeholics/media/')
 from django.core.files.images import ImageFile
 
 
@@ -25,10 +25,10 @@ def populate():
                     {'username': 'caroline99' ,'first_name': 'Caroline' , 'last_name':'Mcdonald', 'email': 'carolinemacdonald99@outlook.com', 'password': '2p#mT@!d', 'owner':False},]
 
     cafes = {'xeniaskotti': [{'cafe_name' : 'Free Spirit','pricepoint': 1, 'picture':ImageFile(open(MEDIA_DIR + 'FreeSpirit.jpg','rb')), 'address': '66 Hyndland St, Glasgow G11 5PT'},
-                            {'cafe_name': 'CoffeeRiver', 'pricepoint': 2, 'picture':ImageFile(open(MEDIA_DIR + 'CoffeeRiver.jpg','rb')), 'address': '7 Keith St, Glasgow G11 6QQ'}],
-            'alisonscott': [{'cafe_name' : 'Starbucks','pricepoint': 3,'picture': ImageFile(open(MEDIA_DIR + 'Starbucks.jpg','rb')), 'address': '254 Byres Rd, Glasgow G12 8SH'},
-                            {'cafe_name': 'Monza', 'pricepoint': 1, 'picture': ImageFile(open(MEDIA_DIR + 'Monza.jpg','rb')), 'address': '13 Vine St, Glasgow G11 6BA'}],
-            'jonathan23':[{'cafe_name' : 'Fika','pricepoint': 2, 'picture': ImageFile(open(MEDIA_DIR + 'Fika.jpg','rb')), 'address': '579 Dumbarton Rd, Glasgow G11 6HY'}]}
+                            {'cafe_name': 'CoffeeRiver', 'pricepoint': 2, 'picture':ImageFile(open(MEDIA_DIR +'CoffeeRiver.jpg','rb')), 'address': '7 Keith St, Glasgow G11 6QQ'}],
+            'alisonscott': [{'cafe_name' : 'Starbucks','pricepoint': 3,'picture': ImageFile(open(MEDIA_DIR +'Starbucks.jpg','rb')), 'address': '254 Byres Rd, Glasgow G12 8SH'},
+                            {'cafe_name': 'Monza', 'pricepoint': 1, 'picture': ImageFile(open(MEDIA_DIR +'Monza.jpg','rb')), 'address': '13 Vine St, Glasgow G11 6BA'}],
+            'jonathan23':[{'cafe_name' : 'Fika','pricepoint': 2, 'picture': ImageFile(open(MEDIA_DIR +'Fika.jpg','rb')), 'address': '579 Dumbarton Rd, Glasgow G11 6HY'}]}
 
     reviews = {'Free Spirit': [{'customer_username':'jakehill', 'price': 1, 'service' : 2, 'atmosphere' : 3, 'quality': 3, 'waiting_time': 5},
                 {'customer_username':'tomwalker', 'price': 3, 'service' : 3, 'atmosphere' : 3, 'quality': 5, 'waiting_time': 5}],
