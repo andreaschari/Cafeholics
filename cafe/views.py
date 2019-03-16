@@ -60,10 +60,11 @@ def chosen_cafe(request, cafe_name_slug):
 def avg_rating_cafe(cafe_name_slug):
     cafe = Cafe.objects.get(slug=cafe_name_slug)
     review = Review.objects.filter(cafe=cafe)
+    review_sum, count = 0
     for r in review:
-        sum = sum + r.avg_rating
+        review_sum += r.avg_rating
         count = count+1
-    avg = sum/count
+    avg = review_sum / count
     return avg
 
 
@@ -82,7 +83,7 @@ def add_cafe(request):
         else:
             print(form.errors)
 
-    return render(request, 'cafe/upload_cafe.html', {'form': form})
+    return render(request, 'cafe/add_cafe.html', {'form': form})
 
 
 def sign_up(request):

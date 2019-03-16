@@ -7,7 +7,6 @@ from django.urls import reverse
 from cafe.models import *
 from django.conf import settings
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
 
 
@@ -434,7 +433,7 @@ class ViewTest(TestCase):
     def test_add_cafe_using_template(self):
         response = self.client.get(reverse('add_cafe'))
         # Check the template used to render page
-        self.assertTemplateUsed(response, 'cafe/upload_cafe.html')
+        self.assertTemplateUsed(response, 'cafe/add_cafe.html')
 
     def test_write_review_using_template(self):
         populate_cafe.populate()
@@ -484,7 +483,7 @@ class TemplateTest(TestCase):
         self.assertContains(response, '<strong>These are not the Cafes you are looking for.</strong>', html=True)
 
 
-class LiveTests(StaticLiveServerTestCase):
+class SideBarTest(StaticLiveServerTestCase):
     def setUp(self):
         self.user = User.objects.create_user('foo', 'bar')
         self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)

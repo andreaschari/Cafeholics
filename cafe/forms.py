@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.auth.models import User
 from cafe.models import *
 
 
@@ -24,7 +23,7 @@ class UserProfileForm(forms.ModelForm):
 class CafeForm(forms.ModelForm):
     name = forms.CharField(required=True)
     pricepoint = forms.IntegerField(help_text='Enter a price average for your cafe.')
-    address = forms.CharField(help_text='Write the address like this: building no#, street name, post code')
+    address = forms.CharField()
 
     class Meta:
         model = Cafe
@@ -39,9 +38,9 @@ class ReviewForm(forms.ModelForm):
     quality = forms.IntegerField(help_text='Enter a value from 1 out of 5')
     waiting_time = forms.IntegerField(help_text='Enter a value from 1 out of 5')
     comments = forms.CharField(required=False)
-    avg_rating = forms.IntegerField(widget = forms.HiddenInput())
+    avg_rating = forms.IntegerField(widget=forms.HiddenInput())
 
     class Meta:
         model = Review
         # include all fields in the form.
-        exclude = ("user","cafe","pub_date",)
+        exclude = ("user", "cafe", "pub_date",)
