@@ -5,12 +5,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from cafe.models import *
-import django.core.exceptions
 
 
 def home(request):
-    cafe_list = Cafe.objects.all()
-    Cafe.objects.order_by('-avg_rating')[:10]
+    cafe_list = Cafe.objects.order_by('-avg_rating')[:10]
     context_dict = {'cafes': cafe_list}
 
     return render(request, 'cafe/home.html', context=context_dict)
@@ -184,20 +182,20 @@ def edit_cafe(request, cafe_name_slug):
         cafe = None
 
     if cafe:
-        context_dict={'cafe.owner':cafe.owner,'cafe.name':cafe.name,'cafe.picture':cafe.picture,
-                      'cafe.pricepoint.':cafe.pricepoint, 'cafe.description':cafe.description}
+        context_dict = {'cafe.owner':cafe.owner,'cafe.name':cafe.name,'cafe.picture':cafe.picture,
+                        'cafe.pricepoint.':cafe.pricepoint, 'cafe.description':cafe.description}
 
     return render(request, 'cafe/edit_cafe.html', context=context_dict)
 
 
 def delete_cafe(request, cafe_name_slug):
     try:
-        cafe =Cafe.objects.get(slug=cafe_name_slug)
+        cafe = Cafe.objects.get(slug=cafe_name_slug)
     except Cafe.DoesNotExist:
         cafe = None
     if cafe:
         cafe.delete()
-    return redirect('/')
+    return redirect('/cafe/my_cafes.html')
 
 
 @login_required
@@ -239,12 +237,12 @@ def edit_review(request, cafe_name_slug):
 @login_required
 def delete_review(request, cafe_name_slug):
     try:
-        cafe =Cafe.objects.get(slug=cafe_name_slug)
+        cafe = Cafe.objects.get(slug=cafe_name_slug)
     except Cafe.DoesNotExist:
         cafe = None
     if cafe:
         Review.objects.get(cafe=cafe,user=request.user).delete()
-    return redirect('/')
+    return redirect('/cafe/chosen_cafe.html')
 
 
 def search(request):
@@ -252,10 +250,9 @@ def search(request):
         cafe_name = request.GET.get('search')
 
         try:
-            #name = Cafe.name
             status = Cafe.objects.get(name__icontains=cafe_name)
             return render(request, 'cafe/search.html', {'cafes': status})
-        except Exception:
+        except Cafe.DoesNotExist:
             print("Can't get cafe names")
     else:
         return render(request, 'cafe/search.html', {})
