@@ -1,36 +1,26 @@
-
 body {
-	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-	background-color: white;
+	font-family: "Times New Roman", Times, serif;
+	background-image: url("background.jpg");
+	background-repeat: repeat-20;
+	background-position: right top;
+	overflow: auto;
 
 }
 
 /*side navigator*/
 .sidenav {
-	width: 15%;
+	width: 50%;
 	position: fixed;
-	height: 100%;
-	background: #fafafa;
-
-	background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(250,250,250)), color-stop(1, rgb(230,230,230)));
-	background: -moz-linear-gradient( center top, rgb(250,250,250) 0%, rgb(230,230,230) 100%);
-
-	overflow-x: hidden;
-	padding: 8px 0;
-	
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	
-	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
-	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
-	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
+	height: 30%;
+	/* background: #D9D6D2; */
+	top: 0px;
+	padding: 0px 0;
 }
 
 .sidenav a {
 	padding: 6px 8px 6px 16px;
 	text-decoration: none;
-	font-size: 23px;
+	font-size: 34px;
 	color: #000000;
 	text-shadow: -1px -1px 3px rgba(0,0,0,.3);
 	display: block;
@@ -46,20 +36,21 @@ body {
 
 /*main content*/
 div.main {
-	width: 80%;
+	width: 90%;
 	height: 100%;
-	top: 350px;
-	margin-left: 17%;
-	font-size: 17px; 
+	top: 250px;
+	margin-left: 5%;
+	font-size: 34px;
+	float: center;
 	padding: 0px 10px;
 }
 
 h1 {
 	font-size: 120px;
 	text-align: center;
-	font-family:"Bradley Hand ITC", "Comic Sans MS", sans-serif; 
-	font-weight: bold; 
-	color: #993300;
+	font-family: "Times New Roman", Times, serif;
+	font-weight: bold;
+	color: #010100;
 	display: block;
 	float: none;
 	width: 100%
@@ -67,26 +58,26 @@ h1 {
 h2 {
 	width: 100%;
 	float: left;
-	font-size: 22px;
-	text-align: left;
+	font-size: 34px;
+	text-align: center;
 }
 
 h3 {
 	width: 100%;
-	
+
 	/*float: left;*/
-	font-size: 20px;
-	text-align: left;
+	font-size: 34px;
+	text-align: center;
 }
 
 /* Buttons */
 button{
 	color: #737373;
-	font: 17px;
+	font: 34px;
 	background-color: #eee;
 	background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(243,243,243)), color-stop(1, rgb(225,225,225)));
 	background: -moz-linear-gradient( center top, rgb(243,243,243) 0%, rgb(225,225,225) 100%);
-	font-size: 17px;
+	font-size: 30px;
 	text-shadow: -1px -1px 2px rgba(0,0,0,.3);
 	padding: 10px 15px;
 	border-radius: 5px;
@@ -107,12 +98,12 @@ button.submit{
 	margin-bottom: 10px;
 	margin-right:10px;
 	float: right;
-	
+
 }
 
 /* Using aa for the cafe links in the lists */
 .aa{
-	font-size: 22px;
+	font-size: 34px;
 	color: #993300;
 	text-decoration: none;
 }
@@ -126,8 +117,11 @@ button.submit{
 
 #login {
 	position: fixed;
-	right: 40px;
-	padding: 0px 40px;
+	top: 10px;
+	right: 10px;
+	padding: 10px 10px;
+	width: 200x;
+	height: 40px;
 }
 
 
@@ -137,9 +131,10 @@ button.submit{
 
 #searchform {
 	background: #e1e1e1;
-	width: 560px;
-	margin: 50px auto;
-	float: left;
+	width: 1000px;
+	margin: 20px auto;
+	float: center;
+	/* text-align: center */
 
 	background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(243,243,243)), color-stop(1, rgb(225,225,225)));
 	background: -moz-linear-gradient( center top, rgb(243,243,243) 0%, rgb(225,225,225) 100%);
@@ -158,11 +153,11 @@ button.submit{
 
 	background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(250,250,250)), color-stop(1, rgb(230,230,230)));
 	background: -moz-linear-gradient( center top, rgb(250,250,250) 0%, rgb(230,230,230) 100%);
-	
-	font-size: 16px;
+
+	font-size: 26px;
 	margin: 4px 4px;
 	padding: 5px 5px;
-	width: 460px;
+	width: 800px;
 
 	border-radius: 30px;
 	-webkit-border-radius: 30px;
@@ -171,7 +166,7 @@ button.submit{
 	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
 	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
 	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
-	
+
 }
 
 .searchbar:focus{
@@ -186,22 +181,22 @@ button.submit{
 	background-color: #eee;
 	background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(243,243,243)), color-stop(1, rgb(225,225,225)));
 	background: -moz-linear-gradient( center top, rgb(243,243,243) 0%, rgb(225,225,225) 100%);
-	
+
 	position: relative;
 	float: right;
 	border: 0;
 	color: #737373;
 	cursor: pointer;
-	font: 17px 'Raleway', sans-serif;
-	height: 30px;
-	margin: 4px 4px 0;
+	font: 26px 'Raleway', sans-serif;
+	height: 40px;
+	margin: 6px 6px 0;
 	text-shadow: 0 -1px 0 rgba(0,0,0,.3);
-	width: 84px;
+	width: 150px;
 	outline: none;
 
-	border-radius: 30px;
-	-webkit-border-radius: 30px;
-	-moz-border-radius: 30px;
+	border-radius: 40px;
+	-webkit-border-radius: 40px;
+	-moz-border-radius: 40px;
 
 	box-shadow: -1px -1px 1px rgba(255,255,255,.5), 2px 2px 0 rgba(0,0,0,.4);
 	-moz-box-shadow: -1px -1px 1px rgba(255,255,255,.5), 2px 2px 0 rgba(0,0,0,.2);
@@ -228,7 +223,7 @@ input[type=text], input[type=password] {
 	background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(255,255,255)), color-stop(1, rgb(235,235,235)));
 	background: -moz-linear-gradient( center top, rgb(255,255,255) 0%, rgb(235,235,235) 100%);
 	outline: none;
-	
+
 }
 
 input:focus{
@@ -254,11 +249,11 @@ input.mainforms{
 	float: left;
 	outline: none;
 	width: 900px;
-	
+
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
-	
+
 	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
 	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
 	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
@@ -269,11 +264,11 @@ input.mainforms{
 
 	background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(243,243,243)), color-stop(1, rgb(225,225,225)));
 	background: -moz-linear-gradient( center top, rgb(243,243,243) 0%, rgb(225,225,225) 100%);
-	
+
 	padding: 5px 5px;
 	color: #737373;
 	font-size: 17px;
-	
+
 	border-radius: 17px;
 	-webkit-border-radius: 17px;
 	-moz-border-radius: 17px;
