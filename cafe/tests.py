@@ -414,7 +414,73 @@ class ViewTest(TestCase):
         # Check the template used to render page
         self.assertTemplateUsed(response, 'cafe/sign_up.html')
 
+    def test_chosen_cafe_using_template(self):
+        populate_cafe.populate()
+        response = self.client.get(reverse('chosen_cafe', kwargs={'cafe_name_slug': 'monza'}))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/chosen_cafe.html')
+
     def test_my_account_using_template(self):
+        # create test user
+        self.user = User.objects.create_user(username='test_user', password='12345')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
+        # login as test user
+        self.client.login(username='test_user', password='12345')
+
         response = self.client.get(reverse('my_account'))
         # Check the template used to render page
         self.assertTemplateUsed(response, 'cafe/my_account.html')
+
+    def test_add_cafe_using_template(self):
+        response = self.client.get(reverse('add_cafe'))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/upload_cafe.html')
+
+    def test_write_review_using_template(self):
+        populate_cafe.populate()
+        # create test owner
+        self.user = User.objects.create_user(username='test_owner', password='12345')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
+        # login as test owner
+        self.client.login(username='test_owner', password='12345')
+
+        response = self.client.get(reverse('write_review', kwargs={'cafe_name_slug': 'monza'}))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/write_review.html')
+
+
+class TemplateTest(TestCase):
+    def test_home_shows_search_bar(self):
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, '<input class="searchButton" type="submit" value="Search"/>', html=True)
+
+    def test_home_shows_log_in_when_not_logged_in(self):
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, """<button onclick="window.location.href = '/cafe/login/';">Log In</button>""", html=True)
+
+    def test_home_shows_log_out_when_logged_in(self):
+        # create test user
+        self.user = User.objects.create_user(username='test_user', password='12345')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
+        # login as test user
+        self.client.login(username='test_user', password='12345')
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, """<button onclick="window.location.href = '/cafe/logout/';">Log out</button>""", html=True)
+
+    def test_cafes_shows_name_in_template(self):
+        populate_cafe.populate()
+        # get all Cafes
+        cafes = Cafe.objects.all()
+        for cafe in cafes:
+            response = self.client.get(reverse("chosen_cafe", kwargs={'cafe_name_slug': cafe.slug}))
+            self.assertContains(response, '<h2>{}</h2>'.format(cafe.name), html=True)
+
+    def test_home_shows_sign_up_when_not_logged_in(self):
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, """<button onclick="window.location.href = '/cafe/sign_up/';">Sign Up</button>""", html=True)
+
+    def test_cafe_page_displays_error_for_non_existing_cafe(self):
+        response = self.client.get(reverse("chosen_cafe", kwargs={'cafe_name_slug': 'i-dont-exist'}))
+        self.assertContains(response, '<strong>These are not the Cafes you are looking for.</strong>', html=True)
+
+

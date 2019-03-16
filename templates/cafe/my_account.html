@@ -8,14 +8,16 @@
 {% endblock %}
 
 {% block body_block %}
-<h1> My Account </h1>
-    {{ user. username }}
-     {{ user.first_name }}
-   {{ user.last_name }}
- {{ user.email }}
-{% if user.is_owner %}
-  <a href="{% url 'add_cafe'  %}">Add a Cafe</a>
-{% endif %}
- 
+    <h2> My Account </h2>
+       Username: {{ username }}<br>
+       First Name: {{ first_name }}<br>
+       Last Name: {{ last_name }}<br>
+       Email: {{ email }}<br>
+    {% if is_owner %}
+		<a class='aa' href="{% url 'add_cafe'  %}">Add a Cafe</a> <br>
+		<a class='aa' href="{% url 'my_cafes' %}">My Cafes</a>
+	{% else %}
+		<a class='aa' href="{% url 'my_reviews' %}">My Reviews</a>
+    {% endif %}
 {% endblock %}
 

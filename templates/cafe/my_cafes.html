@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+
+{% extends 'cafe/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	My Cafes
+{% endblock %}
+
+{% block body_block %}
+    <h2> My Cafes </h2>
+   {% for cafe in cafe_list %}
+        Cafe Name: {{ cafe.name }} <br>
+        Price Point: {{ cafe.pricepoint }} <br>
+        Address: {{cafe.address}}  <br>
+        Description: {{ cafe.description }} <br>
+   {% endfor %}
+{% endblock %}
