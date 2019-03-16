@@ -42,13 +42,55 @@ $(function() {
     {% if errors %}
     			<strong>These are not the Cafes you are looking for.</strong>
     {%  else %}
-		{% if cafes %}
-
-				{% for cafe in cafes %}
-					<a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<!-- <p class="rating">{{ cafe.average_rating }}</p> --></br>
+		{% if cafe_list %}
+			<ol>
+            {% if byPrice %}
+				{% for cafe in byPrice %}
+					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
 				{% endfor %}
-
+            {%  endif %}
+			</ol>
+            <ol>
+            {% if byAtmosphere %}
+				{% for cafe in byAtmosphere %}
+					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
+				{% endfor %}
+            {%  endif %}
+			</ol>
+            <ol>
+            {% if byQuality %}
+				{% for cafe in byQuality %}
+					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
+				{% endfor %}
+            {%  endif %}
+			</ol>
+            <ol>
+            {% if byService %}
+				{% for cafe in byService %}
+					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
+				{% endfor %}
+            {%  endif %}
+			</ol>
+            <ol>
+            {% if byWaitingTimes %}
+				{% for cafe in byWaitingTimes %}
+					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
+				{% endfor %}
+            {%  endif %}
+			</ol>
+            <ol>
+            {% if byAverage %}
+				{% for cafe in byAverage %}
+					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
+				{% endfor %}
+            {%  endif %}
+			</ol>
 		{% else %}
 			<strong>There aren't any cafes registered.</strong>
 		{% endif %}
