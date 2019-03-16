@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+{% extends 'cafe/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	Search Results
+{% endblock %}
+
+{% block body_block %}
+<h1> Search results as found </h1>
+<div>
+{% if cafes %}
+{% for cafe in cafes %}
+    <a href="{% url 'chosen_cafe' cafe.slug %}"{{ cafe.name }}>
+{% endfor %}
+  {% else %}
+    <strong> result not found </strong>
+{% endif %}
+
+{% endblock %}

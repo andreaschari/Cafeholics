@@ -19,7 +19,7 @@ class UserProfile(models.Model):
 
 class Cafe(models.Model):
     owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    name = models.CharField(max_length=20, unique=True)
+    name = models.TextField(max_length=20, unique=True)
     picture = models.ImageField(upload_to='cafe_images', blank=True)
     pricepoint = models.IntegerField(validators=[MaxValueValidator(3), MinValueValidator(1)])
     description = models.TextField(blank=True)

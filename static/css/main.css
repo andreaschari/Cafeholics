@@ -215,9 +215,13 @@ button.submit{
 
 /* Style for input boxes*/
 
-input[type=text], input[type=password] {
-
+input[type=text], input[type=password], input[type=number] {
+    font-size:24px;
+	width: 50%;
+    padding: 10px 20px;
+    margin: 10px 0;
 	box-sizing: border-box;
+	border: 2px solid black;
 	background: #fff;
 
 	background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(255,255,255)), color-stop(1, rgb(235,235,235)));
