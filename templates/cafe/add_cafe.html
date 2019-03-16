@@ -10,7 +10,7 @@
 {% block body_block %}
 
 	<h2> Add a Cafe </h2>
-    <div>
+    <div class = 'add_cafe'>
         <form id = "add_cafe" method = "post" action="">
     {% csrf_token %}
 
@@ -20,9 +20,9 @@
             {% for field in form.visible_fields %}
                 {{ field.errors }} <br>
                 {{ field.label }} <br>
-                {{ field }}  <br>
+                <div class = 'fields'>{{ field }} <br><div>
             {% endfor %}
-            <input type="submit" name="submit" value="Add Cafe" />
+						<button class="submit" type="submit">Add Cafe</button><br/>
         </form>
     </div>
 {% endblock %}
