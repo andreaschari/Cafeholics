@@ -465,8 +465,22 @@ class TemplateTest(TestCase):
         # login as test user
         self.client.login(username='test_user', password='12345')
         response = self.client.get(reverse("home"))
-        self.assertContains(response,"""<button onclick="window.location.href = '/cafe/logout/';">Log out</button>""", html=True)
+        self.assertContains(response, """<button onclick="window.location.href = '/cafe/logout/';">Log out</button>""", html=True)
 
+    def test_cafes_shows_name_in_template(self):
+        populate_cafe.populate()
+        # get all Cafes
+        cafes = Cafe.objects.all()
+        for cafe in cafes:
+            response = self.client.get(reverse("chosen_cafe", kwargs={'cafe_name_slug': cafe.slug}))
+            self.assertContains(response, '<h2>{}</h2>'.format(cafe.name), html=True)
 
+    def test_home_shows_sign_up_when_not_logged_in(self):
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, """<button onclick="window.location.href = '/cafe/sign_up/';">Sign Up</button>""", html=True)
+
+    def test_cafe_page_displays_error_for_non_existing_cafe(self):
+        response = self.client.get(reverse("chosen_cafe", kwargs={'cafe_name_slug': 'i-dont-exist'}))
+        self.assertContains(response, '<strong>These are not the Cafes you are looking for.</strong>', html=True)
 
 

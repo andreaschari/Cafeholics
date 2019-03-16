@@ -16,7 +16,8 @@
 			<p>{{cafe.description}}</p>
 			Address: {{cafe.address}}<br>
 			Opening hours: {{cafe.opening_hours}}<br>
-			<a class="aa" href="{% url 'write_review' cafe.slug%}">Leave a review for {{cafe.name}} </a>
+			<a class="aa" href="{% url 'write_review' cafe.slug%}" >Leave a review for {{cafe.name}} </a> <br>
+            <a class="aa" href="https://www.google.com/maps/search/?api=1&query={{ cafe.address }}" target="_blank">Open in Google Maps</a>
 		</div>
 	</div>
 	
@@ -35,6 +36,7 @@
 				Review:
 				{{ review.comments }}<br>
 			{% endif %}
+			{{ review.pub_date }}
 			{{ review.user }}
 			</li>
 		{% endfor %}

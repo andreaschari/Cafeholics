@@ -124,6 +124,7 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('home'))
 
+
 @login_required
 def my_account(request):
     context_dict = {}
@@ -147,15 +148,21 @@ def delete_account(request):
 
 @login_required
 def my_reviews(request):
-    reviews_list = Review.objects.filter(user=request.user)
-    return render(request, 'cafe/my_review.html', {'reviews_list':reviews_list})
+    user = UserProfile.objects.get(user=request.user)
+    reviews_list = Review.objects.filter(user=user)
+    return render(request, 'cafe/my_review.html', {'reviews_list': reviews_list})
+
 
 @login_required
 def my_cafes(request):
-    if request.user.is_owner:
-        cafe_list = Cafe.objects.filter(user=request.user)
+    user = UserProfile.objects.get(user=request.user)
+    if user.is_owner:
+        cafe_list = Cafe.objects.filter(owner=user)
+    else:
+        cafe_list = []
+    return render(request, 'cafe/my_cafes.html', {'cafe_list': cafe_list})
 
-    return render(request, 'cafe/my_cafes.html', {'cafe_list':cafe_list})
+
 @login_required
 def edit_cafe(request, cafe_name_slug):
     context_dict ={}
@@ -180,12 +187,13 @@ def delete_cafe(request, cafe_name_slug):
         cafe.delete()
     return redirect('/')
 
+
 @login_required
 def write_review(request, cafe_name_slug):
     try:
         cafe = Cafe.objects.get(slug=cafe_name_slug)
     except Cafe.DoesNotExist:
-        cafe = None
+        return render(request, 'cafe/cafes.html', {'errors': 'One Does not simply review a non-existing page'})
     form = ReviewForm()
     if request.method == 'POST':
         form = ReviewForm(data=request.POST)
@@ -200,6 +208,7 @@ def write_review(request, cafe_name_slug):
             print(form.errors)
 
     return render(request, 'cafe/write_review.html', {'form': form})
+
 
 @login_required
 def edit_review(request, cafe_name_slug):
