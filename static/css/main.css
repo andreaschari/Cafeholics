@@ -97,14 +97,14 @@ button:hover {
 button.submit{
 	margin-bottom: 10px;
 	margin-right:10px;
-	float: right;
+	float: center;
 
 }
 
 /* Using aa for the cafe links in the lists */
 .aa{
 	font-size: 34px;
-	color: #993300;
+	color: #0132D2;
 	text-decoration: none;
 }
 

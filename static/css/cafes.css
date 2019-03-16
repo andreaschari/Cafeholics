@@ -2,12 +2,12 @@
 #displayCafes{
 
 	width: 900px;
-	background: #fff;
 	margin: 20px auto;
 	float: center;
 	padding: 20px 20px;
 	outline: none;
 	overflow: auto;
+	font-size: 30px;
 
 	/* border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -16,6 +16,24 @@
 	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
 	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
 	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3); */
+}
+#add_cafe {
+	background: #e1e1e1;
+	width: 90%;
+	margin: 20px auto;
+	float: center;
+	/* text-align: center */
+
+	background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(243,243,243)), color-stop(1, rgb(225,225,225)));
+	background: -moz-linear-gradient( center top, rgb(243,243,243) 0%, rgb(225,225,225) 100%);
+
+	border-radius: 20px;
+	-webkit-border-radius: 17px;
+	-moz-border-radius: 17px;
+
+	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
+	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
+	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
 }
 
 .rating{
@@ -70,10 +88,10 @@ textarea{
 
 	background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(255,255,255)), color-stop(1, rgb(235,235,235)));
 	background: -moz-linear-gradient( center top, rgb(255,255,255) 0%, rgb(235,235,235) 100%);
-	font-size: 24px;
+	font-size: 20px;
 	margin: 4px 4px;
 	padding: 5px 5px;
-	color: #737373;
+	color:#0132D2;
 
 	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
 	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);

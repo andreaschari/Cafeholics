@@ -27,7 +27,7 @@ $(function() {
 
 	<form id="searchform" method="GET" action="">
 			<input class="searchButton" type="submit" value="Search"/>
-			<input class="searchbar" type="text" placeholder="What cafe are you looking for..">		
+			<input class="searchbar" type="text" placeholder="What cafe are you looking for..">
 	</form>
 	<h2>
 		All Cafes
@@ -46,12 +46,12 @@ $(function() {
     			<strong>These are not the Cafes you are looking for.</strong>
     {%  else %}
 		{% if cafes %}
-			<ol>
+
 				{% for cafe in cafes %}
-					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<!-- <p class="rating">{{ cafe.average_rating }}</p> --></li>
+					<a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+					<!-- <p class="rating">{{ cafe.average_rating }}</p> --></br>
 				{% endfor %}
-			</ol>
+
 		{% else %}
 			<strong>There aren't any cafes registered.</strong>
 		{% endif %}
