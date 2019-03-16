@@ -20,11 +20,10 @@
 		</div>
 	</div>
 	
-	<form id="mainform" method="post" action="{% url 'home' %}">
+	<form id="mainform" method="post" action="{% url 'chosen_cafe' cafe.slug %}">
 		{% csrf_token %}
-		{% for field in form.ReviewForm %}
-			{{ field.label }}<br>
-			{{ field }}<br>
+		{% for field in form.visible_fields %}
+			<br> {{ field.label }} <br>
 			<div class="rate">
 				<input type="radio" id="star5" name="rate" value="5" />
 				<label for="star5" title="text">5 stars</label>
@@ -37,6 +36,7 @@
 				<input type="radio" id="star1" name="rate" value="1" />
 				<label for="star1" title="text">1 star</label>
 			  </div>
+            <br>
 		{% endfor %}
 		<textarea rows="5" cols="100" name="comment" form="mainform">Leave comments here...</textarea>
 		<button class="submit" type="submit">Submit review</button><br/>

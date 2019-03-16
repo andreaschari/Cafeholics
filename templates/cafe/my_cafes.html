@@ -9,8 +9,8 @@
 
 {% block body_block %}
 
-<h1> My Cafes </h1>
-Following are the cafes owned by  {{ cafe.owner }}
+<h2> My Cafes </h2>
+Following are the cafes owned by  {{ request.user }} <br>
 
 {% if cafe_list %}
 <div>
@@ -22,12 +22,12 @@ Following are the cafes owned by  {{ cafe.owner }}
         Price Point: {{ cafe.pricepoint }} <br>
         Address: {{cafe.address}}  <br>
         Description: {{ cafe.description }} <br>
-          <a class="aa" href="{% url 'chosen_cafe'  cafe_name.slug %}">{{ cafe.name }}</a>
+          <a class="aa" href="{% url 'chosen_cafe'  cafe.slug %}">{{ cafe.name }}</a>
 
           {% endfor %}
           </ul>
           {% else %}
-                            <strong>No owned cafe uploaded </strong>
+                            <strong>No owned cafe uploaded </strong> <br>
   <a class="aa" href="{% url 'add_cafe' %}">Add Cafe</a>
           {% endif %}
 

@@ -40,18 +40,16 @@ def chosen_cafe(request, cafe_name_slug):
     try:
         cafe = Cafe.objects.get(slug=cafe_name_slug)
         reviews = Review.objects.order_by('-pub_date').filter(cafe=cafe)
-        name = cafe.name
-        pricepoint = cafe.pricepoint
-        owner = cafe.owner
-        picture = cafe.picture
-        avg_rating = avg_rating_cafe(cafe_name_slug)
-        context_dict['name'] = name
-        context_dict['reviews'] = reviews
+        if len(reviews) > 0:
+            context_dict['reviews'] = reviews
+            context_dict['avg rating'] = avg_rating_cafe(cafe_name_slug)
+        else:
+            context_dict['avg rating'] = 0
+        context_dict['name'] = cafe.name
+        context_dict['pricepoint'] = cafe.pricepoint
+        context_dict['owner'] = cafe.owner
+        context_dict['picture'] = cafe.picture
         context_dict['cafe'] = cafe
-        context_dict['pricepoint'] = pricepoint
-        context_dict['owner'] = owner
-        context_dict['picture'] = picture
-        context_dict['avg rating'] = avg_rating
         return render(request, 'cafe/chosen_cafe.html', context=context_dict)
     except Cafe.DoesNotExist:
         context_dict['errors'] = 'This Cafe Does Not Exist'
@@ -61,10 +59,11 @@ def chosen_cafe(request, cafe_name_slug):
 def avg_rating_cafe(cafe_name_slug):
     cafe = Cafe.objects.get(slug=cafe_name_slug)
     review = Review.objects.filter(cafe=cafe)
+    review_sum, count = 0, 0
     for r in review:
-        sum = sum + r.avg_rating
+        review_sum += r.avg_rating
         count = count+1
-    avg = sum/count
+    avg = review_sum / count
     return avg
 
 
@@ -75,7 +74,8 @@ def add_cafe(request):
 
         if form.is_valid():
             cafe = form.save(commit=False)
-            cafe.owner = request.user
+            owner = UserProfile.objects.get(user=request.user)
+            cafe.owner = owner
             if 'picture' in request.FILES:
                 cafe.picture = request.FILES['picture']
             cafe.save()
@@ -83,7 +83,7 @@ def add_cafe(request):
         else:
             print(form.errors)
 
-    return render(request, 'cafe/upload_cafe.html', {'form': form})
+    return render(request, 'cafe/add_cafe.html', {'form': form})
 
 
 def sign_up(request):
@@ -142,26 +142,31 @@ def my_reviews(request):
 @login_required
 def my_cafes(request):
     user = UserProfile.objects.get(user=request.user)
-    if user.is_owner:
-        cafe_list = Cafe.objects.filter(owner=user)
-    else:
-        cafe_list = []
+    cafe_list = Cafe.objects.filter(owner=user)
     return render(request, 'cafe/my_cafes.html', {'cafe_list': cafe_list})
 
 
 @login_required
 def edit_cafe(request, cafe_name_slug):
-    context_dict ={}
     try:
         cafe = Cafe.objects.get(slug=cafe_name_slug)
     except Cafe.DoesNotExist:
         cafe = None
+    if request.method == 'POST':
+        form = CafeForm(data=request.POST, files=request.FILES, instance=cafe)
 
-    if cafe:
-        context_dict = {'cafe.owner':cafe.owner,'cafe.name':cafe.name,'cafe.picture':cafe.picture,
-                        'cafe.pricepoint.':cafe.pricepoint, 'cafe.description':cafe.description}
+        if form.is_valid():
+            cafe = form.save(commit=False)
+            owner = UserProfile.objects.get(user=request.user)
+            cafe.owner = owner
+            if 'picture' in request.FILES:
+                cafe.picture = request.FILES['picture']
+            cafe.save()
+            return home(request)
+        else:
+            form = CafeForm(instance=cafe)
 
-    return render(request, 'cafe/edit_cafe.html', context=context_dict)
+    return render(request, 'cafe/edit_cafe.html', {'form':form})
 
 
 def delete_cafe(request, cafe_name_slug):
@@ -176,37 +181,53 @@ def delete_cafe(request, cafe_name_slug):
 
 @login_required
 def write_review(request, cafe_name_slug):
+    context_dict = {}
     try:
         cafe = Cafe.objects.get(slug=cafe_name_slug)
     except Cafe.DoesNotExist:
         return render(request, 'cafe/cafes.html', {'errors': 'One Does not simply review a non-existing page'})
+    context_dict['cafe'] = cafe
     form = ReviewForm()
+
     if request.method == 'POST':
         form = ReviewForm(data=request.POST)
         if form.is_valid():
             if cafe:
                 review = form.save(commit=False)
                 review.cafe = cafe
-                review.avg_rating = int((review.price+review.quality+review.waiting_time+review.service+review.atmosphere )/5)
+                review.avg_rating = int((review.price+review.quality+review.waiting_time+review.service+review.atmosphere)/5)
                 review.user = request.user
                 review.save()
         else:
             print(form.errors)
-
-    return render(request, 'cafe/write_review.html', {'form': form})
+    context_dict['form'] = form
+    return render(request, 'cafe/write_review.html', context_dict)
 
 
 @login_required
 def edit_review(request, cafe_name_slug):
+    context_dict = {}
     try:
         cafe =Cafe.objects.get(slug=cafe_name_slug)
     except Cafe.DoesNotExist:
         cafe = None
-    if cafe:
-        toedit = Review.objects.get(cafe=cafe_name_slug,user=request.user)
-        context_dict={'toedit.atmosphere':toedit.atmosphere, 'toedit.service':toedit.service,
-                      'toedit.quality':toedit.quality, 'toedit.price':toedit.price,
-                      'toedit.waiting_time':toedit.waiting_time}
+    context_dict['cafe'] = cafe
+    form = ReviewForm(request.POST, request.FILES, instance=cafe)
+
+    if request.method == 'POST':
+        form = ReviewForm(data=request.POST,files=request.FILES,instance=cafe)
+        if form.is_valid():
+            if cafe:
+                review = form.save(commit=False)
+                review.cafe = cafe
+                review.avg_rating = int(
+                    (review.price + review.quality + review.waiting_time + review.service + review.atmosphere) / 5)
+                review.user = request.user
+                review.save()
+        else:
+            form = ReviewForm(instance=cafe)
+    context_dict['form'] = form
+
     return render(request, 'cafe/edit_review.html', context=context_dict)
 
 
