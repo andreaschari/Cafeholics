@@ -40,18 +40,16 @@ def chosen_cafe(request, cafe_name_slug):
     try:
         cafe = Cafe.objects.get(slug=cafe_name_slug)
         reviews = Review.objects.order_by('-pub_date').filter(cafe=cafe)
-        name = cafe.name
-        pricepoint = cafe.pricepoint
-        owner = cafe.owner
-        picture = cafe.picture
-        avg_rating = avg_rating_cafe(cafe_name_slug)
-        context_dict['name'] = name
-        context_dict['reviews'] = reviews
+        if len(reviews) > 0:
+            context_dict['reviews'] = reviews
+            context_dict['avg rating'] = avg_rating_cafe(cafe_name_slug)
+        else:
+            context_dict['avg rating'] = 0
+        context_dict['name'] = cafe.name
+        context_dict['pricepoint'] = cafe.pricepoint
+        context_dict['owner'] = cafe.owner
+        context_dict['picture'] = cafe.picture
         context_dict['cafe'] = cafe
-        context_dict['pricepoint'] = pricepoint
-        context_dict['owner'] = owner
-        context_dict['picture'] = picture
-        context_dict['avg rating'] = avg_rating
         return render(request, 'cafe/chosen_cafe.html', context=context_dict)
     except Cafe.DoesNotExist:
         context_dict['errors'] = 'This Cafe Does Not Exist'
@@ -61,7 +59,7 @@ def chosen_cafe(request, cafe_name_slug):
 def avg_rating_cafe(cafe_name_slug):
     cafe = Cafe.objects.get(slug=cafe_name_slug)
     review = Review.objects.filter(cafe=cafe)
-    review_sum, count = 0
+    review_sum, count = 0, 0
     for r in review:
         review_sum += r.avg_rating
         count = count+1
@@ -76,7 +74,8 @@ def add_cafe(request):
 
         if form.is_valid():
             cafe = form.save(commit=False)
-            cafe.owner = request.user
+            owner = UserProfile.objects.get(user=request.user)
+            cafe.owner = owner
             if 'picture' in request.FILES:
                 cafe.picture = request.FILES['picture']
             cafe.save()
@@ -143,10 +142,7 @@ def my_reviews(request):
 @login_required
 def my_cafes(request):
     user = UserProfile.objects.get(user=request.user)
-    if user.is_owner:
-        cafe_list = Cafe.objects.filter(owner=user)
-    else:
-        cafe_list = []
+    cafe_list = Cafe.objects.filter(owner=user)
     return render(request, 'cafe/my_cafes.html', {'cafe_list': cafe_list})
 
 
@@ -177,11 +173,14 @@ def delete_cafe(request, cafe_name_slug):
 
 @login_required
 def write_review(request, cafe_name_slug):
+    context_dict = {}
     try:
         cafe = Cafe.objects.get(slug=cafe_name_slug)
     except Cafe.DoesNotExist:
         return render(request, 'cafe/cafes.html', {'errors': 'One Does not simply review a non-existing page'})
+    context_dict['cafe'] = cafe
     form = ReviewForm()
+
     if request.method == 'POST':
         form = ReviewForm(data=request.POST)
         if form.is_valid():
@@ -193,8 +192,8 @@ def write_review(request, cafe_name_slug):
                 review.save()
         else:
             print(form.errors)
-
-    return render(request, 'cafe/write_review.html', {'form': form})
+    context_dict['form'] = form
+    return render(request, 'cafe/write_review.html', context_dict)
 
 
 @login_required

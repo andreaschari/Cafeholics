@@ -20,7 +20,7 @@
 .rating{
 	display: inline;
 	font-size: 22px;
-	font-style: bold;
+	font-style: oblique;
 	color: #ffcc00;
 	text-shadow: 0 1px 0 rgba(0,0,0,.3);
 }

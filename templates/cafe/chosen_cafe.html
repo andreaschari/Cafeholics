@@ -16,11 +16,11 @@
 			<p>{{cafe.description}}</p>
 			Address: {{cafe.address}}<br>
 			Opening hours: {{cafe.opening_hours}}<br>
-			<a class="aa" href="{% url 'write_review' cafe.slug%}" >Leave a review for {{cafe.name}} </a> <br>
+			<a class="aa" href="{% url 'write_review' cafe.slug %}" >Leave a review for {{cafe.name}} </a> <br>
             <a class="aa" href="https://www.google.com/maps/search/?api=1&query={{ cafe.address }}" target="_blank">Open in Google Maps</a>
 		</div>
 	</div>
-	
+
 	<h3>Reviews</h3>
 	{% if reviews %}
 	<ul>
@@ -42,7 +42,7 @@
 		{% endfor %}
 	</ul>
 	{% else %}
-		<strong>There are no reviews yet :(</strong>
+		<strong>There are no reviews yet.</strong>
 	{% endif %}
-	
+
 {% endblock %}

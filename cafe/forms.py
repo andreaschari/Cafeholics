@@ -32,11 +32,12 @@ class CafeForm(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
-    price = forms.IntegerField(help_text='Enter a value from 1 out of 5')
-    service = forms.IntegerField(help_text='Enter a value from 1 out of 5')
-    atmosphere = forms.IntegerField(help_text='Enter a value from 1 out of 5')
-    quality = forms.IntegerField(help_text='Enter a value from 1 out of 5')
-    waiting_time = forms.IntegerField(help_text='Enter a value from 1 out of 5')
+    CHOICES = ((1,'One'), (2,'Two'), (3,'Three'), (4,'Four'), (5,'Five'))
+    price = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+    service = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+    atmosphere = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+    quality = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+    waiting_time = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
     comments = forms.CharField(required=False)
     avg_rating = forms.IntegerField(widget=forms.HiddenInput())
 
