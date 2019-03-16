@@ -25,6 +25,7 @@ class Cafe(models.Model):
     description = models.TextField(blank=True)
     slug = models.SlugField(unique=True)
     address = models.TextField(default='1600 Amphitheatre Parkway, Mountain View, CA 94043')
+    avg_rating = models.IntegerField(blank=True, default=0)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
