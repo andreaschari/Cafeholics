@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+{% extends 'cafe/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	Log in
+{% endblock %}
+
+{% block body_block %}
+	<h2>Login to Cafeholics</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Login</button>
+    </form>
+{% endblock %}

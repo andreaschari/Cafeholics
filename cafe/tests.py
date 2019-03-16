@@ -467,7 +467,11 @@ class TemplateTest(TestCase):
         response = self.client.get(reverse("home"))
         self.assertContains(response, """<button onclick="window.location.href = '/cafe/logout/';">Log out</button>""", html=True)
 
-    def test_cafes_shows_name_in_template(self):
+    def test_home_shows_sign_up_when_not_logged_in(self):
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, """<button onclick="window.location.href = '/cafe/sign_up/';">Sign Up</button>""", html=True)
+
+    def test_cafes_show__in_cafes_page(self):
         populate_cafe.populate()
         # get all Cafes
         cafes = Cafe.objects.all()
@@ -475,12 +479,67 @@ class TemplateTest(TestCase):
             response = self.client.get(reverse("chosen_cafe", kwargs={'cafe_name_slug': cafe.slug}))
             self.assertContains(response, '<h2>{}</h2>'.format(cafe.name), html=True)
 
-    def test_home_shows_sign_up_when_not_logged_in(self):
-        response = self.client.get(reverse("home"))
-        self.assertContains(response, """<button onclick="window.location.href = '/cafe/sign_up/';">Sign Up</button>""", html=True)
-
     def test_cafe_page_displays_error_for_non_existing_cafe(self):
         response = self.client.get(reverse("chosen_cafe", kwargs={'cafe_name_slug': 'i-dont-exist'}))
         self.assertContains(response, '<strong>These are not the Cafes you are looking for.</strong>', html=True)
 
 
+class LiveTests(StaticLiveServerTestCase):
+    def setUp(self):
+        self.user = User.objects.create_user('foo', 'bar')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
+        self.client.login(username='foo', password='bar')
+
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('headless')
+        self.browser = webdriver.Chrome(chrome_options=chrome_options)
+        self.browser.implicitly_wait(3)
+
+    def tearDown(self):
+        self.browser.refresh()
+        self.browser.quit()
+
+    def sidebar_redirects_to_correct_pages(self):
+        # populate database
+        populate_cafe.populate()
+
+        # access home page
+        url = self.live_server_url
+        url = url.replace('localhost', '127.0.0.1')
+        self.browser.get(url + reverse('home'))
+
+        # Access Cafes page
+        sidebar_link = self.browser.find_elements_by_link_text('Cafes')
+        sidebar_link[0].click()
+        # check if it's the correct page
+        self.assertEquals(self.browser.current_url, url + reverse('cafes'))
+
+        # access home page
+        self.browser.get(url + reverse('home'))
+
+        # Access About page
+        url = self.live_server_url
+        url = url.replace('localhost', '127.0.0.1')
+        self.browser.get(url + reverse('about'))
+        # check if it's the correct page
+        self.assertEquals(self.browser.current_url, url + reverse('about'))
+
+        # access home page
+        self.browser.get(url + reverse('home'))
+
+        # Access My Account page
+        url = self.live_server_url
+        url = url.replace('localhost', '127.0.0.1')
+        self.browser.get(url + reverse('my_account'))
+        # check if it's the correct page
+        self.assertEquals(self.browser.current_url, url + reverse('my_account'))
+
+        # access home page
+        self.browser.get(url + reverse('home'))
+
+        # Access Home page
+        url = self.live_server_url
+        url = url.replace('localhost', '127.0.0.1')
+        self.browser.get(url + reverse('home'))
+        # check if it's the correct page
+        self.assertEquals(self.browser.current_url, url + reverse('home'))

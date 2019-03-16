@@ -97,32 +97,7 @@ def sign_up(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'cafe/sign_up.html', {'user_form': user_form,
-                                                 'profile_form': profile_form,
-                                                 'registered': registered})
-
-
-def user_login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
-
-        if user:
-            login(request, user)
-            return HttpResponseRedirect(reverse('home'))
-        else:
-            print("Invalid login details: {0}, {1}".format(username, password))
-            return HttpResponse("Invalid login details supplied."), HttpResponseRedirect(reverse('login'))
-
-    else:
-        return render(request, 'cafe/login.html', {})
-
-
-@login_required
-def user_logout(request):
-    logout(request)
-    return HttpResponseRedirect(reverse('home'))
+    return render(request, 'registration/sign_up.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
 
 
 @login_required
