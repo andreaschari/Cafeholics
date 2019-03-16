@@ -45,6 +45,7 @@ def chosen_cafe(request, cafe_name_slug):
         pricepoint = cafe.pricepoint
         owner = cafe.owner
         picture = cafe.picture
+        average_rating =
         context_dict['name'] = name
         context_dict['reviews'] = reviews
         context_dict['cafe'] = cafe
@@ -59,6 +60,16 @@ def chosen_cafe(request, cafe_name_slug):
         context_dict['owner'] = None
         context_dict['picture'] = None
     return render(request, 'cafe/chosen_cafe.html', context=context_dict)
+
+
+def avg_rating_cafe(cafe_name_slug):
+    cafe = Cafe.objects.get(slug=cafe_name_slug)
+    review = Review.objects.filter(cafe=cafe)
+    for r in review:
+        sum = sum + r.avg_rating
+        count = count+1
+    avg = sum/count
+    return avg
 
 
 def add_cafe(request):
