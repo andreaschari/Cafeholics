@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from django.conf.urls import include
+from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from cafe import views
@@ -23,8 +23,9 @@ from cafe import views
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
+    path('accounts/', include('django.contrib.auth.urls')),
     # maps any other URLs to be handled by the cafe application
     url(r'^cafe/', include('cafe.urls')),
-	# maps the url /admin to the admin page
+    # maps the url /admin to the admin page
     url(r'^admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

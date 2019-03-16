@@ -8,4 +8,41 @@
 
 {% block body_block %}
 
+	<h2>{{cafe.name}}</h2>
+	<div id = "cafedescription">
+		<img class = "cafeimage" src="{{ MEDIA_DIR }}cafe_images/{{ cafe.picture }}" alt="Picture of {{ cafe.name }}" width="30%"/>
+		<div class="cafedetails">
+			Price point: {{cafe.pricepoint}}<br>
+			<p>{{cafe.description}}</p>
+			Address: {{cafe.address}}<br>
+			Opening hours: {{cafe.opening_hours}}<br>
+			<a class="aa" href="{% url 'write_review' cafe.slug%}" >Leave a review for {{cafe.name}} </a> <br>
+            <a class="aa" href="https://www.google.com/maps/search/?api=1&query={{ cafe.address }}" target="_blank">Open in Google Maps</a>
+		</div>
+	</div>
+	
+	<h3>Reviews</h3>
+	{% if reviews %}
+	<ul>
+		{% for review in reviews %}
+			<li>
+			Price:{{ review.price }}<br>
+			Service:{{ review.service }}<br>
+			Atmosphere:{{ review.atmosphere }}<br>
+			Quality:{{ review.quality }}<br>
+			Waiting time: {{ review.waiting_time }}<br>
+			
+			{% if review.comments %}
+				Review:
+				{{ review.comments }}<br>
+			{% endif %}
+			{{ review.pub_date }}
+			{{ review.user }}
+			</li>
+		{% endfor %}
+	</ul>
+	{% else %}
+		<strong>There are no reviews yet :(</strong>
+	{% endif %}
+	
 {% endblock %}

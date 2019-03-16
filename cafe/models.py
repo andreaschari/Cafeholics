@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.template.defaultfilters import slugify
+import datetime
 
 
 class UserProfile(models.Model):
@@ -23,6 +24,8 @@ class Cafe(models.Model):
     pricepoint = models.IntegerField(validators=[MaxValueValidator(3), MinValueValidator(1)])
     description = models.TextField(blank=True)
     slug = models.SlugField(unique=True)
+    address = models.TextField(default='1600 Amphitheatre Parkway, Mountain View, CA 94043')
+    avg_rating = models.IntegerField(blank=True, default=0)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -46,9 +49,9 @@ class Review(models.Model):
     quality = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
     waiting_time = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
     comments = models.CharField(max_length=500, blank=True)
-    pub_date = models.DateTimeField('date published')
-    avg_rating = models.IntegerField(blank=True)
-    
+    pub_date = models.DateTimeField(default=datetime.datetime.now)
+    avg_rating = models.IntegerField(blank=True, default=0)
+
     class Meta:
         # joins cafe and user as primary keys
         unique_together = ('cafe', 'user')

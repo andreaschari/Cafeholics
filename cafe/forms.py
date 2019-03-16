@@ -13,7 +13,7 @@ class UserForm(forms.ModelForm):
 
 
 class UserProfileForm(forms.ModelForm):
-    is_owner = forms.BooleanField(help_text='Check if you are an owner of a cafe.')
+    is_owner = forms.BooleanField(help_text='Check if you are an owner of a cafe.', required=False)
 
     class Meta:
         model = UserProfile
@@ -24,11 +24,12 @@ class UserProfileForm(forms.ModelForm):
 class CafeForm(forms.ModelForm):
     name = forms.CharField(required=True)
     pricepoint = forms.IntegerField(help_text='Enter a price average for your cafe.')
+    address = forms.CharField(help_text='Write the address like this: building no#, street name, post code')
 
     class Meta:
         model = Cafe
         # include the following fields in the form.
-        fields = ('name', 'picture', 'pricepoint', 'description')
+        fields = ('name', 'picture', 'pricepoint', 'address', 'description')
 
 
 class ReviewForm(forms.ModelForm):
@@ -38,8 +39,9 @@ class ReviewForm(forms.ModelForm):
     quality = forms.IntegerField(help_text='Enter a value from 1 out of 5')
     waiting_time = forms.IntegerField(help_text='Enter a value from 1 out of 5')
     comments = forms.CharField(required=False)
+    avg_rating = forms.IntegerField(widget = forms.HiddenInput())
 
     class Meta:
         model = Review
         # include all fields in the form.
-        fields = '__all__'
+        exclude = ("user","cafe","pub_date",)

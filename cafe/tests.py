@@ -1,3 +1,6 @@
+import os
+import socket
+import populate_cafe
 from django.test import TestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.urls import reverse
@@ -6,8 +9,6 @@ from django.conf import settings
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
-import os, socket
-import populate_cafe
 
 
 class CafeModelTest(TestCase):
@@ -413,7 +414,132 @@ class ViewTest(TestCase):
         # Check the template used to render page
         self.assertTemplateUsed(response, 'cafe/sign_up.html')
 
+    def test_chosen_cafe_using_template(self):
+        populate_cafe.populate()
+        response = self.client.get(reverse('chosen_cafe', kwargs={'cafe_name_slug': 'monza'}))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/chosen_cafe.html')
+
     def test_my_account_using_template(self):
+        # create test user
+        self.user = User.objects.create_user(username='test_user', password='12345')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
+        # login as test user
+        self.client.login(username='test_user', password='12345')
+
         response = self.client.get(reverse('my_account'))
         # Check the template used to render page
         self.assertTemplateUsed(response, 'cafe/my_account.html')
+
+    def test_add_cafe_using_template(self):
+        response = self.client.get(reverse('add_cafe'))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/upload_cafe.html')
+
+    def test_write_review_using_template(self):
+        populate_cafe.populate()
+        # create test owner
+        self.user = User.objects.create_user(username='test_owner', password='12345')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
+        # login as test owner
+        self.client.login(username='test_owner', password='12345')
+
+        response = self.client.get(reverse('write_review', kwargs={'cafe_name_slug': 'monza'}))
+        # Check the template used to render page
+        self.assertTemplateUsed(response, 'cafe/write_review.html')
+
+
+class TemplateTest(TestCase):
+    def test_home_shows_search_bar(self):
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, '<input class="searchButton" type="submit" value="Search"/>', html=True)
+
+    def test_home_shows_log_in_when_not_logged_in(self):
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, """<button onclick="window.location.href = '/cafe/login/';">Log In</button>""", html=True)
+
+    def test_home_shows_log_out_when_logged_in(self):
+        # create test user
+        self.user = User.objects.create_user(username='test_user', password='12345')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
+        # login as test user
+        self.client.login(username='test_user', password='12345')
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, """<button onclick="window.location.href = '/cafe/logout/';">Log out</button>""", html=True)
+
+    def test_home_shows_sign_up_when_not_logged_in(self):
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, """<button onclick="window.location.href = '/cafe/sign_up/';">Sign Up</button>""", html=True)
+
+    def test_cafes_show__in_cafes_page(self):
+        populate_cafe.populate()
+        # get all Cafes
+        cafes = Cafe.objects.all()
+        for cafe in cafes:
+            response = self.client.get(reverse("chosen_cafe", kwargs={'cafe_name_slug': cafe.slug}))
+            self.assertContains(response, '<h2>{}</h2>'.format(cafe.name), html=True)
+
+    def test_cafe_page_displays_error_for_non_existing_cafe(self):
+        response = self.client.get(reverse("chosen_cafe", kwargs={'cafe_name_slug': 'i-dont-exist'}))
+        self.assertContains(response, '<strong>These are not the Cafes you are looking for.</strong>', html=True)
+
+
+class LiveTests(StaticLiveServerTestCase):
+    def setUp(self):
+        self.user = User.objects.create_user('foo', 'bar')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
+        self.client.login(username='foo', password='bar')
+
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('headless')
+        self.browser = webdriver.Chrome(chrome_options=chrome_options)
+        self.browser.implicitly_wait(3)
+
+    def tearDown(self):
+        self.browser.refresh()
+        self.browser.quit()
+
+    def sidebar_redirects_to_correct_pages(self):
+        # populate database
+        populate_cafe.populate()
+
+        # access home page
+        url = self.live_server_url
+        url = url.replace('localhost', '127.0.0.1')
+        self.browser.get(url + reverse('home'))
+
+        # Access Cafes page
+        sidebar_link = self.browser.find_elements_by_link_text('Cafes')
+        sidebar_link[0].click()
+        # check if it's the correct page
+        self.assertEquals(self.browser.current_url, url + reverse('cafes'))
+
+        # access home page
+        self.browser.get(url + reverse('home'))
+
+        # Access About page
+        url = self.live_server_url
+        url = url.replace('localhost', '127.0.0.1')
+        self.browser.get(url + reverse('about'))
+        # check if it's the correct page
+        self.assertEquals(self.browser.current_url, url + reverse('about'))
+
+        # access home page
+        self.browser.get(url + reverse('home'))
+
+        # Access My Account page
+        url = self.live_server_url
+        url = url.replace('localhost', '127.0.0.1')
+        self.browser.get(url + reverse('my_account'))
+        # check if it's the correct page
+        self.assertEquals(self.browser.current_url, url + reverse('my_account'))
+
+        # access home page
+        self.browser.get(url + reverse('home'))
+
+        # Access Home page
+        url = self.live_server_url
+        url = url.replace('localhost', '127.0.0.1')
+        self.browser.get(url + reverse('home'))
+        # check if it's the correct page
+        self.assertEquals(self.browser.current_url, url + reverse('home'))

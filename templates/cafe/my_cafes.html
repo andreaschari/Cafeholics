@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block body_block %}
+
 <h1> My Cafes </h1>
 Following are the cafes owned by  {{ cafe.owner }}
 
@@ -18,7 +19,7 @@ Following are the cafes owned by  {{ cafe.owner }}
           <li>
             
               {{ cafe.name }}
-           <a class="aa" href="{% url 'chosen_cafe'                             cafe_name.slug %}">{{ cafe.name }}</a>
+           <a class="aa" href="{% url 'chosen_cafe'  cafe_name.slug %}">{{ cafe.name }}</a>
 
           {% endfor %}
           </ul>
@@ -26,4 +27,13 @@ Following are the cafes owned by  {{ cafe.owner }}
                             <strong>No owned cafe uploaded </strong>
   <a class="aa" href="{% url 'add_cafe' %}">Add Cafe</a>
           {% endif %}
+
+    <h2> My Cafes </h2>
+   {% for cafe in cafe_list %}
+        Cafe Name: {{ cafe.name }} <br>
+        Price Point: {{ cafe.pricepoint }} <br>
+        Address: {{cafe.address}}  <br>
+        Description: {{ cafe.description }} <br>
+   {% endfor %}
+
 {% endblock %}
