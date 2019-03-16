@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+{% extends 'cafe/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	My reviews
+{% endblock %}
+
+{% block body_block %}
+<h1> My Reviews </h1>
+Following are the reviews made by  {{ review.user }}
+
+{% if reviews_list %}
+<div>
+    <ul>
+    {% for review in reviews_list %}
+          <div>
+          
+              Rated {{ review.cafe }} based on the following categories
+           <li>   Prices : {{ review.price }} </li></br>
+             <li> Service :  {{ review.service }} </li></br> 
+           <li>   Atmosphere : {{ review.price }} <li></br>
+            <li>  Quality :  {{ review.quality }} </li> </br>
+             <li> Waiting time :  {{ review.waiting_time }}</li> </br>
+         
+           <li> Feedback Comments : </li> </br>
+                 {{ review.comments }}
+
+          {% endfor %}
+          </ul>
+          {% else %}
+                            <strong>No reviews to display </strong>
+          {% endif %}
+{% endblock %}
