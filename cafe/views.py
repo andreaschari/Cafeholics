@@ -45,13 +45,14 @@ def chosen_cafe(request, cafe_name_slug):
         pricepoint = cafe.pricepoint
         owner = cafe.owner
         picture = cafe.picture
-        average_rating =
+        avg_rating = avg_rating_cafe(cafe_name_slug)
         context_dict['name'] = name
         context_dict['reviews'] = reviews
         context_dict['cafe'] = cafe
         context_dict['pricepoint'] = pricepoint
         context_dict['owner'] = owner
         context_dict['picture'] = picture
+        context_dict['avg rating'] = avg_rating
         return render(request, 'cafe/chosen_cafe.html', context=context_dict)
     except Cafe.DoesNotExist:
         context_dict['errors'] = 'This Cafe Does Not Exist'
