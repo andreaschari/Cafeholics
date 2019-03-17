@@ -22,7 +22,7 @@
             <br>
 			<p>{{cafe.description}}</p>
 			Opening hours: {{cafe.opening_hours}}<br>
-            <br><a class="aa" href="https://www.google.com/maps/search/?api=1&query={{ cafe.address }}" target="_blank">Address: {{ cafe.address }}</a><br>
+            <br>Address:<a class="aa" href="https://www.google.com/maps/search/?api=1&query={{ cafe.address }}" target="_blank"> {{ cafe.address }}</a><br>
 			<br><a class="aa" href="{% url 'write_review' cafe.slug %}" >Leave a review for {{cafe.name}} </a> <br>
 		</div>
 	</div>
