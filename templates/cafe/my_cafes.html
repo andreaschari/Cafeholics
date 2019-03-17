@@ -13,11 +13,9 @@
 Following are the cafes owned by  {{ request.user.first_name}} {{  request.user.last_name  }}
 
 {% if cafe_list %}
-<div>
-     <ul>
+<div id = cafedescription>
     {% for cafe in cafe_list %}
-          <li>
-            
+
         Cafe Name: {{ cafe.name }} <br>
         Price Point: {{ cafe.pricepoint }} <br>
         Address: {{cafe.address}}  <br>
@@ -25,7 +23,6 @@ Following are the cafes owned by  {{ request.user.first_name}} {{  request.user.
           <a class="aa" href="{% url 'chosen_cafe'  cafe.slug %}">{{ cafe.name }}</a>
 
           {% endfor %}
-          </ul>
           {% else %}
                             <strong>No owned cafe uploaded </strong>
   <a class="aa" href="{% url 'add_cafe' %}">Add Cafe</a>
