@@ -7,6 +7,11 @@ body {
 
 }
 
+.login_button{
+	float: right;
+	padding: 20px 20px;
+}
+
 /*side navigator*/
 .sidenav {
 	width: 50%;
@@ -121,8 +126,6 @@ button.submit{
 	width: 200x;
 	height: 40px;
 }
-
-
 
 
 /* Style of the search bar*/
@@ -246,10 +249,10 @@ input.mainforms{
 }
 
 #mainform{
-	background: #fff;
+	background:#FAF5E9;
 	margin: 20px auto;
 	padding: 20px 20px;
-	float: left;
+	float: center;
 	outline: none;
 	width: 900px;
 
