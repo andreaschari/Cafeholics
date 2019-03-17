@@ -401,6 +401,12 @@ class ViewTest(TestCase):
         self.assertTemplateUsed(response, 'cafe/about.html')
 
     def test_cafes_using_template(self):
+        # create test user
+        self.user = User.objects.create_user(username='test_user', password='12345')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
+        # login as test user
+        self.client.login(username='test_user', password='12345')
+
         response = self.client.get(reverse('cafes'))
         # Check the template used to render page
         self.assertTemplateUsed(response, 'cafe/cafes.html')
@@ -417,6 +423,11 @@ class ViewTest(TestCase):
 
     def test_chosen_cafe_using_template(self):
         populate_cafe.populate()
+        # create test user
+        self.user = User.objects.create_user(username='test_user', password='12345')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
+        # login as test user
+        self.client.login(username='test_user', password='12345')
         response = self.client.get(reverse('chosen_cafe', kwargs={'cafe_name_slug': 'monza'}))
         # Check the template used to render page
         self.assertTemplateUsed(response, 'cafe/chosen_cafe.html')
@@ -475,12 +486,23 @@ class TemplateTest(TestCase):
     def test_cafes_show__in_cafes_page(self):
         populate_cafe.populate()
         # get all Cafes
+        # create test user
+        self.user = User.objects.create_user(username='test_user', password='12345')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
+        # login as test user
+        self.client.login(username='test_user', password='12345')
         cafes = Cafe.objects.all()
         for cafe in cafes:
             response = self.client.get(reverse("chosen_cafe", kwargs={'cafe_name_slug': cafe.slug}))
             self.assertContains(response, '<h2>{}</h2>'.format(cafe.name), html=True)
 
     def test_cafe_page_displays_error_for_non_existing_cafe(self):
+        # create test user
+        self.user = User.objects.create_user(username='test_user', password='12345')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
+        # login as test user
+        self.client.login(username='test_user', password='12345')
+
         response = self.client.get(reverse("chosen_cafe", kwargs={'cafe_name_slug': 'i-dont-exist'}))
         self.assertContains(response, '<strong>These are not the Cafes you are looking for.</strong>', html=True)
 
