@@ -1,7 +1,7 @@
 
 #displayCafes{
 	background: #FAF5E9;
-	width: 60%;
+	width: 500px;
 	margin: 20px auto;
 	float: center;
 	padding: 20px 20px;
@@ -9,6 +9,7 @@
 	overflow: auto;
 	font-size: 30px;
 	opacity: 0.85;
+	text-align: center;
 
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -35,6 +36,13 @@
 	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
 	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
 	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
+}
+.avg_rating{
+	display: inline;
+	font-size: 22px;
+	font-style: oblique;
+	color: #868686;
+	text-shadow: 0 1px 0 rgba(0,0,0,.3);
 }
 
 .rating{
@@ -92,7 +100,6 @@ textarea{
 	font-size: 20px;
 	margin: 4px 4px;
 	padding: 5px 5px;
-	width: 40%
 	color:#0132D2;
 
 	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
