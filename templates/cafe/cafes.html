@@ -3,6 +3,8 @@
 {% extends 'cafe/base.html' %}
 {% load staticfiles %}
 
+
+
 <!-- JS script for dropdown menu:
 $(function() {
   // choose target dropdown
@@ -15,6 +17,19 @@ $(function() {
   // $('select').get(0).selectedIndex = 0;
 });
 -->
+<script src="jquery-3.3.1.js"></script>
+<script>
+
+$(document).ready(function () {
+  $('.group').hide();
+  $('#average_rating').show();
+  $('#dropdown').change(function () {
+    $('.group').hide();
+    $('#'+$(this).val()).show();
+  })
+});
+
+</script>
 
 {% block title_block %}
 	Cafes
@@ -28,30 +43,9 @@ $(function() {
 	</form>
 	<h2>
 		All Cafes
-        <div id="average_rating" class="group">{% for cafe in byAverage %}
-					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
-				{% endfor %}</div>
-        <div id="price" class="group">{% for cafe in byPrice %}
-					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
-				{% endfor %}</div>
-        <div id="service" class="group">{% for cafe in byService %}
-					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
-				{% endfor %}</div>
-        <div id="atmosphere" class="group">{% for cafe in byAtmosphere %}
-					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
-				{% endfor %}</div>
-        <div id="quality" class="group">{% for cafe in byQuality %}
-					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
-				{% endfor %}</div>
-
-
-		<select id="dropdown">
-			<option selected>Sort by</option>
+        <label for="dropdown"></label>
+        <select name="sort by" id="dropdown">
+			<option value="">Sort by</option>
 			<option value="average_rating">Average rating</option>
 			<option value="price">Price</option>
 			<option value="service">Service</option>
@@ -59,7 +53,37 @@ $(function() {
 			<option value="quality">Quality</option>
 			<option value="waiting_time">Waiting time</option>
 		</select>
-	</h2>
+    </h2>
+        <div id="average_rating" class="group">
+            <ol>
+            {% for cafe in byAverage %}
+					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+                        <!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
+				{% endfor %} </ol></div>
+        <div id="price" class="group">
+        <ol>
+            {% for cafe in byPrice %}
+					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
+				{% endfor %}</ol></div>
+        <div id="service" class="group">
+            <ol>
+            {% for cafe in byService %}
+					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
+            {% endfor %}</ol></div>
+        <div id="atmosphere" class="group">
+            <ol>
+            {% for cafe in byAtmosphere %}
+					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
+				{% endfor %}</ol></div>
+        <div id="quality" class="group">
+            <ol>
+            {% for cafe in byQuality %}
+					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
+            {% endfor %}</ol></div>
 	<center>
  	<div id="displayCafes">
     {% if errors %}
