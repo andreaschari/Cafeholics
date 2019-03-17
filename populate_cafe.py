@@ -5,7 +5,8 @@ django.setup()
 from cafe.models import UserProfile, Cafe, Review
 from django.contrib.auth.models import User
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MEDIA_DIR = os.path.join(BASE_DIR, 'Cafeholics/media/')
+
+MEDIA_DIR = os.path.join(BASE_DIR, 'Cafeholics\\media\\')
 from django.core.files.images import ImageFile
 
 
@@ -15,7 +16,6 @@ def populate():
     # the coffe shop owners and the users who rate cafes.
     # Then we will create a dictionary of dictionaries for
     # the coffee shops and their reviews.
-
     cafe_owners = [{'username': 'xeniaskotti' ,'first_name': 'Xenia' , 'last_name':'Skotti', 'email': 'xeniaskotti@gmail.com', 'password': '1p2Qw#rT', 'owner': True},
                     {'username': 'alisonscott' ,'first_name': 'Alison' , 'last_name':'Scott', 'email': 'alisonscott@outlook.com', 'password': '5tB@e7Pl', 'owner':True},
                     {'username': 'jonathan23' ,'first_name': 'Jonathan' , 'last_name':'Holland', 'email': 'jonathan23@outlook.com', 'password': '!2FgA@pm', 'owner':True}]
@@ -42,7 +42,6 @@ def populate():
                             {'customer_username':'caroline99', 'price': 5, 'service' : 4, 'atmosphere' : 3, 'quality': 4, 'waiting_time': 5}]
                             }
 #what is the meaning of price relating to stars and the rest of the attributes
-
     #create the customers
     users =  {}
     for customer_data in customers:
@@ -52,7 +51,7 @@ def populate():
     for owner_data in cafe_owners:
         o = add_user(owner_data["username"], owner_data["first_name"], owner_data["last_name"], owner_data["email"], owner_data["password"], owner_data["owner"])
         for cafe in cafes[owner_data["username"]]:
-            c = add_cafe(o, cafe["cafe_name"], cafe["pricepoint"], cafe['picture'], cafe['address'])
+            c = add_cafe(o, cafe["cafe_name"], cafe["pricepoint"], cafe['address'])
             for review in reviews[cafe["cafe_name"]]:
                 r = add_review(c, users[review["customer_username"]],review["price"],review["service"],review["atmosphere"],review["quality"], review["waiting_time"])
 
@@ -69,11 +68,9 @@ def add_user(username, first_name, last_name, email, password, owner):
     return up
 
 
-def add_cafe(owner,cafe_name,pricepoint,picture,address):
+def add_cafe(owner,cafe_name,pricepoint,address):
     c = Cafe.objects.get_or_create(owner = owner, name = cafe_name, pricepoint = pricepoint)[0]
-    # with open(picture, "rb") as imageFile:
-    #     data = base64.b64encode(imageFile.read())
-    c.picture = picture
+    # c.picture = picture
     c.address = address
     c.save()
     return c
