@@ -9,26 +9,23 @@
 
 {% block body_block %}
 
-<h1> My Cafes </h1>
+<h2> My Cafes </h2>
 Following are the cafes owned by  {{ cafe.owner }}
 
 {% if cafe_list %}
-<div>
-     <ul>
+<div id = cafedescription>
     {% for cafe in cafe_list %}
-          <li>
-            
-        Cafe Name: {{ cafe.name }} <br>
+
+        Cafe Name: <a class="aa" href="{% url 'chosen_cafe'  cafe.slug %}">{{ cafe.name }}</a> <br>
         Price Point: {{ cafe.pricepoint }} <br>
         Address: {{cafe.address}}  <br>
         Description: {{ cafe.description }} <br>
-          <a class="aa" href="{% url 'chosen_cafe'  cafe_name.slug %}">{{ cafe.name }}</a>
+		<button onclick="window.location.href = '{% url 'edit_cafe' %}';">Edit</button>
 
           {% endfor %}
-          </ul>
           {% else %}
-                            <strong>No owned cafe uploaded </strong>
-  <a class="aa" href="{% url 'add_cafe' %}">Add Cafe</a>
+	<strong>No owned cafe uploaded </strong>
+	<a class="aa" href="{% url 'add_cafe' %}">Add Cafe</a>
           {% endif %}
-
+</div>
 {% endblock %}

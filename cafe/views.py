@@ -1,11 +1,34 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
 from cafe.forms import CafeForm, ReviewForm, UserForm, UserProfileForm
-from django.contrib.auth import authenticate, login, logout
-from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.generic import UpdateView
 from cafe.models import *
+from django.urls import reverse
 
+
+class EditCafeView(UpdateView):
+    model = Cafe
+    form_class = CafeForm
+    template_name = 'cafe/edit_cafe.html'
+
+    def get_object(self, *args, **kwargs):
+        return Cafe.objects.get(slug=self.kwargs['cafe_name_slug'])
+
+    def get_success_url(self, *args, **kwargs):
+        return reverse('my_cafes')
+
+
+class EditReviewView(UpdateView):
+    model = Review
+    form_class = CafeForm
+    template_name = 'cafe/edit_review.html'
+
+    def get_object(self, *args, **kwargs):
+        cafe = Cafe.objects.get(slug=self.kwargs['cafe_name_slug'])
+        return Review.objects.get(cafe=cafe)
+
+    def get_success_url(self, *args, **kwargs):
+        return reverse('my_reviews')
 
 def home(request):
     cafe_list = Cafe.objects.order_by('-avg_rating')[:10]
@@ -38,6 +61,9 @@ def cafes(request):
 def chosen_cafe(request, cafe_name_slug):
     context_dict = {}
     try:
+        if request.user.is_authenticated:
+            user = User.objects.get(username=request.user)
+            context_dict['user'] = user
         cafe = Cafe.objects.get(slug=cafe_name_slug)
         reviews = Review.objects.order_by('-pub_date').filter(cafe=cafe)
         if len(reviews) > 0:
@@ -54,6 +80,8 @@ def chosen_cafe(request, cafe_name_slug):
     except Cafe.DoesNotExist:
         context_dict['errors'] = 'This Cafe Does Not Exist'
         return render(request, 'cafe/cafes.html', context=context_dict)
+
+
 
 
 def avg_rating_cafe(cafe_name_slug):
@@ -146,29 +174,6 @@ def my_cafes(request):
     return render(request, 'cafe/my_cafes.html', {'cafe_list': cafe_list})
 
 
-@login_required
-def edit_cafe(request, cafe_name_slug):
-    try:
-        cafe = Cafe.objects.get(slug=cafe_name_slug)
-    except Cafe.DoesNotExist:
-        cafe = None
-    if request.method == 'POST':
-        form = CafeForm(data=request.POST, files=request.FILES, instance=cafe)
-
-        if form.is_valid():
-            cafe = form.save(commit=False)
-            owner = UserProfile.objects.get(user=request.user)
-            cafe.owner = owner
-            if 'picture' in request.FILES:
-                cafe.picture = request.FILES['picture']
-            cafe.save()
-            return home(request)
-        else:
-            form = CafeForm(instance=cafe)
-
-    return render(request, 'cafe/edit_cafe.html', {'form': form})
-
-
 def delete_cafe(request, cafe_name_slug):
     try:
         cafe = Cafe.objects.get(slug=cafe_name_slug)
@@ -202,33 +207,6 @@ def write_review(request, cafe_name_slug):
             print(form.errors)
     context_dict['form'] = form
     return render(request, 'cafe/write_review.html', context_dict)
-
-
-@login_required
-def edit_review(request, cafe_name_slug):
-    context_dict = {}
-    try:
-        cafe =Cafe.objects.get(slug=cafe_name_slug)
-    except Cafe.DoesNotExist:
-        cafe = None
-    context_dict['cafe'] = cafe
-    form = ReviewForm(request.POST, request.FILES, instance=cafe)
-
-    if request.method == 'POST':
-        form = ReviewForm(data=request.POST,files=request.FILES,instance=cafe)
-        if form.is_valid():
-            if cafe:
-                review = form.save(commit=False)
-                review.cafe = cafe
-                review.avg_rating = int(
-                    (review.price + review.quality + review.waiting_time + review.service + review.atmosphere) / 5)
-                review.user = request.user
-                review.save()
-        else:
-            form = ReviewForm(instance=cafe)
-    context_dict['form'] = form
-
-    return render(request, 'cafe/edit_review.html', context=context_dict)
 
 
 @login_required

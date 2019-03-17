@@ -17,19 +17,17 @@
 		</form>
 
 	<h2> Top rated cafes </h2>
-	<div id="displayCafes">
+	<center><div id="cafesmain">
 		{% if cafes %}
-			<ol>
 				{% for cafe in cafes %}
-					<li><a class = "aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<p class="rating">{{ cafe.average_rating }}</p>
-					</li>
+					<a class = "aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
+					<p class = 'avg_rating'>Average rating: {{ cafe.avg_rating }}</p><br>
 				{% endfor %}
-			</ol>
 		{% else %}
 			<strong>There are no cafes registered.</strong>
 		{% endif %}
 	</div>
+</center>
 
 
 

@@ -22,33 +22,43 @@
             <br>
 			<p>{{cafe.description}}</p>
 			Opening hours: {{cafe.opening_hours}}<br>
-            <br><a class="aa" href="https://www.google.com/maps/search/?api=1&query={{ cafe.address }}" target="_blank">Address: {{ cafe.address }}</a><br>
-			<br><a class="aa" href="{% url 'write_review' cafe.slug %}" >Leave a review for {{cafe.name}} </a> <br>
+            <br>Address:<a class="aa" href="https://www.google.com/maps/search/?api=1&query={{ cafe.address }}" target="_blank"> {{ cafe.address }}</a><br>
+        {% if user.is_authenticated %}
+			{% if  not user.userprofile.is_owner%}
+                <br><a class="aa" href="{% url 'write_review' cafe.slug %}" >Leave a review for {{cafe.name}} </a> <br>
+            {% elif user.username == owner.user.username %}
+                <a class="aa" href="{% url 'edit_cafe' cafe.slug %}">Edit {{ cafe.name }}</a><br>
+            {% endif %}
+        {% endif %}
 		</div>
 	</div>
 
 	<h3>Reviews</h3>
-	{% if reviews %}
-	<ul>
-		{% for review in reviews %}
-			<li>
-			Price:{{ review.price }}<br>
-			Service:{{ review.service }}<br>
-			Atmosphere:{{ review.atmosphere }}<br>
-			Quality:{{ review.quality }}<br>
-			Waiting time: {{ review.waiting_time }}<br>
-			
-			{% if review.comments %}
-				Review:
-				{{ review.comments }}<br>
-			{% endif %}
-			{{ review.pub_date }}
-			{{ review.user }}
-			</li>
-		{% endfor %}
-	</ul>
+		{% if reviews %}
+				{% for review in reviews %}
+					<div id ='reviewdescription'>
+					<p>
+					<p><strong>{{ review.user }}</strong></p>
+
+					<strong>Price:</strong> <span class="fa fa-star checked">{{ review.price }}</span><br>
+					<strong>Service:</strong> {{ review.service }}<br>
+					<strong>Atmosphere:</strong> {{ review.atmosphere }}<br>
+					<strong>Quality:</strong> {{ review.quality }}<br>
+					<strong>Waiting time:</strong> {{ review.waiting_time }}<br>
+
+					{% if review.comments %}
+						Review:
+						{{ review.comments }}<br>
+					{% endif %}
+					{{ review.pub_date }} <br>
+
+					</p>
+					</div>
+				{% endfor %}
+
 	{% else %}
 		<strong>There are no reviews yet.</strong>
 	{% endif %}
+
 
 {% endblock %}
