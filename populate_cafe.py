@@ -21,7 +21,8 @@ def populate():
 
     customers = [ {'username': 'jakehill' ,'first_name': 'Jake' , 'last_name':'Hill', 'email': 'jakehill@gmail.com', 'password': 'Sm&4R8pA', 'owner':False},
                     {'username': 'tomwalker' ,'first_name': 'Tom' , 'last_name':'Walker', 'email': 'tomwalker@gmail.com', 'password': '$pm%5td3', 'owner':False},
-                    {'username': 'caroline99' ,'first_name': 'Caroline' , 'last_name':'Mcdonald', 'email': 'carolinemacdonald99@outlook.com', 'password': '2p#mT@!d', 'owner':False},]
+                    {'username': 'caroline99' ,'first_name': 'Caroline' , 'last_name':'Mcdonald', 'email': 'carolinemacdonald99@outlook.com', 'password': '2p#mT@!d', 'owner':False},
+                    {'username': 'johnson34' ,'first_name': 'Johnson' , 'last_name':'Hill', 'email': 'johnsonhill@outlook.com', 'password': '!2FgA@pm', 'owner':False}]
 
     cafes = {'xeniaskotti': [{'cafe_name' : 'Free Spirit','pricepoint': 1, 'picture':ImageFile(open(MEDIA_DIR + 'FreeSpirit.jpg','rb')), 'address': '66 Hyndland St, Glasgow G11 5PT'},
                             {'cafe_name': 'CoffeeRiver', 'pricepoint': 2, 'picture':ImageFile(open(MEDIA_DIR +'CoffeeRiver.jpg','rb')), 'address': '7 Keith St, Glasgow G11 6QQ'}],
@@ -30,15 +31,24 @@ def populate():
             'jonathan23':[{'cafe_name' : 'Fika','pricepoint': 2, 'picture': ImageFile(open(MEDIA_DIR +'Fika.jpg','rb')), 'address': '579 Dumbarton Rd, Glasgow G11 6HY'}]}
 
     reviews = {'Free Spirit': [{'customer_username':'jakehill', 'price': 1, 'service' : 2, 'atmosphere' : 3, 'quality': 3, 'waiting_time': 5},
-                {'customer_username':'tomwalker', 'price': 3, 'service' : 3, 'atmosphere' : 3, 'quality': 5, 'waiting_time': 5}],
+                                {'customer_username':'tomwalker', 'price': 3, 'service' : 3, 'atmosphere' : 3, 'quality': 5, 'waiting_time': 5},
+                                {'customer_username':'caroline99', 'price': 4, 'service' : 4, 'atmosphere' : 2, 'quality': 2, 'waiting_time': 5},
+                                {'customer_username':'johnson34', 'price': 3, 'service' : 4, 'atmosphere' : 4, 'quality': 2, 'waiting_time': 5}],
                 'CoffeeRiver':[{'customer_username':'jakehill', 'price': 5, 'service' : 3, 'atmosphere' : 3, 'quality': 4, 'waiting_time': 5},
-                            {'customer_username':'caroline99', 'price': 4, 'service' : 4, 'atmosphere' : 2, 'quality': 2, 'waiting_time': 5}],
+                            {'customer_username':'caroline99', 'price': 4, 'service' : 4, 'atmosphere' : 2, 'quality': 2, 'waiting_time': 5},
+                            {'customer_username':'tomwalker', 'price': 3, 'service' : 3, 'atmosphere' : 3, 'quality': 4, 'waiting_time': 5},
+                            {'customer_username':'johnson34', 'price': 3, 'service' : 4, 'atmosphere' : 4, 'quality': 2, 'waiting_time': 5}],
                 'Monza': [{'customer_username':'tomwalker', 'price': 3, 'service' : 5, 'atmosphere' : 4, 'quality': 4, 'waiting_time': 5},
-                            {'customer_username':'caroline99', 'price': 4, 'service' : 4, 'atmosphere' : 2, 'quality': 2, 'waiting_time': 5}],
+                            {'customer_username':'caroline99', 'price': 4, 'service' : 4, 'atmosphere' : 2, 'quality': 2, 'waiting_time': 5},
+                            {'customer_username':'johnson34', 'price': 3, 'service' : 4, 'atmosphere' : 4, 'quality': 2, 'waiting_time': 5}],
                 'Starbucks': [{'customer_username':'jakehill', 'price': 2, 'service' : 3, 'atmosphere' : 3, 'quality': 3, 'waiting_time': 5},
-                            {'customer_username':'tomwalker', 'price': 3, 'service' : 3, 'atmosphere' : 3, 'quality': 4, 'waiting_time': 5}],
+                            {'customer_username':'tomwalker', 'price': 3, 'service' : 3, 'atmosphere' : 3, 'quality': 4, 'waiting_time': 5},
+                            {'customer_username':'caroline99', 'price': 4, 'service' : 4, 'atmosphere' : 2, 'quality': 2, 'waiting_time': 5},
+                            {'customer_username':'johnson34', 'price': 3, 'service' : 4, 'atmosphere' : 4, 'quality': 2, 'waiting_time': 5}],
                 'Fika': [{'customer_username':'jakehill', 'price': 5, 'service' : 5, 'atmosphere' : 5, 'quality': 5, 'waiting_time': 5},
-                            {'customer_username':'caroline99', 'price': 5, 'service' : 4, 'atmosphere' : 3, 'quality': 4, 'waiting_time': 5}]
+                            {'customer_username':'caroline99', 'price': 5, 'service' : 4, 'atmosphere' : 3, 'quality': 4, 'waiting_time': 5},
+                            {'customer_username':'tomwalker', 'price': 5, 'service' : 5, 'atmosphere' : 5, 'quality': 4, 'waiting_time': 5},
+                            {'customer_username':'johnson34', 'price': 5, 'service' : 4, 'atmosphere' : 4, 'quality': 5, 'waiting_time': 5}]
                             }
 
     users =  {}
@@ -53,6 +63,9 @@ def populate():
             for review in reviews[cafe["cafe_name"]]:
                 r = add_review(c, users[review["customer_username"]],review["price"],review["service"],review["atmosphere"],review["quality"], review["waiting_time"])
 
+    for c in Cafe.objects.all():
+        c.avg_rating = avg_rating_cafe(c)
+        c.save()
 
 def add_user(username, first_name, last_name, email, password, owner):
     u = User.objects.get_or_create(username = username, first_name = first_name, last_name = last_name, email = email, password = password )[0]
@@ -75,6 +88,16 @@ def add_review(cafe,user,price,service,atmosphere,quality,waiting_time):
     r.save()
     return r
 
+def avg_rating_cafe(cafe):
+    review = Review.objects.filter(cafe=cafe)
+    review_sum, count = 0, 0
+    avg = 0
+    for r in review:
+        review_sum += r.avg_rating
+        count = count+1
+    if (count>0):
+        avg = review_sum / count
+    return avg
 
 if __name__ == '__main__':
     print("Starting Cafe population script...")
