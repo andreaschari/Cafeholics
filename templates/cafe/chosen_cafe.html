@@ -46,8 +46,10 @@
 					</div>
 				{% endfor %}
 			<!-- </ul> -->
+			{% endif %}
+			
 	{% if reviews %}
-	<ul>
+		<ul>
 		{% for review in reviews %}
 			<li>
 			Price:{{ review.price }}<br>
@@ -64,8 +66,8 @@
 			{{ review.user }}
 			</li>
 		{% endfor %}
-	</ul>
-	{% else %}
+		</ul>
+		{% else %}
 		<strong>There are no reviews yet.</strong>
 	{% endif %}
 
