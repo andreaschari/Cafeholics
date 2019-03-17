@@ -32,10 +32,7 @@
 	</div>
 
 	<h3>Reviews</h3>
-
-	<!-- <div id = 'cafedescription'> -->
 		{% if reviews %}
-			<!-- <ul> -->
 				{% for review in reviews %}
 					<div id ='reviewdescription'>
 					<p>
@@ -56,17 +53,10 @@
 					</p>
 					</div>
 				{% endfor %}
-			<!-- </ul> -->
-<<<<<<< HEAD
 
 	{% else %}
 		<strong>There are no reviews yet.</strong>
 	{% endif %}
-=======
-	{% else %}
-		<strong>There are no reviews yet.</strong>
-	{% endif %}
-	<!-- </div> -->
->>>>>>> 38c62b0be61527bbbe1a1a0888d1ad558ccef6f7
+
 
 {% endblock %}

@@ -17,7 +17,7 @@
 		</form>
 
 	<h2> Top rated cafes </h2>
-	<div id="displayCafes">
+	<center><div id="cafesmain">
 		{% if cafes %}
 				{% for cafe in cafes %}
 					<a class = "aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
@@ -27,6 +27,7 @@
 			<strong>There are no cafes registered.</strong>
 		{% endif %}
 	</div>
+</center>
 
 
 

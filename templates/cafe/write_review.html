@@ -8,9 +8,9 @@
 {% endblock %}
 
 {% block body_block %}
-	<h2>{{cafe.name}}</h2>
+	<h2>Write a review for {{cafe.name}}</h2>
 
-	<div id = "cafedescription">
+	<!-- <div id = "cafedescription">
 		<img class = "cafeimage" src="{{ MEDIA_DIR }}cafe_images/{{ cafe.picture }}" alt="Picture of {{ cafe.name }}" width="30%"/>
 		<div class="cafedetails">
 			Price point: {{cafe.pricepoint}}<br>
@@ -18,7 +18,7 @@
 			Address: {{cafe.address}}<br>
 			Opening hours: {{cafe.opening_hours}}<br>
 		</div>
-	</div>
+	</div> -->
 
 	<form id="mainform" method="post" action="{% url 'chosen_cafe' cafe.slug %}">
 		{% csrf_token %}
