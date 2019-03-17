@@ -59,9 +59,11 @@ def cafes(request):
 
 
 def chosen_cafe(request, cafe_name_slug):
-    user = User.objects.get(username=request.user)
     context_dict = {}
     try:
+        if request.user.is_authenticated:
+            user = User.objects.get(username=request.user)
+            context_dict['user'] = user
         cafe = Cafe.objects.get(slug=cafe_name_slug)
         reviews = Review.objects.order_by('-pub_date').filter(cafe=cafe)
         if len(reviews) > 0:
@@ -74,11 +76,12 @@ def chosen_cafe(request, cafe_name_slug):
         context_dict['owner'] = cafe.owner
         context_dict['picture'] = cafe.picture
         context_dict['cafe'] = cafe
-        context_dict['user'] = user
         return render(request, 'cafe/chosen_cafe.html', context=context_dict)
     except Cafe.DoesNotExist:
         context_dict['errors'] = 'This Cafe Does Not Exist'
         return render(request, 'cafe/cafes.html', context=context_dict)
+
+
 
 
 def avg_rating_cafe(cafe_name_slug):
