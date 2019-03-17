@@ -28,27 +28,33 @@
 	</div>
 
 	<h3>Reviews</h3>
-	{% if reviews %}
-	<ul>
-		{% for review in reviews %}
-			<li>
-			Price:{{ review.price }}<br>
-			Service:{{ review.service }}<br>
-			Atmosphere:{{ review.atmosphere }}<br>
-			Quality:{{ review.quality }}<br>
-			Waiting time: {{ review.waiting_time }}<br>
-			
-			{% if review.comments %}
-				Review:
-				{{ review.comments }}<br>
-			{% endif %}
-			{{ review.pub_date }}
-			{{ review.user }}
-			</li>
-		{% endfor %}
-	</ul>
+	<!-- <div id = 'cafedescription'> -->
+		{% if reviews %}
+			<!-- <ul> -->
+				{% for review in reviews %}
+					<div id ='reviewdescription'>
+					<p>
+					<p><strong>{{ review.user }}</strong></p>
+
+					<strong>Price:</strong> {{ review.price }}<br>
+					<strong>Service:</strong> {{ review.service }}<br>
+					<strong>Atmosphere:</strong> {{ review.atmosphere }}<br>
+					<strong>Quality:</strong> {{ review.quality }}<br>
+					<strong>Waiting time:</strong> {{ review.waiting_time }}<br>
+
+					{% if review.comments %}
+						Review:
+						{{ review.comments }}<br>
+					{% endif %}
+					{{ review.pub_date }} <br>
+
+					</p>
+					</div>
+				{% endfor %}
+			<!-- </ul> -->
 	{% else %}
 		<strong>There are no reviews yet.</strong>
 	{% endif %}
+	<!-- </div> -->
 
 {% endblock %}
