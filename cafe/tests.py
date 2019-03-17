@@ -5,6 +5,8 @@ from django.test import TestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.urls import reverse
 from cafe.models import *
+from cafe.forms import *
+from django.contrib.auth.models import User
 from django.conf import settings
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -406,12 +408,12 @@ class ViewTest(TestCase):
     def test_login_using_template(self):
         response = self.client.get(reverse('login'))
         # Check the template used to render page
-        self.assertTemplateUsed(response, 'cafe/login.html')
+        self.assertTemplateUsed(response, 'registration/login.html')
 
     def test_sign_up_using_template(self):
         response = self.client.get(reverse('sign_up'))
         # Check the template used to render page
-        self.assertTemplateUsed(response, 'cafe/sign_up.html')
+        self.assertTemplateUsed(response, 'registration/sign_up.html')
 
     def test_chosen_cafe_using_template(self):
         populate_cafe.populate()
@@ -455,7 +457,7 @@ class TemplateTest(TestCase):
 
     def test_home_shows_log_in_when_not_logged_in(self):
         response = self.client.get(reverse("home"))
-        self.assertContains(response, """<button onclick="window.location.href = '/cafe/login/';">Log In</button>""", html=True)
+        self.assertContains(response, """<button onclick="window.location.href = '/accounts/login/';">Log In</button>""", html=True)
 
     def test_home_shows_log_out_when_logged_in(self):
         # create test user
@@ -464,11 +466,11 @@ class TemplateTest(TestCase):
         # login as test user
         self.client.login(username='test_user', password='12345')
         response = self.client.get(reverse("home"))
-        self.assertContains(response, """<button onclick="window.location.href = '/cafe/logout/';">Log out</button>""", html=True)
+        self.assertContains(response, """<button onclick="window.location.href = '/accounts/logout/';">Log out</button>""", html=True)
 
     def test_home_shows_sign_up_when_not_logged_in(self):
         response = self.client.get(reverse("home"))
-        self.assertContains(response, """<button onclick="window.location.href = '/cafe/sign_up/';">Sign Up</button>""", html=True)
+        self.assertContains(response, """<button onclick="window.location.href = '/cafe/register/';">Sign Up</button>""", html=True)
 
     def test_cafes_show__in_cafes_page(self):
         populate_cafe.populate()
@@ -542,3 +544,23 @@ class SideBarTest(StaticLiveServerTestCase):
         self.browser.get(url + reverse('home'))
         # check if it's the correct page
         self.assertEquals(self.browser.current_url, url + reverse('home'))
+
+
+class FormTest(TestCase):
+    def setUp(self):
+        # create test owner
+        self.user = User.objects.create_user(username='test_owner', password='12345')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=True)
+        # create test user
+        self.owner = User.objects.create_user(username='test_user', password='12345')
+        self.owner_profile = UserProfile.objects.create(user=self.owner, is_owner=False)
+
+    def test_cafe_form_valid_data(self):
+        # login as test owner
+        self.client.login(username='test_owner', password='12345')
+        # create form
+        form = CafeForm({'name': 'New Cafe',
+                         'pricepoint': 3, 'address':
+                             '1600 Pennsylvania Avenue NW, Washington, DC 20500.'})
+        # check if the form is valid
+        self.assertTrue(form.is_valid())
