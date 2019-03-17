@@ -7,18 +7,11 @@
 {% endblock %}
 
 {% block body_block %}
-<h1> Edit {{ cafe_name_slug }} </h1>
-<div> 
-   <form id = "edit_cafe" method = "post" action="my_cafes/chosen_cafe/">
-{% csrf_token %}
-{% for hidden in form.hidden_fields %}
-                                   {{ hidden }}
-                        {% endfor %}
-                        {% for field in form.visible_fields %}
-                                   {{ field.errors }}
-                                   {{ field.help_text }}
-                         <div class = 'fields'>{{ field }} <br><div>
+<h2> Edit {{ cafe.name }} </h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
 
-                        {% endfor %}
-                        <button class="submit" type="submit">Edit Cafe</button><br/>
+  <input type=submit value="submit" />
+</form>
 {% endblock %}

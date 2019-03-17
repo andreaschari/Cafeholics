@@ -23,7 +23,11 @@
 			<p>{{cafe.description}}</p>
 			Opening hours: {{cafe.opening_hours}}<br>
             <br>Address:<a class="aa" href="https://www.google.com/maps/search/?api=1&query={{ cafe.address }}" target="_blank"> {{ cafe.address }}</a><br>
-			<br><a class="aa" href="{% url 'write_review' cafe.slug %}" >Leave a review for {{cafe.name}} </a> <br>
+			{% if  not user.userprofile.is_owner%}
+                <br><a class="aa" href="{% url 'write_review' cafe.slug %}" >Leave a review for {{cafe.name}} </a> <br>
+            {% elif user.username == owner.user.username %}
+                <a class="aa" href="{% url 'edit_cafe' cafe.slug %}">Edit {{ cafe.name }}</a><br>
+            {% endif %}
 		</div>
 	</div>
 
