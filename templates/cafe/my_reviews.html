@@ -26,7 +26,9 @@ Following are the reviews made by  {{ review.user }}
          
            <li> Feedback Comments : </li> </br>
                  {{ review.comments }}
-
+			
+			<button onclick="window.location.href = '{% url 'edit_review' %}';">Edit</button>
+			
           {% endfor %}
           </ul>
           {% else %}

@@ -22,6 +22,7 @@
 	</div>
 
 	<h3>Reviews</h3>
+
 	<!-- <div id = 'cafedescription'> -->
 		{% if reviews %}
 			<!-- <ul> -->
@@ -30,7 +31,7 @@
 					<p>
 					<p><strong>{{ review.user }}</strong></p>
 
-					<strong>Price:</strong> {{ review.price }}<br>
+					<strong>Price:</strong> <span class="fa fa-star checked">{{ review.price }}</span><br>
 					<strong>Service:</strong> {{ review.service }}<br>
 					<strong>Atmosphere:</strong> {{ review.atmosphere }}<br>
 					<strong>Quality:</strong> {{ review.quality }}<br>
@@ -46,6 +47,9 @@
 					</div>
 				{% endfor %}
 			<!-- </ul> -->
-			{% endif %}
+
+	{% else %}
+		<strong>There are no reviews yet.</strong>
+	{% endif %}
 
 {% endblock %}
