@@ -10,10 +10,9 @@ MEDIA_DIR = os.path.join(BASE_DIR, 'Cafeholics\\media\\')
 from django.core.files.images import ImageFile
 
 
-
 def populate():
     # Firstly we create the lists of dictionaries containing
-    # the coffe shop owners and the users who rate cafes.
+    # the coffee shop owners and the users who rate cafes.
     # Then we will create a dictionary of dictionaries for
     # the coffee shops and their reviews.
     cafe_owners = [{'username': 'xeniaskotti' ,'first_name': 'Xenia' , 'last_name':'Skotti', 'email': 'xeniaskotti@gmail.com', 'password': '1p2Qw#rT', 'owner': True},
@@ -41,8 +40,7 @@ def populate():
                 'Fika': [{'customer_username':'jakehill', 'price': 5, 'service' : 5, 'atmosphere' : 5, 'quality': 5, 'waiting_time': 5},
                             {'customer_username':'caroline99', 'price': 5, 'service' : 4, 'atmosphere' : 3, 'quality': 4, 'waiting_time': 5}]
                             }
-#what is the meaning of price relating to stars and the rest of the attributes
-    #create the customers
+                            
     users =  {}
     for customer_data in customers:
         c = add_user(customer_data["username"], customer_data["first_name"], customer_data["last_name"], customer_data["email"], customer_data["password"], customer_data["owner"])
@@ -54,7 +52,6 @@ def populate():
             c = add_cafe(o, cafe["cafe_name"], cafe["pricepoint"], cafe['address'])
             for review in reviews[cafe["cafe_name"]]:
                 r = add_review(c, users[review["customer_username"]],review["price"],review["service"],review["atmosphere"],review["quality"], review["waiting_time"])
-
 
 
 def add_user(username, first_name, last_name, email, password, owner):

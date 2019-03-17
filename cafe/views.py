@@ -136,7 +136,7 @@ def delete_account(request):
 def my_reviews(request):
     user = UserProfile.objects.get(user=request.user)
     reviews_list = Review.objects.filter(user=user)
-    return render(request, 'cafe/my_review.html', {'reviews_list': reviews_list})
+    return render(request, 'cafe/my_reviews.html', {'reviews_list': reviews_list})
 
 
 @login_required
@@ -166,7 +166,7 @@ def edit_cafe(request, cafe_name_slug):
         else:
             form = CafeForm(instance=cafe)
 
-    return render(request, 'cafe/edit_cafe.html', {'form':form})
+    return render(request, 'cafe/edit_cafe.html', {'form': form})
 
 
 def delete_cafe(request, cafe_name_slug):
@@ -248,8 +248,8 @@ def search(request):
 
         try:
             status = Cafe.objects.filter(name__icontains=cafe_name)
-            return render(request, 'cafe/Search_results.html', {'cafes': status})
+            return render(request, 'cafe/search_results.html', {'cafes': status})
         except Cafe.DoesNotExist:
             print("Can't get cafe names")
     else:
-        return render(request, 'cafe/Search_results.html', {})
+        return render(request, 'cafe/search_results.html', {})
