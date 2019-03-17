@@ -5,7 +5,8 @@ django.setup()
 from cafe.models import UserProfile, Cafe, Review
 from django.contrib.auth.models import User
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MEDIA_DIR = os.path.join(BASE_DIR, 'Cafeholics/media/')
+
+MEDIA_DIR = os.path.join(BASE_DIR, 'Cafeholics\\media\\')
 from django.core.files.images import ImageFile
 
 
@@ -14,7 +15,6 @@ def populate():
     # the coffee shop owners and the users who rate cafes.
     # Then we will create a dictionary of dictionaries for
     # the coffee shops and their reviews.
-
     cafe_owners = [{'username': 'xeniaskotti' ,'first_name': 'Xenia' , 'last_name':'Skotti', 'email': 'xeniaskotti@gmail.com', 'password': '1p2Qw#rT', 'owner': True},
                     {'username': 'alisonscott' ,'first_name': 'Alison' , 'last_name':'Scott', 'email': 'alisonscott@outlook.com', 'password': '5tB@e7Pl', 'owner':True},
                     {'username': 'jonathan23' ,'first_name': 'Jonathan' , 'last_name':'Holland', 'email': 'jonathan23@outlook.com', 'password': '!2FgA@pm', 'owner':True}]
@@ -41,8 +41,7 @@ def populate():
                             {'customer_username':'caroline99', 'price': 5, 'service' : 4, 'atmosphere' : 3, 'quality': 4, 'waiting_time': 5}]
                             }
 
-    # create the customers
-    users = {}
+    users =  {}
     for customer_data in customers:
         c = add_user(customer_data["username"], customer_data["first_name"], customer_data["last_name"], customer_data["email"], customer_data["password"], customer_data["owner"])
         users[customer_data["username"]] = c
@@ -50,27 +49,21 @@ def populate():
     for owner_data in cafe_owners:
         o = add_user(owner_data["username"], owner_data["first_name"], owner_data["last_name"], owner_data["email"], owner_data["password"], owner_data["owner"])
         for cafe in cafes[owner_data["username"]]:
-            c = add_cafe(o, cafe["cafe_name"], cafe["pricepoint"], cafe['picture'], cafe['address'])
+            c = add_cafe(o, cafe["cafe_name"], cafe["pricepoint"], cafe['address'])
             for review in reviews[cafe["cafe_name"]]:
                 r = add_review(c, users[review["customer_username"]],review["price"],review["service"],review["atmosphere"],review["quality"], review["waiting_time"])
 
 
 def add_user(username, first_name, last_name, email, password, owner):
-    u = User.objects.get_or_create(username = username)[0]
-    u.first_name = first_name
-    u.last_name = last_name
-    u.email = email
-    u.password = password
+    u = User.objects.get_or_create(username = username, first_name = first_name, last_name = last_name, email = email, password = password )[0]
     up = UserProfile.objects.get_or_create(user = u, is_owner = owner)[0]
     up.save()
     return up
 
 
-def add_cafe(owner,cafe_name,pricepoint,picture,address):
+def add_cafe(owner,cafe_name,pricepoint,address):
     c = Cafe.objects.get_or_create(owner = owner, name = cafe_name, pricepoint = pricepoint)[0]
-    # with open(picture, "rb") as imageFile:
-    #     data = base64.b64encode(imageFile.read())
-    c.picture = picture
+    # c.picture = picture
     c.address = address
     c.save()
     return c
