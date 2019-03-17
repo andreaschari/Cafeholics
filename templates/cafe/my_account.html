@@ -9,16 +9,18 @@
 
 {% block body_block %}
     <h2> My Account </h2>
+		<center>
        Username: {{ username }}<br>
        First Name: {{ first_name }}<br>
        Last Name: {{ last_name }}<br>
        Email: {{ email }}<br>
+		</center>
+		<center>
     {% if is_owner %}
 		<a class='aa' href="{% url 'add_cafe'  %}">Add a Cafe</a> <br>
 		<a class='aa' href="{% url 'my_cafes' %}">My Cafes</a>
 	{% else %}
 		<a class='aa' href="{% url 'my_reviews' %}">My Reviews</a>
     {% endif %}
+	</center>
 {% endblock %}
-
-
