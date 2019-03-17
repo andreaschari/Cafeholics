@@ -247,9 +247,9 @@ def search(request):
         cafe_name = request.GET.get('search')
 
         try:
-            status = Cafe.objects.get(name__icontains=cafe_name)
-            return render(request, 'cafe/search.html', {'cafes': status})
+            status = Cafe.objects.filter(name__icontains=cafe_name)
+            return render(request, 'cafe/Search_results.html', {'cafes': status})
         except Cafe.DoesNotExist:
             print("Can't get cafe names")
     else:
-        return render(request, 'cafe/search.html', {})
+        return render(request, 'cafe/Search_results.html', {})
