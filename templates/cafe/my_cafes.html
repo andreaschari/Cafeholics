@@ -20,12 +20,12 @@ Following are the cafes owned by  {{ cafe.owner }}
         Price Point: {{ cafe.pricepoint }} <br>
         Address: {{cafe.address}}  <br>
         Description: {{ cafe.description }} <br>
-
+		<button onclick="window.location.href = '{% url 'edit_cafe' %}';">Edit</button>
 
           {% endfor %}
           {% else %}
-                            <strong>No owned cafe uploaded </strong>
-  <a class="aa" href="{% url 'add_cafe' %}">Add Cafe</a>
+	<strong>No owned cafe uploaded </strong>
+	<a class="aa" href="{% url 'add_cafe' %}">Add Cafe</a>
           {% endif %}
 </div>
 {% endblock %}
