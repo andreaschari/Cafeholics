@@ -32,8 +32,6 @@ body {
 }
 
 
-
-
 /*main content*/
 div.main {
 	width: 90%;
@@ -106,7 +104,6 @@ button.submit{
 	font-size: 34px;
 	color: #0132D2;
 	text-decoration: none;
-	text-align: center;
 }
 
 .aa:hover{
@@ -140,9 +137,9 @@ button.submit{
 	background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(243,243,243)), color-stop(1, rgb(225,225,225)));
 	background: -moz-linear-gradient( center top, rgb(243,243,243) 0%, rgb(225,225,225) 100%);
 
-	border-radius: 17px;
-	-webkit-border-radius: 17px;
-	-moz-border-radius: 17px;
+	border-radius: 30px;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
 
 	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
 	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
@@ -157,9 +154,10 @@ button.submit{
 
 	font-size: 26px;
 	margin: 4px 4px;
-	padding: 2px 2px;
-	width: 1000px;
+	padding: 5px 5px;
+	width: 800px;
 
+	outline: none;
 	border-radius: 30px;
 	-webkit-border-radius: 30px;
 	-moz-border-radius: 30px;
@@ -192,7 +190,7 @@ button.submit{
 	height: 60px;
 	margin: 6px 6px 0;
 	text-shadow: 0 -1px 0 rgba(0,0,0,.3);
-	width: 150px;
+	width: 200px;
 	outline: none;
 
 	border-radius: 40px;
@@ -248,13 +246,12 @@ input.mainforms{
 }
 
 #mainform{
-	background: #FAF5E9;
+	background: #fff;
 	margin: 20px auto;
 	padding: 20px 20px;
-	float: center;
+	float: left;
 	outline: none;
-	width: 90%;
-	opacity: 0.85;
+	width: 900px;
 
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
