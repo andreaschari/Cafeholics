@@ -32,8 +32,6 @@ body {
 }
 
 
-
-
 /*main content*/
 div.main {
 	width: 90%;
@@ -157,7 +155,7 @@ button.submit{
 
 	font-size: 26px;
 	margin: 4px 4px;
-	padding: 2px 2px;
+	padding: 5px 5px;
 	width: 1000px;
 
 	border-radius: 30px;
