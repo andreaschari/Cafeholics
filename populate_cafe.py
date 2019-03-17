@@ -40,7 +40,7 @@ def populate():
                 'Fika': [{'customer_username':'jakehill', 'price': 5, 'service' : 5, 'atmosphere' : 5, 'quality': 5, 'waiting_time': 5},
                             {'customer_username':'caroline99', 'price': 5, 'service' : 4, 'atmosphere' : 3, 'quality': 4, 'waiting_time': 5}]
                             }
-                            
+
     users =  {}
     for customer_data in customers:
         c = add_user(customer_data["username"], customer_data["first_name"], customer_data["last_name"], customer_data["email"], customer_data["password"], customer_data["owner"])
@@ -55,11 +55,7 @@ def populate():
 
 
 def add_user(username, first_name, last_name, email, password, owner):
-    u = User.objects.get_or_create(username = username)[0]
-    u.first_name = first_name
-    u.last_name = last_name
-    u.email = email
-    u.password = password
+    u = User.objects.get_or_create(username = username, first_name = first_name, last_name = last_name, email = email, password = password )[0]
     up = UserProfile.objects.get_or_create(user = u, is_owner = owner)[0]
     up.save()
     return up
