@@ -8,22 +8,16 @@
 
 {% block body_block %}
 
-    <h2 xmlns="http://www.w3.org/1999/html">{{cafe.name}}</h2>
+	<h2>{{cafe.name}}</h2>
 	<div id = "cafedescription">
 		<img class = "cafeimage" src="{{ MEDIA_DIR }}cafe_images/{{ cafe.picture }}" alt="Picture of {{ cafe.name }}" width="30%"/>
 		<div class="cafedetails">
-            {% if cafe.pricepoint == 1 %}
-                Price Estimate: Cheap
-            {% elif cafe.pricepoint == 2 %}
-                Price Estimate: Moderate
-            {% elif cafe.pricepoint == 3 %}
-                Price Estimate: Deluxe
-            {% endif %}
-            <br>
+			Price point: {{cafe.pricepoint}}<br>
 			<p>{{cafe.description}}</p>
+			Address: {{cafe.address}}<br>
 			Opening hours: {{cafe.opening_hours}}<br>
-            <br>Address:<a class="aa" href="https://www.google.com/maps/search/?api=1&query={{ cafe.address }}" target="_blank"> {{ cafe.address }}</a><br>
-			<br><a class="aa" href="{% url 'write_review' cafe.slug %}" >Leave a review for {{cafe.name}} </a> <br>
+			<a class="aa" href="{% url 'write_review' cafe.slug %}" >Leave a review for {{cafe.name}} </a> <br>
+            <a class="aa" href="https://www.google.com/maps/search/?api=1&query={{ cafe.address }}" target="_blank">Open in Google Maps</a>
 		</div>
 	</div>
 
@@ -52,9 +46,6 @@
 					</div>
 				{% endfor %}
 			<!-- </ul> -->
-	{% else %}
-		<strong>There are no reviews yet.</strong>
-	{% endif %}
-	<!-- </div> -->
+			{% endif %}
 
 {% endblock %}
