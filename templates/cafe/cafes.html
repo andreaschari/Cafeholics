@@ -28,6 +28,28 @@ $(function() {
 	</form>
 	<h2>
 		All Cafes
+        <div id="average_rating" class="group">{% for cafe in byAverage %}
+					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
+				{% endfor %}</div>
+        <div id="price" class="group">{% for cafe in byPrice %}
+					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
+				{% endfor %}</div>
+        <div id="service" class="group">{% for cafe in byService %}
+					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
+				{% endfor %}</div>
+        <div id="atmosphere" class="group">{% for cafe in byAtmosphere %}
+					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
+				{% endfor %}</div>
+        <div id="quality" class="group">{% for cafe in byQuality %}
+					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
+				{% endfor %}</div>
+
+
 		<select id="dropdown">
 			<option selected>Sort by</option>
 			<option value="average_rating">Average rating</option>
@@ -42,8 +64,14 @@ $(function() {
     {% if errors %}
     			<strong>These are not the Cafes you are looking for.</strong>
     {%  else %}
-		{% if cafe_list %}
+		{% if cafes %}
 			<ol>
+            {% for cafe in cafes %}
+                <li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
+            {% endfor %}
+            </ol>
+            <ol>
             {% if byPrice %}
 				{% for cafe in byPrice %}
 					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
