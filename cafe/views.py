@@ -32,8 +32,14 @@ class EditReviewView(UpdateView):
 
 
 def home(request):
+    context_dict = {}
+    if 'search' in request.GET:
+        search_term = request.GET['search']
+        cafes_found = Cafe.objects.all().filter(name__icontains=search_term)
+        context_dict['cafes'] = cafes_found
+        return render(request, 'cafe/search_results.html', context=context_dict)
     cafe_list = Cafe.objects.order_by('-avg_rating')[:10]
-    context_dict = {'cafes': cafe_list}
+    context_dict['cafes'] = cafe_list
 
     return render(request, 'cafe/home.html', context=context_dict)
 
@@ -45,6 +51,12 @@ def about(request):
 
 
 def cafes(request):
+    context_dict = {}
+    if 'search' in request.GET:
+        search_term = request.GET['search']
+        cafes_found = Cafe.objects.all().filter(name__icontains=search_term)
+        context_dict['cafes'] = cafes_found
+        return render(request, 'cafe/search_results.html', context=context_dict)
     cafe_list = Cafe.objects.all()
     price_list = []
     service_list =[]
@@ -91,7 +103,7 @@ def cafes(request):
     avg_rating_list = Cafe.objects.order_by('-avg_rating')
     context_dict = {'cafes': cafe_list, 'byPrice': byPrice, 'byService': byService,
                     'byAtmosphere': byAtmosphere, 'byQuality': byQuality,
-                    'byWaitingTimes': byWaitingTimes, 'byAverage': avg_rating_list, 'flag_code' : 0}
+                    'byWaitingTimes': byWaitingTimes, 'byAverage': avg_rating_list}
 
     return render(request, 'cafe/cafes.html', context=context_dict)
 
@@ -258,6 +270,12 @@ def delete_review(request, cafe_name_slug):
 
 
 def search(request):
+    context_dict = {}
+    if 'search' in request.GET:
+        search_term = request.GET['search']
+        cafes_found = Cafe.objects.all().filter(name__icontains=search_term)
+        context_dict['cafes'] = cafes_found
+        return render(request, 'cafe/search_results.html', context=context_dict)
     if request.method == 'GET':
         cafe_name = request.GET.get('search')
 

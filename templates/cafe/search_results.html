@@ -8,14 +8,29 @@
 {% endblock %}
 
 {% block body_block %}
-<h1> Search results as found </h1>
+    <div>
+        <nav class="navbar navbar-light bg-light">
+            <form class="form-inline">
+                <input class="form-control mr-sm-2"
+                   type="search"
+                   placeholder="Search"
+                   aria-label="Search"
+                   name="search"value="{{ request.GET.search }}"
+                >
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </nav>
+    </div>
 <div>
-{% if cafes %}
-{% for cafe in cafes %}
-    <a href="{% url 'chosen_cafe' cafe.slug %}"{{ cafe.name }}>
-{% endfor %}
-  {% else %}
-    <strong> result not found </strong>
-{% endif %}
-
+<div id="displayCafes">
+    {% if cafes %}
+        <h2> Cafes Found: </h2>
+        {% for cafe in cafes %}
+            <a href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a> Opening Hours: {{ cafe.opening_hours }}<br><br>
+        {% endfor %}
+    {% else %}
+        <h2> These are not the Cafes you are looking for </h2>
+    {% endif %}
+</div>
+</div>
 {% endblock %}
