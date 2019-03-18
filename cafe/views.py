@@ -91,7 +91,7 @@ def cafes(request):
     avg_rating_list = Cafe.objects.order_by('-avg_rating')
     context_dict = {'cafes': cafe_list, 'byPrice': byPrice, 'byService': byService,
                     'byAtmosphere': byAtmosphere, 'byQuality': byQuality,
-                    'byWaitingTimes': byWaitingTimes, 'byAverage': avg_rating_list, 'flag_code' : 0}
+                    'byWaitingTimes': byWaitingTimes, 'byAverage': avg_rating_list}
 
     return render(request, 'cafe/cafes.html', context=context_dict)
 
