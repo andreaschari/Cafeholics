@@ -7,8 +7,8 @@
 {% endblock %}
 
 {% block body_block %}
-	<p><center>Welcome to Cafeholics. Here you can find your next favourite cafe. <br>
-	You can you use the search bar below to find your next go-to place.</center> </p>
+	<center><p>Welcome to Cafeholics. Here you can find your next favourite cafe. <br>
+	You can you use the search bar below to find your next go-to place.</p></center>
 		<form id="searchform" method="GET" action="">
 			{% csrf_token %}
 			<input class="searchButton" type="submit" value="Search"/>
@@ -26,9 +26,5 @@
 		{% else %}
 			<strong>There are no cafes registered.</strong>
 		{% endif %}
-	</div>
-</center>
-
-
-
+	</div></center>
 {% endblock %}

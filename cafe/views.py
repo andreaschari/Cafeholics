@@ -30,6 +30,7 @@ class EditReviewView(UpdateView):
     def get_success_url(self, *args, **kwargs):
         return reverse('my_reviews')
 
+
 def home(request):
     cafe_list = Cafe.objects.order_by('-avg_rating')[:10]
     context_dict = {'cafes': cafe_list}
@@ -45,15 +46,52 @@ def about(request):
 
 def cafes(request):
     cafe_list = Cafe.objects.all()
-    price_list = Cafe.objects.order_by('-owner__review__price')
-    service_list = Cafe.objects.order_by('-owner__review__service')
-    atmosphere_list = Cafe.objects.order_by('-owner__review__atmosphere')
-    quality_list = Cafe.objects.order_by('-owner__review__quality')
-    waiting_times_list = Cafe.objects.order_by('-owner__review__waiting_time')
-    avg_rating_list = Cafe.objects.order_by('owner__cafe__avg_rating')
-    context_dict = {'cafes': cafe_list, 'byPrice': price_list, 'byService': service_list,
-                    'byAtmosphere': atmosphere_list, 'byQuality': quality_list,
-                    'byWaitingTimes': waiting_times_list, 'byAverage': avg_rating_list, 'flag_code' : 0}
+    price_list = []
+    service_list =[]
+    atmosphere_list =[]
+    waiting_times_list = []
+    quality_list =[]
+    for cafe in cafe_list:
+        reviews = Review.objects.filter(cafe=cafe)
+        sumPrice = 0
+        sumQuality = 0
+        sumWaitingTime =0
+        sumService =0
+        sumAtmosphere =0
+        count = 0
+        for review in reviews:
+            sumPrice = sumPrice + review.price
+            sumQuality = sumQuality + review.quality
+            sumWaitingTime = sumWaitingTime + review.waiting_time
+            sumService = sumService + review.service
+            sumAtmosphere = sumAtmosphere + review.atmosphere
+            count = count + 1
+        price_list.append([sumPrice/count, cafe.name])
+        quality_list.append([sumQuality/count, cafe.name])
+        waiting_times_list.append([sumWaitingTime/count, cafe.name])
+        service_list.append([sumService/count, cafe.name])
+        atmosphere_list.append([sumAtmosphere/count, cafe.name])
+    price_list.sort()
+    quality_list.sort()
+    waiting_times_list.sort()
+    service_list.sort()
+    atmosphere_list.sort()
+
+    byPrice = []
+    byService =[]
+    byAtmosphere =[]
+    byWaitingTimes = []
+    byQuality = []
+    for i in range(len(price_list)):
+        byPrice.append(price_list[i][1])
+        byService.append(service_list[i][1])
+        byAtmosphere.append(atmosphere_list[i][1])
+        byQuality.append(quality_list[i][1])
+        byWaitingTimes.append(waiting_times_list[i][1])
+    avg_rating_list = Cafe.objects.order_by('-avg_rating')
+    context_dict = {'cafes': cafe_list, 'byPrice': byPrice, 'byService': byService,
+                    'byAtmosphere': byAtmosphere, 'byQuality': byQuality,
+                    'byWaitingTimes': byWaitingTimes, 'byAverage': avg_rating_list, 'flag_code' : 0}
 
     return render(request, 'cafe/cafes.html', context=context_dict)
 
@@ -71,17 +109,16 @@ def chosen_cafe(request, cafe_name_slug):
             context_dict['avg rating'] = avg_rating_cafe(cafe_name_slug)
         else:
             context_dict['avg rating'] = 0
-            context_dict['name'] = cafe.name
-            context_dict['pricepoint'] = cafe.pricepoint
-            context_dict['owner'] = cafe.owner
-            context_dict['picture'] = cafe.picture
-            context_dict['cafe'] = cafe
+        context_dict['opening_hours'] = cafe.opening_hours
+        context_dict['name'] = cafe.name
+        context_dict['pricepoint'] = cafe.pricepoint
+        context_dict['owner'] = cafe.owner
+        context_dict['picture'] = cafe.picture
+        context_dict['cafe'] = cafe
         return render(request, 'cafe/chosen_cafe.html', context=context_dict)
     except Cafe.DoesNotExist:
         context_dict['errors'] = 'This Cafe Does Not Exist'
         return render(request, 'cafe/cafes.html', context=context_dict)
-
-
 
 
 def avg_rating_cafe(cafe_name_slug):
