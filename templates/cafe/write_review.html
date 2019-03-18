@@ -20,7 +20,7 @@
 		</div>
 	</div> -->
 
-	<form id="mainform" method="post" action="{% url 'chosen_cafe' cafe.slug %}">
+	<form id="mainform" method="post">
 		{% csrf_token %}
 		{% for field in form.visible_fields %}
 			<br>{{ field.label }}<br>

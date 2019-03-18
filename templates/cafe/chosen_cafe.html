@@ -10,7 +10,7 @@
 
     <h2 xmlns="http://www.w3.org/1999/html">{{cafe.name}}</h2>
 	<div id = "cafedescription">
-		<img class = "cafeimage" src="{{ MEDIA_DIR }}cafe_images/{{ cafe.picture }}" alt="Picture of {{ cafe.name }}" width="30%"/>
+    <img src="/media/{{ cafe.picture }}" alt="{{ cafe.name }}">
 		<div class="cafedetails">
             {% if cafe.pricepoint == 1 %}
                 Price Estimate: Cheap
@@ -20,7 +20,7 @@
                 Price Estimate: Deluxe
             {% endif %}
             <br>
-			<p>{{cafe.description}}</p>
+			<p>Description: {{cafe.description}}</p>
 			Opening hours: {{cafe.opening_hours}}<br>
             <br>Address:<a class="aa" href="https://www.google.com/maps/search/?api=1&query={{ cafe.address }}" target="_blank"> {{ cafe.address }}</a><br>
         {% if user.is_authenticated %}

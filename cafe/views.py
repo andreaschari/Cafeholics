@@ -150,19 +150,16 @@ def avg_rating_cafe(cafe_name_slug):
 def add_cafe(request):
     form = CafeForm()
     if request.method == 'POST':
-        form = CafeForm(data=request.POST)
+        form = CafeForm(request.POST, request.FILES)
 
         if form.is_valid():
             cafe = form.save(commit=False)
-            owner = UserProfile.objects.get(user=request.user)
-            cafe.owner = owner
-            if 'picture' in request.FILES:
-                cafe.picture = request.FILES['picture']
+            cafe.owner = UserProfile.objects.get(user=request.user)
+            cafe.picture = form.cleaned_data['picture']
             cafe.save()
-            return home(request)
+            return redirect('my_cafes')
         else:
             print(form.errors)
-
     return render(request, 'cafe/add_cafe.html', {'form': form})
 
 

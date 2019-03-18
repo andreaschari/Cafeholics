@@ -22,7 +22,7 @@
     </nav>
 
 	<h2> Top rated cafes </h2>
-	<center><div id="cafesmain">
+	<div id="cafesmain">
 		{% if cafes %}
 				{% for cafe in cafes %}
 					<a class = "aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
@@ -31,5 +31,5 @@
 		{% else %}
 			<strong>There are no cafes registered.</strong>
 		{% endif %}
-	</div></center>
+	</div>
 {% endblock %}

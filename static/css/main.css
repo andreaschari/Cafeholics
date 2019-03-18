@@ -303,13 +303,11 @@ input.mainforms{
 	background:#FAF5E9;
 	padding: 20px 20px;
 	outline: none;
-	margin: 20px 20px auto;
-	float: center;
 	width: 400px;
 	overflow: auto;
 	opacity: 0.8;
 	text-align: center;
-
+	margin: 0 auto;
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
