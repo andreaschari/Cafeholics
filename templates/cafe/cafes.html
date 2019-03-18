@@ -2,33 +2,60 @@
 
 {% extends 'cafe/base.html' %}
 {% load staticfiles %}
-
-
-
-<!-- JS script for dropdown menu:
-$(function() {
-  // choose target dropdown
-  var select = $('select');
-  select.html(select.find('option').sort(function(x, y) {
-    // to change to descending order switch "<" for ">"
-    return $(x).text() > $(y).text() ? 1 : -1;
-  }));
-  // select default item after sorting (first item)
-  // $('select').get(0).selectedIndex = 0;
-});
--->
-<script src="jquery-3.3.1.js"></script>
+<!-- <script src="jquery-3.3.1.js"></script>
 <script>
-$(document).ready(function () {
-  $('.group').hide();
-  $('#average_rating').show();
-  $('#dropdown').change(function () {
-    $('.group').hide();
-    $('#'+$(this).val()).show();
-  })
-});
-</script>
+    $(document).ready(function () {
+       $('#byAverage').show();
+       $('#byPrice').hide();
+       $('#byQuality').hide();
+       $('#byAtmosphere').hide();
+       $('#byWaitingTimes').hide();
+       $('#byService').hide();
+    });
+    $(document).ready(function () {
+        $("#Price").click(function () {
+            $('#byAverage').hide();
+            $('#byPrice').show();
+            $('#byQuality').hide();
+            $('#byAtmosphere').hide();
+            $('#byWaitingTimes').hide();
+            $('#byService').hide();
+        });
+        $("#Quality").click(function () {
+            $('#byAverage').hide();
+            $('#byPrice').hide();
+            $('#byQuality').show();
+            $('#byAtmosphere').hide();
+            $('#byWaitingTimes').hide();
+            $('#byService').hide();
+        });
+        $("#Atmosphere").click(function () {
+            $('#byAverage').hide();
+            $('#byPrice').hide();
+            $('#byQuality').hide();
+            $('#byAtmosphere').show();
+            $('#byWaitingTimes').hide();
+            $('#byService').hide();
+        });
+        $("#Service").click(function () {
+            $('#byAverage').hide();
+            $('#byPrice').hide();
+            $('#byQuality').hide();
+            $('#byAtmosphere').hide();
+            $('#byWaitingTimes').hide();
+            $('#byService').show();
+        });
+        $("#WaitingTimes").click(function () {
+            $('#byAverage').hide();
+            $('#byPrice').hide();
+            $('#byQuality').hide();
+            $('#byAtmosphere').hide();
+            $('#byWaitingTimes').show();
+            $('#byService').hide();
+        });
+    });
 
+</script> -->
 {% block title_block %}
 	Cafes
 {% endblock %}
@@ -50,83 +77,66 @@ $(document).ready(function () {
     <center>
     <h2>Sort by:</h2><br>
         <p>
-          <button onclick="priceDisplay()">Price</button>
-          <button onclick="qualityDisplay()">Quality</button>
-          <button onclick="waiting_timeDisplay()">Waiting Time</button>
-          <button onclick="serviceDisplay()">Service</button>
-          <button onclick="atmosphereDisplay()">Atmosphere</button>
+          <button id = "Price">Price</button>
+          <button id= "Quality">Quality</button>
+          <button id="WaitingTimes">Waiting Time</button>
+          <button id="Service">Service</button>
+          <button id="Atmosphere">Atmosphere</button>
         </p>
+    </center>
     </h2>
-    <center>
+    </center>
  	<div id="displayCafes">
     {% if errors %}
     			<strong>These are not the Cafes you are looking for.</strong>
     {%  else %}
       		{% if cafes %}
-                {% if flag_code == 0 %}
+              <p id="byAverage">
                       {% if byAverage %}
                           {% for cafe in byAverage %}
                               <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
                           {% endfor %}
                       {%  endif %}
-                  {% endif %}
-                  {% if flag_code == 1 %}
+              </p>
+              <p id ="byPrice">
                         {% if byPrice %}
             				        {% for cafe in byPrice %}
             					           <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
                             {% endfor %}
                         {%  endif %}
-                  {% endif %}
-                  {% if flag_code == 2 %}
+              </p>
+              <p id="byAtmosphere">
                           {% if byAtmosphere %}
               				        {% for cafe in byAtmosphere %}
               					           <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
               				        {% endfor %}
                           {%  endif %}
-                  {% endif %}
-                  {% if flag_code == 3 %}
+              </p>
+              <p id="byQuality">
                             {% if byQuality %}
                 				        {% for cafe in byQuality %}
                 					           <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
                 				        {% endfor %}
                             {%  endif %}
-                  {% endif %}
-                  {% if flag_code == 4 %}
+              </p>
+              <p id="byService">
                               {% if byService %}
                   				        {% for cafe in byService %}
                   					           <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
                   				        {% endfor %}
                               {%  endif %}
-                  {% endif %}
-                  {% if flag_code == 5 %}
+              </p>
+              <p id="byWaitingTimes">
                               {% if byWaitingTimes %}
                   				        {% for cafe in byWaitingTimes %}
                   					           <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a> <br>
                   				        {% endfor %}
                               {%  endif %}
-                  {% endif %}
+              </p>
       		{% else %}
       			<strong>There aren't any cafes registered.</strong>
       		{% endif %}
 
     {%  endif %}
 	</div>
-  </center>
-    <script>
-        function priceDisplay() {
-            flag_code = 1;
-        }
-        function qualityDisplay() {
-            flag_code = 3;
-        }
-        function atmosphereDisplay() {
-            flag_code = 2;
-        }
-        function serviceDisplay() {
-            flag_code = 4;
-        }
-        function waiting_timeDisplay() {
-            flag_code = 5;
-        }
-    </script>
 {% endblock %}
