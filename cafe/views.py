@@ -63,6 +63,11 @@ def cafes(request):
     atmosphere_list =[]
     waiting_times_list = []
     quality_list =[]
+    byPrice = []
+    byService =[]
+    byAtmosphere =[]
+    byWaitingTimes = []
+    byQuality = []
     for cafe in cafe_list:
         reviews = Review.objects.filter(cafe=cafe)
         sumPrice = 0
@@ -90,11 +95,7 @@ def cafes(request):
             service_list.sort()
             atmosphere_list.sort()
 
-            byPrice = []
-            byService =[]
-            byAtmosphere =[]
-            byWaitingTimes = []
-            byQuality = []
+
             for i in range(len(price_list)):
                 byPrice.append(price_list[i][1])
                 byService.append(service_list[i][1])
