@@ -19,7 +19,6 @@ $(function() {
 -->
 <script src="jquery-3.3.1.js"></script>
 <script>
-
 $(document).ready(function () {
   $('.group').hide();
   $('#average_rating').show();
@@ -28,7 +27,6 @@ $(document).ready(function () {
     $('#'+$(this).val()).show();
   })
 });
-
 </script>
 
 {% block title_block %}
@@ -43,14 +41,15 @@ $(document).ready(function () {
 	</form>
 	<h2>
 		All Cafes<br>
+    <center>
     <h2>Sort by:</h2><br>
-        <center><p>
+        <p>
           <button onclick="priceDisplay()">Price</button>
           <button onclick="qualityDisplay()">Quality</button>
           <button onclick="waiting_timeDisplay()">Waiting Time</button>
           <button onclick="serviceDisplay()">Service</button>
           <button onclick="atmosphereDisplay()">Atmosphere</button>
-        </p></center>
+        </p>
     </h2>
     <center>
  	<div id="displayCafes">
@@ -107,4 +106,21 @@ $(document).ready(function () {
     {%  endif %}
 	</div>
   </center>
+    <script>
+        function priceDisplay() {
+            flag_code = 1;
+        }
+        function qualityDisplay() {
+            flag_code = 3;
+        }
+        function atmosphereDisplay() {
+            flag_code = 2;
+        }
+        function serviceDisplay() {
+            flag_code = 4;
+        }
+        function waiting_timeDisplay() {
+            flag_code = 5;
+        }
+    </script>
 {% endblock %}
