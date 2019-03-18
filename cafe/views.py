@@ -45,12 +45,12 @@ def about(request):
 
 def cafes(request):
     cafe_list = Cafe.objects.all()
-    price_list = Cafe.objects.order_by('-review__price')
-    service_list = Cafe.objects.order_by('-review__service')
-    atmosphere_list = Cafe.objects.order_by('-review__atmosphere')
-    quality_list = Cafe.objects.order_by('-review__quality')
-    waiting_times_list = Cafe.objects.order_by('-review__waiting_time')
-    avg_rating_list = Cafe.objects.order_by('-review__avg_rating')
+    price_list = Cafe.objects.order_by('-owner__review__price')
+    service_list = Cafe.objects.order_by('-owner__review__service')
+    atmosphere_list = Cafe.objects.order_by('-owner__review__atmosphere')
+    quality_list = Cafe.objects.order_by('-owner__review__quality')
+    waiting_times_list = Cafe.objects.order_by('-owner__review__waiting_time')
+    avg_rating_list = Cafe.objects.order_by('owner__cafe__avg_rating')
     context_dict = {'cafes': cafe_list, 'byPrice': price_list, 'byService': service_list,
                     'byAtmosphere': atmosphere_list, 'byQuality': quality_list,
                     'byWaitingTimes': waiting_times_list, 'byAverage': avg_rating_list, 'flag_code' : 0}
