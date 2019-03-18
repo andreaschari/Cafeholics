@@ -84,23 +84,23 @@ def cafes(request):
             waiting_times_list.append([sumWaitingTime/count, cafe.name])
             service_list.append([sumService/count, cafe.name])
             atmosphere_list.append([sumAtmosphere/count, cafe.name])
-    price_list.sort()
-    quality_list.sort()
-    waiting_times_list.sort()
-    service_list.sort()
-    atmosphere_list.sort()
+            price_list.sort()
+            quality_list.sort()
+            waiting_times_list.sort()
+            service_list.sort()
+            atmosphere_list.sort()
 
-    byPrice = []
-    byService =[]
-    byAtmosphere =[]
-    byWaitingTimes = []
-    byQuality = []
-    for i in range(len(price_list)):
-        byPrice.append(price_list[i][1])
-        byService.append(service_list[i][1])
-        byAtmosphere.append(atmosphere_list[i][1])
-        byQuality.append(quality_list[i][1])
-        byWaitingTimes.append(waiting_times_list[i][1])
+            byPrice = []
+            byService =[]
+            byAtmosphere =[]
+            byWaitingTimes = []
+            byQuality = []
+            for i in range(len(price_list)):
+                byPrice.append(price_list[i][1])
+                byService.append(service_list[i][1])
+                byAtmosphere.append(atmosphere_list[i][1])
+                byQuality.append(quality_list[i][1])
+                byWaitingTimes.append(waiting_times_list[i][1])
     avg_rating_list = Cafe.objects.order_by('-avg_rating')
     context_dict = {'cafes': cafe_list, 'byPrice': byPrice, 'byService': byService,
                     'byAtmosphere': byAtmosphere, 'byQuality': byQuality,
