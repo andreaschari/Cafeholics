@@ -78,11 +78,12 @@ def cafes(request):
             sumService = sumService + review.service
             sumAtmosphere = sumAtmosphere + review.atmosphere
             count = count + 1
-        price_list.append([sumPrice/count, cafe.name])
-        quality_list.append([sumQuality/count, cafe.name])
-        waiting_times_list.append([sumWaitingTime/count, cafe.name])
-        service_list.append([sumService/count, cafe.name])
-        atmosphere_list.append([sumAtmosphere/count, cafe.name])
+        if (count>0):
+            price_list.append([sumPrice/count, cafe.name])
+            quality_list.append([sumQuality/count, cafe.name])
+            waiting_times_list.append([sumWaitingTime/count, cafe.name])
+            service_list.append([sumService/count, cafe.name])
+            atmosphere_list.append([sumAtmosphere/count, cafe.name])
     price_list.sort()
     quality_list.sort()
     waiting_times_list.sort()
