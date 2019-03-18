@@ -42,81 +42,69 @@ $(document).ready(function () {
 			<input class="searchbar" type="text" placeholder="What cafe are you looking for..">
 	</form>
 	<h2>
-		All Cafes
-        <button onclick="priceDisplay()">Price</button>
-        <button onclick="qualityDisplay()">Price</button>
-        <button onclick="waiting_timeDisplay()">Price</button>
-        <button onclick="serviceDisplay()">Price</button>
-        <button onclick="atmosphereDisplay()">Price</button>
+		All Cafes<br>
+    <h2>Sort by:</h2><br>
+        <center><p>
+          <button onclick="priceDisplay()">Price</button>
+          <button onclick="qualityDisplay()">Quality</button>
+          <button onclick="waiting_timeDisplay()">Waiting Time</button>
+          <button onclick="serviceDisplay()">Service</button>
+          <button onclick="atmosphereDisplay()">Atmosphere</button>
+        </p></center>
     </h2>
-
+    <center>
  	<div id="displayCafes">
     {% if errors %}
     			<strong>These are not the Cafes you are looking for.</strong>
     {%  else %}
-		{% if cafes %}
-            {% if flag_code == 0 %}
-			    <ol>
-                {% if byAverage %}
-                    {% for cafe in byAverage %}
-                        <li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-                            <!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
-                    {% endfor %}
-                    </ol>
-                {%  endif %}
-            {% endif %}
-            <ol>
-            {% if byPrice %}
-				{% for cafe in byPrice %}
-					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
-				{% endfor %}
-            {%  endif %}
-			</ol>
-            <ol>
-            {% if byAtmosphere %}
-				{% for cafe in byAtmosphere %}
-					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
-				{% endfor %}
-            {%  endif %}
-			</ol>
-            <ol>
-            {% if byQuality %}
-				{% for cafe in byQuality %}
-					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
-				{% endfor %}
-            {%  endif %}
-			</ol>
-            <ol>
-            {% if byService %}
-				{% for cafe in byService %}
-					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
-				{% endfor %}
-            {%  endif %}
-			</ol>
-            <ol>
-            {% if byWaitingTimes %}
-				{% for cafe in byWaitingTimes %}
-					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
-				{% endfor %}
-            {%  endif %}
-			</ol>
-            <ol>
-            {% if byAverage %}
-				{% for cafe in byAverage %}
-					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
-				{% endfor %}
-            {%  endif %}
-			</ol>
-		{% else %}
-			<strong>There aren't any cafes registered.</strong>
-		{% endif %}
+      		{% if cafes %}
+                {% if flag_code == 0 %}
+                      {% if byAverage %}
+                          {% for cafe in byAverage %}
+                              <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
+                          {% endfor %}
+                      {%  endif %}
+                  {% endif %}
+                  {% if flag_code == 1 %}
+                        {% if byPrice %}
+            				        {% for cafe in byPrice %}
+            					           <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
+                            {% endfor %}
+                        {%  endif %}
+                  {% endif %}
+                  {% if flag_code == 2 %}
+                          {% if byAtmosphere %}
+              				        {% for cafe in byAtmosphere %}
+              					           <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
+              				        {% endfor %}
+                          {%  endif %}
+                  {% endif %}
+                  {% if flag_code == 3 %}
+                            {% if byQuality %}
+                				        {% for cafe in byQuality %}
+                					           <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
+                				        {% endfor %}
+                            {%  endif %}
+                  {% endif %}
+                  {% if flag_code == 4 %}
+                              {% if byService %}
+                  				        {% for cafe in byService %}
+                  					           <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
+                  				        {% endfor %}
+                              {%  endif %}
+                  {% endif %}
+                  {% if flag_code == 5 %}
+                              {% if byWaitingTimes %}
+                  				        {% for cafe in byWaitingTimes %}
+                  					           <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a> <br>
+                  				        {% endfor %}
+                              {%  endif %}
+                  {% endif %}
+      		{% else %}
+      			<strong>There aren't any cafes registered.</strong>
+      		{% endif %}
+
     {%  endif %}
 	</div>
-</center>
+  </center>
 {% endblock %}
