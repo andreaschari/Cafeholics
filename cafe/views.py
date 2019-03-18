@@ -53,7 +53,7 @@ def cafes(request):
     avg_rating_list = Cafe.objects.order_by('-review__avg_rating')
     context_dict = {'cafes': cafe_list, 'byPrice': price_list, 'byService': service_list,
                     'byAtmosphere': atmosphere_list, 'byQuality': quality_list,
-                    'byWaitingTimes': waiting_times_list, 'byAverage': avg_rating_list}
+                    'byWaitingTimes': waiting_times_list, 'byAverage': avg_rating_list, 'flag_code' : 0}
 
     return render(request, 'cafe/cafes.html', context=context_dict)
 
@@ -71,11 +71,11 @@ def chosen_cafe(request, cafe_name_slug):
             context_dict['avg rating'] = avg_rating_cafe(cafe_name_slug)
         else:
             context_dict['avg rating'] = 0
-        context_dict['name'] = cafe.name
-        context_dict['pricepoint'] = cafe.pricepoint
-        context_dict['owner'] = cafe.owner
-        context_dict['picture'] = cafe.picture
-        context_dict['cafe'] = cafe
+            context_dict['name'] = cafe.name
+            context_dict['pricepoint'] = cafe.pricepoint
+            context_dict['owner'] = cafe.owner
+            context_dict['picture'] = cafe.picture
+            context_dict['cafe'] = cafe
         return render(request, 'cafe/chosen_cafe.html', context=context_dict)
     except Cafe.DoesNotExist:
         context_dict['errors'] = 'This Cafe Does Not Exist'
