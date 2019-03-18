@@ -43,59 +43,28 @@ $(document).ready(function () {
 	</form>
 	<h2>
 		All Cafes
-        <label for="dropdown"></label>
-        <select name="sort by" id="dropdown">
-			<option value="">Sort by</option>
-			<option value="average_rating">Average rating</option>
-			<option value="price">Price</option>
-			<option value="service">Service</option>
-			<option value="atmosphere">Atmosphere</option>
-			<option value="quality">Quality</option>
-			<option value="waiting_time">Waiting time</option>
-		</select>
+        <button onclick="priceDisplay()">Price</button>
+        <button onclick="qualityDisplay()">Price</button>
+        <button onclick="waiting_timeDisplay()">Price</button>
+        <button onclick="serviceDisplay()">Price</button>
+        <button onclick="atmosphereDisplay()">Price</button>
     </h2>
-        <div id="average_rating" class="group">
-            <ol>
-            {% for cafe in byAverage %}
-					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-                        <!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
-				{% endfor %} </ol></div>
-        <div id="price" class="group">
-        <ol>
-            {% for cafe in byPrice %}
-					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
-				{% endfor %}</ol></div>
-        <div id="service" class="group">
-            <ol>
-            {% for cafe in byService %}
-					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
-            {% endfor %}</ol></div>
-        <div id="atmosphere" class="group">
-            <ol>
-            {% for cafe in byAtmosphere %}
-					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
-				{% endfor %}</ol></div>
-        <div id="quality" class="group">
-            <ol>
-            {% for cafe in byQuality %}
-					<li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
-            {% endfor %}</ol></div>
-	<center>
+
  	<div id="displayCafes">
     {% if errors %}
     			<strong>These are not the Cafes you are looking for.</strong>
     {%  else %}
 		{% if cafes %}
-			<ol>
-            {% for cafe in cafes %}
-                <li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
-					<!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
-            {% endfor %}
-            </ol>
+            {% if flag_code == 0 %}
+			    <ol>
+                {% if byAverage %}
+                    {% for cafe in byAverage %}
+                        <li><a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a>
+                            <!-- <p class="rating">{{ cafe.avg_rating }}</p> --></li>
+                    {% endfor %}
+                    </ol>
+                {%  endif %}
+            {% endif %}
             <ol>
             {% if byPrice %}
 				{% for cafe in byPrice %}
