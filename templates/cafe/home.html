@@ -26,7 +26,7 @@
 		{% if cafes %}
 				{% for cafe in cafes %}
 					<a class = "aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
-					<p class = 'avg_rating'>Average rating: {{ cafe.avg_rating }}</p><br>
+					<p class = 'avg_rating'>Average rating: {{ cafe.avg_rating }} out of 5</p><br>
 				{% endfor %}
 		{% else %}
 			<strong>There are no cafes registered.</strong>
