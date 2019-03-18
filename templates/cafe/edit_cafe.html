@@ -7,11 +7,10 @@
 {% endblock %}
 
 {% block body_block %}
-<h2> Edit {{ cafe.name }} </h2>
-<form id = 'mainform' method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-
-  <input class ='submit' type=submit value="submit" />
-</form>
+    <h2> Edit {{ cafe.name }} </h2>
+    <form id = 'mainform' method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="submit" type="submit">Submit Changes</button><br/>
+    </form>
 {% endblock %}

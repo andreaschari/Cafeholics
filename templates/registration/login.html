@@ -11,9 +11,7 @@
 	<h2>Login to Cafeholics</h2>
     <form id = 'mainform' method="post">
       {% csrf_token %}
-			<center>
       {{ form.as_p }}
-		</center>
       <p class ='login_button'><button type="submit">Login</button></p>
     </form>
 {% endblock %}

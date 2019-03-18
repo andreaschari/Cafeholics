@@ -144,6 +144,7 @@ def avg_rating_cafe(cafe_name_slug):
     return avg
 
 
+@login_required
 def add_cafe(request):
     form = CafeForm()
     if request.method == 'POST':

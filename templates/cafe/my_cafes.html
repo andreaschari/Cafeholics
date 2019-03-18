@@ -10,22 +10,18 @@
 {% block body_block %}
 
 <h2> My Cafes </h2>
-Following are the cafes owned by  {{ cafe.owner }}
-
 {% if cafe_list %}
-<div id = cafedescription>
+    Here are your cafes:
     {% for cafe in cafe_list %}
-
+<div id = cafedescription>
         Cafe Name: <a class="aa" href="{% url 'chosen_cafe'  cafe.slug %}">{{ cafe.name }}</a> <br>
         Price Point: {{ cafe.pricepoint }} <br>
         Address: {{cafe.address}}  <br>
         Description: {{ cafe.description }} <br>
-		<button onclick="window.location.href = '{% url 'edit_cafe' %}';">Edit</button>
-
-          {% endfor %}
-          {% else %}
-	<strong>No owned cafe uploaded </strong>
-	<a class="aa" href="{% url 'add_cafe' %}">Add Cafe</a>
-          {% endif %}
+		<button onclick="window.location.href = '{% url 'edit_cafe' cafe.slug %}';">Edit Cafe</button><br><br>
 </div>
+    {% endfor %}
+{% else %}
+    <strong>You don't own any cafes </strong> <br>
+{% endif %}
 {% endblock %}
