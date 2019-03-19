@@ -10,8 +10,8 @@
 {% block body_block %}
 	<h2>Login to Cafeholics</h2>
     <form id = 'mainform' method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <p class ='login_button'><button type="submit">Login</button></p>
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button class ='submit'type="submit">Login</button>
     </form>
 {% endblock %}

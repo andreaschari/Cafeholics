@@ -17,7 +17,7 @@ form {
 }
 .center_text{
 	text-align: center;
-    margin: 0 auto;
+    	margin: 0 auto;
 }
 .login_button{
 	float: right;
@@ -29,7 +29,6 @@ form {
 	width: 50%;
 	position: fixed;
 	height: 30%;
-	/* background: #D9D6D2; */
 	top: 0px;
 	padding: 0px 0;
 	z-index: 1;
@@ -198,7 +197,7 @@ button.submit{
 	background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(243,243,243)), color-stop(1, rgb(225,225,225)));
 	background: -moz-linear-gradient( center top, rgb(255,255,255) 0%, rgb(235,235,235) 100%);
 
-	position: relative;
+	position:relative;
 	border: 0;
 	color: #737373;
 	cursor: pointer;
@@ -208,6 +207,7 @@ button.submit{
 	text-shadow: 0 -1px 0 rgba(0,0,0,.3);
 	width: 150px;
 	outline: none;
+	display: inline;
 
 	border-radius: 40px;
 	-webkit-border-radius: 40px;
@@ -315,10 +315,11 @@ input.mainforms{
 	background:#FAF5E9;
 	padding: 20px 20px;
 	outline: none;
-	width: 400px;
+	width: 800px;
 	overflow: auto;
 	opacity: 0.8;
 	text-align: center;
+	font-size: 38px;
 	margin: 0 auto;
 	border-radius: 5px;
 	-webkit-border-radius: 5px;

@@ -67,6 +67,7 @@
                     {% if by_quality %}
         				        {% for cafe in by_quality %}
                             <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
+							<p class = 'avg_rating'>Average rating: {{ cafe.avg_rating }} out of 5</p><br>
         				        {% endfor %}
                     {%  endif %}
               </div>
