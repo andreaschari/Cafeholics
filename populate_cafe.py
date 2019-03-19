@@ -4,9 +4,7 @@ import django
 django.setup()
 from cafe.models import UserProfile, Cafe, Review
 from django.contrib.auth.models import User
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-MEDIA_DIR = os.path.join(BASE_DIR, r'Cafeholics\media')
+from cafeholics.settings import BASE_DIR, MEDIA_DIR
 from django.core.files.images import ImageFile
 
 
@@ -77,7 +75,7 @@ def add_user(username, first_name, last_name, email, password, owner):
 def add_cafe(owner,cafe_name,pricepoint,address, opening_hours,picture):
     c = Cafe.objects.get_or_create(owner = owner, name = cafe_name, pricepoint = pricepoint)[0]
     print(picture)
-    # c.picture = picture
+    c.picture = picture
     c.opening_hours = opening_hours
     c.address = address
     c.save()
@@ -115,4 +113,5 @@ if __name__ == '__main__':
     #     for r in Review.objects.filter(cafe=c):
     #         print(str(r))
     #     print()
+    print(MEDIA_DIR + r'\FreeSpirit.jpg')
     populate()
