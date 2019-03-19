@@ -191,8 +191,8 @@ button.submit{
 
 .searchButton{
 	background-color: #eee;
-	/*background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(243,243,243)), color-stop(1, rgb(225,225,225)));*/
-	/*background: -moz-linear-gradient( center top, rgb(255,255,255) 0%, rgb(235,235,235) 100%);*/
+	background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(243,243,243)), color-stop(1, rgb(225,225,225)));
+	background: -moz-linear-gradient( center top, rgb(255,255,255) 0%, rgb(235,235,235) 100%);
 
 	position: relative;
 	border: 0;
@@ -218,7 +218,7 @@ button.submit{
 	background: #fafafa;
 
 	background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(250,250,250)), color-stop(1, rgb(230,230,230)));*!*/
-	background: -moz-linear-gradient( center top, rgb(255,255,255) 0%, rgb(235,235,235) 100%);*!*/
+	background: -moz-linear-gradient( center top, rgb(255,255,255) 0%, rgb(235,235,235) 100%);
 }
 
 
@@ -227,10 +227,11 @@ button.submit{
 /* Style for input boxes*/
 
 input[type=text], input[type=password], input[type=number] {
-    font-size:24px;
+    	font-size:24px;
 	width: 50%;
-    padding: 10px 20px;
-    margin: 10px 0;
+    	padding: 10px 20px;
+    	margin: 10px 0;
+
 	box-sizing: border-box;
 	border: 2px solid black;
 	background: #fff;
@@ -280,14 +281,19 @@ input.mainforms{
 
 	background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(243,243,243)), color-stop(1, rgb(225,225,225)));
 	background: -moz-linear-gradient( center top, rgb(243,243,243) 0%, rgb(225,225,225) 100%);
-
-	padding: 5px 5px;
+	
+	
+	text-align: center;
+	height: 50px;
+	padding: 7px 7px;
 	color: #737373;
-	font-size: 17px;
+	cursor: pointer;
+	font: 26px 'Raleway', sans-serif;
+	text-shadow: 0 -1px 0 rgba(0,0,0,.3);
 
-	border-radius: 17px;
-	-webkit-border-radius: 17px;
-	-moz-border-radius: 17px;
+	border-radius: 30px;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
 
 	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
 	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
@@ -295,6 +301,10 @@ input.mainforms{
 }
 #dropdown:focus{
 	outline: none;
+	background: #fafafa;
+
+	background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(250,250,250)), color-stop(1, rgb(230,230,230)));*!*/
+	background: -moz-linear-gradient( center top, rgb(255,255,255) 0%, rgb(235,235,235) 100%);
 }
 
 #cafesmain{
