@@ -15,7 +15,7 @@
        First Name: {{ first_name }}<br>
        Last Name: {{ last_name }}<br>
        Email: {{ email }}<br><br>
-       <button onclick="window.location.href = '{% url 'delete_account' cafe.slug %}';">Delete Account</button><br>
+{#       <button onclick="window.location.href = '{% url 'delete_account' cafe.slug %}';">Delete Account</button><br>#}
     {% if is_owner %}
 		<button onclick="window.location.href = '{% url 'add_cafe'%}';">Add a Cafe</button>
 		<button onclick="window.location.href = '{% url 'my_cafes'%}';">My Cafes</button>

@@ -5,6 +5,7 @@ from django.views.generic import UpdateView
 from django.urls import reverse
 from cafe.forms import *
 from cafe.models import *
+from django.shortcuts import get_object_or_404
 
 
 class EditCafeView(UpdateView):
@@ -211,7 +212,7 @@ def my_account(request):
 
 @login_required
 def delete_account(request):
-    UserProfile.objects.filter.get(request.user.get_username()).delete()
+    UserProfile.objects.all().filter(username=request.user.get_username()).delete()
     return redirect('/')
 
 
@@ -229,15 +230,13 @@ def my_cafes(request):
     cafe_list = Cafe.objects.filter(owner=user)
     return render(request, 'cafe/my_cafes.html', {'cafe_list': cafe_list})
 
-
+@login_required
 def delete_cafe(request, cafe_name_slug):
-    try:
-        cafe = Cafe.objects.get(slug=cafe_name_slug)
-    except Cafe.DoesNotExist:
-        cafe = None
-    if cafe:
-        cafe.delete()
-    return redirect('/cafe/my_cafes.html')
+    # if request.method == 'POST':
+        cafe = Cafe.objects.all().filter(slug=cafe_name_slug)
+        # print(cafe.name)
+        get_object_or_404(cafe, slug=cafe_name_slug).delete()
+        return redirect('/cafe/my_account/my_cafes/')
 
 
 @login_required

@@ -12,6 +12,5 @@
         {% csrf_token %}
         {{ form.as_p }}
         <button class="submit" type="submit">Submit Changes</button><br/>
-        <button onclick="window.location.href = '{% url 'delete_cafe' cafe.slug %}';">Delete Cafe</button><br>
     </form>
 {% endblock %}
