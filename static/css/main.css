@@ -32,6 +32,7 @@ form {
 	/* background: #D9D6D2; */
 	top: 0px;
 	padding: 0px 0;
+	z-index: 1;
 }
 
 .sidenav a {
@@ -87,6 +88,7 @@ h3 {
 
 /* Buttons */
 button{
+
 	color: #737373;
 	font: 34px;
 	background-color: #eee;
@@ -119,11 +121,12 @@ button.submit{
 /* Using aa for the cafe links in the lists */
 .aa{
 	font-size: 34px;
-	color: #0132D2;
+	color: #634d37;
 	text-decoration: none;
 }
 
 .aa:hover{
+	font-size: 36px;
 	text-decoration: none;
 	font-style: bold;
 	text-shadow: -1px -1px 1px rgba(0,0,0,.2);
@@ -132,6 +135,7 @@ button.submit{
 
 #login {
 	position: fixed;
+	z-index: 1;
 	top: 10px;
 	right: 10px;
 	padding: 10px 10px;
@@ -226,7 +230,7 @@ button.submit{
 
 /* Style for input boxes*/
 
-input[type=text], input[type=password], input[type=number] {
+input[type=text], input[type=password], input[type=number], input[type=email]{
     	font-size:24px;
 	width: 50%;
     	padding: 10px 20px;

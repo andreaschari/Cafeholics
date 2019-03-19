@@ -28,8 +28,8 @@
         <div class="sidenav">
             {% block sidebar_block %}
             <p>
-							<button onclick="window.location.href = '{% url 'home' %}';">Home</button>
-							<button onclick="window.location.href = '{% url 'cafes' %}';">Cafes</button>
+				<button onclick="window.location.href = '{% url 'home' %}';">Home</button>
+				<button onclick="window.location.href = '{% url 'cafes' %}';">Cafes</button>
 				{% if user.is_authenticated %}
 					<button onclick="window.location.href = '{% url 'my_account' %}';">My Account</button>
 				{% endif %}
