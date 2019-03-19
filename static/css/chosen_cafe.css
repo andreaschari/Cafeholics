@@ -22,14 +22,12 @@
 
 .cafedetails{
 	width: 90%;
-	float:center;
 	opacity: 1;
 }
 
 img.cafeimage{
 	height: 300px;
 	width: 300px;
-	float: center;
 	margin: 20px auto;
 }
 
