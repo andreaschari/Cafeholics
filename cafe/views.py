@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from cafe.forms import CafeForm, ReviewForm, UserForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 from django.views.generic import UpdateView
-from cafe.models import *
 from django.urls import reverse
+from cafe.forms import *
+from cafe.models import *
 
 
 class EditCafeView(UpdateView):
@@ -164,7 +165,6 @@ def add_cafe(request):
 
 
 def sign_up(request):
-    registered = False
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
         profile_form = UserProfileForm(data=request.POST)
@@ -173,19 +173,21 @@ def sign_up(request):
             user = user_form.save()
             user.set_password(user.password)
             user.save()
-
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
-            registered = True
-
+            username = user_form.cleaned_data['username']
+            password = user_form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('/cafe')
         else:
             print(user_form.errors, profile_form.errors)
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'registration/sign_up.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+    return render(request, 'registration/sign_up.html', {'user_form': user_form, 'profile_form': profile_form})
 
 
 @login_required
