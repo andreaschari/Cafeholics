@@ -25,7 +25,6 @@
     </nav>
 	<h2>
 		All Cafes<br>
-    <center>
     <h2>Sort by:</h2><br>
         <select name="sort by" id="dropdown">
             <option value="avg_rating">Average rating</option>
@@ -35,52 +34,50 @@
             <option value="quality">Quality</option>
             <option value="waiting_times">Waiting time</option>
         </select>
-    </center>
     </h2>
-    </center>
  	<div id="displayCafes">
     {% if errors %}
     			<strong>These are not the Cafes you are looking for.</strong>
     {%  else %}
       		{% if cafes %}
               <div id="avg_rating" class="group">
-                  {% if byAverage %}
-                      {% for cafe in byAverage %}
+                  {% if by_average %}
+                      {% for cafe in by_average %}
                           <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
                       {% endfor %}
                   {%  endif %}
               </div>
               <div id="price" class="group">
-                    {% if byPrice %}
-        				        {% for cafe in byPrice %}
+                    {% if by_price %}
+        				        {% for cafe in by_price %}
                               <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
                         {% endfor %}
                     {%  endif %}
               </div>
               <div id="atmosphere" class="group">
-                    {% if byAtmosphere %}
-        				        {% for cafe in byAtmosphere %}
+                    {% if by_atmosphere %}
+        				        {% for cafe in by_atmosphere %}
                               <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
         				        {% endfor %}
                     {%  endif %}
               </div>
                <div id="quality" class="group">
-                    {% if byQuality %}
-        				        {% for cafe in byQuality %}
+                    {% if by_quality %}
+        				        {% for cafe in by_quality %}
                             <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
         				        {% endfor %}
                     {%  endif %}
               </div>
               <div id="service" class="group">
-                    {% if byService %}
-        				        {% for cafe in byService %}
+                    {% if by_service %}
+        				        {% for cafe in by_service %}
                             <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
         				        {% endfor %}
                     {%  endif %}
               </div>
               <div id="waiting_times" class="group">
-                    {% if byWaitingTimes %}
-        				        {% for cafe in byWaitingTimes %}
+                    {% if by_waiting_times %}
+        				        {% for cafe in by_waiting_times %}
                             <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
         				        {% endfor %}
                     {%  endif %}

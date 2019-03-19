@@ -444,6 +444,11 @@ class ViewTest(TestCase):
         self.assertTemplateUsed(response, 'cafe/my_account.html')
 
     def test_add_cafe_using_template(self):
+        # create test owner
+        self.user = User.objects.create_user(username='test_owner', password='12345')
+        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
+        # login as test owner
+        self.client.login(username='test_owner', password='12345')
         response = self.client.get(reverse('add_cafe'))
         # Check the template used to render page
         self.assertTemplateUsed(response, 'cafe/add_cafe.html')
@@ -462,9 +467,9 @@ class ViewTest(TestCase):
 
 
 class TemplateTest(TestCase):
-    def test_home_shows_search_bar(self):
+    def test_home_shows_search_button(self):
         response = self.client.get(reverse("home"))
-        self.assertContains(response, '<input class="searchButton" type="submit" value="Search"/>', html=True)
+        self.assertContains(response, '<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>', html=True)
 
     def test_home_shows_log_in_when_not_logged_in(self):
         response = self.client.get(reverse("home"))
