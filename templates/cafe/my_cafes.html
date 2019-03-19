@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 {% extends 'cafe/base.html' %}
 {% load staticfiles %}
 
@@ -10,18 +9,24 @@
 {% block body_block %}
 
 <h2> My Cafes </h2>
-{% if cafe_list %}
-    Here are your cafes:
-    {% for cafe in cafe_list %}
-<div id = cafedescription>
-        Cafe Name: <a class="aa" href="{% url 'chosen_cafe'  cafe.slug %}">{{ cafe.name }}</a> <br>
-        Price Point: {{ cafe.pricepoint }} <br>
-        Address: {{cafe.address}}  <br>
-        Description: {{ cafe.description }} <br>
-		<button onclick="window.location.href = '{% url 'edit_cafe' cafe.slug %}';">Edit Cafe</button><br><br>
-</div>
-    {% endfor %}
-{% else %}
-    <strong>You don't own any cafes </strong> <br>
-{% endif %}
+    {% if cafe_list %}
+        {% for cafe in cafe_list %}
+            <div id = cafedescription>
+                Cafe Name: <a class="aa" href="{% url 'chosen_cafe'  cafe.slug %}">{{ cafe.name }}</a> <br>
+                {% if cafe.pricepoint == 1 %}
+                    Price Estimate: Cheap
+                {% elif cafe.pricepoint == 2 %}
+                    Price Estimate: Moderate
+                {% elif cafe.pricepoint == 3 %}
+                    Price Estimate: Deluxe
+                {% endif %} <br>
+                Address: {{cafe.address}}  <br>
+                Description: {{ cafe.description }} <br>
+                <button onclick="window.location.href = '{% url 'edit_cafe' cafe.slug %}';">Edit Cafe</button><br><br>
+            </div>
+            <br>
+        {% endfor %}
+    {% else %}
+        <strong>You don't own any cafes </strong> <br>
+    {% endif %}
 {% endblock %}

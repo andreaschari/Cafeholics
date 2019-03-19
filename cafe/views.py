@@ -50,6 +50,7 @@ def about(request):
 
     return render(request, 'cafe/about.html', context=context_dict)
 
+
 def sortByCategoryLists(cafe_list):
     price_list, service_list, atmosphere_list, quality_list, waiting_times_list = [], [], [], [], []
     byPrice, byService, byAtmosphere, byWaitingTimes, byQuality = [], [], [], [], []
@@ -161,7 +162,7 @@ def add_cafe(request):
             cafe.owner = UserProfile.objects.get(user=request.user)
             cafe.picture = form.cleaned_data['picture']
             cafe.save()
-            return redirect('my_cafes')
+            return redirect('/cafe/my_account/my_cafes')
         else:
             print(form.errors)
     return render(request, 'cafe/add_cafe.html', {'form': form})
@@ -218,6 +219,7 @@ def delete_account(request):
 def my_reviews(request):
     user = UserProfile.objects.get(user=request.user)
     reviews_list = Review.objects.filter(user=user)
+
     return render(request, 'cafe/my_reviews.html', {'reviews_list': reviews_list})
 
 
@@ -251,12 +253,12 @@ def write_review(request, cafe_name_slug):
     if request.method == 'POST':
         form = ReviewForm(data=request.POST)
         if form.is_valid():
-            if cafe:
-                review = form.save(commit=False)
-                review.cafe = cafe
-                review.avg_rating = int((review.price+review.quality+review.waiting_time+review.service+review.atmosphere)/5)
-                review.user = request.user
-                review.save()
+            review = form.save(commit=False)
+            review.cafe = cafe
+            review.avg_rating = int((review.price+review.quality+review.waiting_time+review.service+review.atmosphere)/5)
+            review.user = UserProfile.objects.get(user=request.user)
+            review.save()
+            return redirect('/cafe/my_account/my_reviews')
         else:
             print(form.errors)
     context_dict['form'] = form

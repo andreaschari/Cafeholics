@@ -39,7 +39,7 @@ class ReviewForm(forms.ModelForm):
     quality = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
     waiting_time = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
     comments = forms.CharField(required=False)
-    avg_rating = forms.IntegerField(widget=forms.HiddenInput())
+    avg_rating = forms.IntegerField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = Review

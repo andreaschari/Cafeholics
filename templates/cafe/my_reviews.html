@@ -9,29 +9,26 @@
 
 {% block body_block %}
 <h2> My Reviews </h2>
-Here are your reviews: <br>
-
-{% if reviews_list %}
-<div>
-    <ul>
-    {% for review in reviews_list %}
-          <div>
-          
-              Rated {{ review.cafe }} based on the following categories
-           <li>   Prices : {{ review.price }} </li><br>
-             <li> Service :  {{ review.service }} </li><br>
-           <li>   Atmosphere : {{ review.price }} </li><br>
-            <li>  Quality :  {{ review.quality }} </li> <br>
-             <li> Waiting time :  {{ review.waiting_time }}</li> <br>
-         
-           <li> Feedback Comments : </li> <br>
-                 {{ review.comments }}
-			
-			<button onclick="window.location.href = '{% url 'edit_review' %}';">Edit</button>
-			
-          {% endfor %}
-          </ul>
-          {% else %}
-                            <strong>No reviews to display </strong>
-          {% endif %}
+    {% if reviews_list %}
+        <div>
+        {% for review in reviews_list %}
+        <div>
+            <div id = cafedescription>
+                Review for <a class="aa" href="{% url 'chosen_cafe'  review.cafe.slug %}">{{ review.cafe.name }}</a> <br>
+                Prices : {{ review.price }} <br>
+                Service :  {{ review.service }} <br>
+                Atmosphere : {{ review.price }} <br>
+                Quality :  {{ review.quality }} <br>
+                Waiting time :  {{ review.waiting_time }}<br>
+                Feedback Comments :<br>
+                {{ review.comments }} <br>
+                <button onclick="window.location.href = '{% url 'edit_review' review.cafe.slug %}';">Edit</button>
+            </div>
+            <br>
+        {% endfor %}
+    {% else %}
+        <strong>No reviews to display </strong>
+    {% endif %}
+</div>
+</div>
 {% endblock %}

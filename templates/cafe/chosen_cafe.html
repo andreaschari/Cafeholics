@@ -10,7 +10,7 @@
 
     <h2 xmlns="http://www.w3.org/1999/html">{{cafe.name}}</h2>
 	<div id = "cafedescription">
-    <img src="/media/{{ cafe.picture }}" alt="{{ cafe.name }}">
+    <img src="{{ MEDIA_URL }}{{ cafe.picture }}" alt="{{ cafe.name }}">
 		<div class="cafedetails">
             {% if cafe.pricepoint == 1 %}
                 Price Estimate: Cheap

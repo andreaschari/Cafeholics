@@ -6,7 +6,7 @@ from cafe.models import UserProfile, Cafe, Review
 from django.contrib.auth.models import User
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-MEDIA_DIR = os.path.join(BASE_DIR, 'Cafeholics\\media\\')
+MEDIA_DIR = os.path.join(BASE_DIR, 'Cafeholics\\media\\cafe_images\\')
 from django.core.files.images import ImageFile
 
 
