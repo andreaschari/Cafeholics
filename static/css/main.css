@@ -17,6 +17,7 @@ form {
 }
 .center_text{
 	text-align: center;
+	font-size: 34px;
     	margin: 0 auto;
 }
 .login_button{
@@ -25,29 +26,34 @@ form {
 }
 
 /*side navigator*/
-.sidenav {
-	width: 50%;
-	position: fixed;
+nav {
+	width: 100%;
+	position: sticky;
 	height: 30%;
 	top: 0px;
-	padding: 0px 0;
+	padding: 5px 5px;
 	z-index: 1;
+	opacity: 0.7;
 }
 
-.sidenav a {
-	padding: 6px 8px 6px 16px;
+
+nav a {
+	padding: 16px 8px 6px 16px;
 	text-decoration: none;
 	font-size: 34px;
 	color: #000000;
 	text-shadow: -1px -1px 3px rgba(0,0,0,.3);
 	display: block;
+
 }
 
-.sidenav a:hover {
+nav a:hover {
 	color: #993300;
 	text-shadow: -1px -1px 3px rgba(0,0,0,.3);
 }
-
+nav-item nav-link{
+	margin-left: 10px;
+}
 
 /*main content*/
 div.main {
@@ -61,20 +67,22 @@ div.main {
 }
 
 h1 {
-	font-size: 120px;
-	text-align: center;
+	font-size: 50px;
+	text-align: left;
 	font-family: "Times New Roman", Times, serif;
 	font-weight: bold;
+	font-style: italic;
 	color: #010100;
 	display: block;
+	margin-right: 10%;
 	float: none;
-	width: 100%
 }
 h2 {
 	width: 100%;
 	float: left;
 	font-size: 34px;
 	text-align: center;
+	margin: 20px auto;
 }
 
 h3 {
@@ -262,22 +270,6 @@ input.mainforms{
 	padding: 10px 10px;
 	width: 250px;
 	height: 100px;
-}
-
-#mainform{
-	background:#FAF5E9;
-	margin: 20px auto;
-	padding: 20px 20px;
-	outline: none;
-	width: 900px;
-
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-
-	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
-	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
-	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
 }
 
 #dropdown{

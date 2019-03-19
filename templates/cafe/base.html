@@ -4,6 +4,7 @@
 <html>
 	<head lang="en">
 		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
             <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -40,21 +41,17 @@
 
     </head>
     <body>
-		<div>
-            <h1></h1>
-		</div>
 
-        <div class="sidenav">
+       <!-- <div class="sidenav"> -->
             {% block sidebar_block %}
-            <p>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">Cafeholics</a>
+                <h1>Cafeholics</h1>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                            <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
+                        <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
                         <a class="nav-item nav-link" href="{% url 'cafes' %}">Cafes</a>
 
                         {% if user.is_authenticated %}
@@ -67,13 +64,20 @@
                             <a class="nav-item nav-link" href="{% url 'login' %}">Log In</a>
                             <a class="nav-item nav-link" href="{% url 'sign_up' %}">Sign Up</a>
                         {% endif %}
+						<form class="form-inline">
+							<input class="form-control"
+								   type="search"
+								   placeholder="Search"
+								   name="search"
+							>
+							<button class="searchButton" type="submit">Search</button>
+						</form>
                     </div>
                 </div>
             </nav>
-            </p>
             {% endblock %}
-        </div>
-		<div class="main">
+       
+		<div class="body">
             {% block body_block %}
 			{% endblock %}
         </div>
