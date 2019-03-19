@@ -232,6 +232,7 @@ def my_cafes(request):
     cafe_list = Cafe.objects.filter(owner=user)
     return render(request, 'cafe/my_cafes.html', {'cafe_list': cafe_list})
 
+
 @login_required
 def delete_cafe(request, cafe_name_slug):
     # if request.method == 'POST':
@@ -265,6 +266,7 @@ def write_review(request, cafe_name_slug):
     context_dict['form'] = form
     return render(request, 'cafe/write_review.html', context_dict)
 
+
 @login_required
 def delete_review(request, cafe_name_slug):
     try:
@@ -278,7 +280,6 @@ def delete_review(request, cafe_name_slug):
         cafe_reviews = None
     finally:
         return redirect('/cafe/my_account/my_reviews/')
-
 
 
 def search(request):

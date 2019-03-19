@@ -4,7 +4,6 @@ import populate_cafe
 from django.test import TestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.urls import reverse
-from cafe.models import *
 from cafe.forms import *
 from django.contrib.auth.models import User
 from django.conf import settings
@@ -578,3 +577,52 @@ class FormTest(TestCase):
                              '1600 Pennsylvania Avenue NW, Washington, DC 20500.'})
         # check if the form is valid
         self.assertTrue(form.is_valid())
+
+    def test_cafe_form_adds_data(self):
+        # login as test owner
+        self.client.login(username='test_owner', password='12345')
+        # create form
+        form = CafeForm({'name': 'New Cafe',
+                         'pricepoint': 3, 'address':
+                             '1600 Pennsylvania Avenue NW, Washington, DC 20500.'})
+
+        # save form
+        cafe = form.save(commit=False)
+        cafe.owner = UserProfile.objects.all().get(user=User.objects.get(username='test_owner'))
+        cafe.picture = form.cleaned_data['picture']
+        form.save()
+
+        # get all cafes check a cafe with the above data exists
+        cafes = Cafe.objects.all().get(name='New Cafe')
+        self.assertIsNotNone(cafes)
+
+    def test_review_form_valid_data(self):
+        # login as test user
+        self.client.login(username='test_user', password='12345')
+        # create form
+        form = ReviewForm({'price': 1, 'service': 2, 'atmosphere': 4, 'quality': 3, 'waiting_time': 5, 'comments': 'Hello There' })
+        # check if the form is valid
+        self.assertTrue(form.is_valid())
+
+    def test_review_form_adds_data(self):
+        # login as test owner
+        self.client.login(username='test_user', password='12345')
+        # create test cafe
+        cafe = Cafe(owner=self.user_profile, name='New Cafe', pricepoint=2)
+        cafe.save()
+        # create form
+        form = ReviewForm(
+            {'price': 1, 'service': 2, 'atmosphere': 4, 'quality': 3, 'waiting_time': 5, 'comments': 'Hello There'})
+        # save form
+        review = form.save(commit=False)
+        cafe = Cafe.objects.all().get(name='New Cafe')
+        review.cafe = cafe
+        review.avg_rating = int(
+            (review.price + review.quality + review.waiting_time + review.service + review.atmosphere) / 5)
+        review.user = UserProfile.objects.all().get(user=User.objects.get(username='test_user'))
+        review.save()
+        # get user profile
+        user = UserProfile.objects.all().get(user=User.objects.get(username='test_user'))
+        # get all reviews check a reviews with the above data exists
+        review = Review.objects.all().get(cafe=cafe, user=user)
+        self.assertIsNotNone(review)
