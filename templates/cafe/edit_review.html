@@ -9,7 +9,7 @@
 
 {% block body_block %}
 	<h2>{{cafe.name}}</h2>
-    <form method="post">
+    <form id="cafesmain" method="post">
   {% csrf_token %}
   {{ form.as_p }}
 

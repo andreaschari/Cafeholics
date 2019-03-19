@@ -1,4 +1,4 @@
-
+﻿
 #displayCafes{
 	background: #FAF5E9;
 	width: 90%;
@@ -47,7 +47,7 @@
 
 .rating{
 	display: inline;
-	font-size: 22px;
+	font-size: 30px;
 	font-style: oblique;
 	color: #ffcc00;
 	text-shadow: 0 1px 0 rgba(0,0,0,.3);

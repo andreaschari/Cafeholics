@@ -133,6 +133,7 @@ button.submit{
 }
 
 .aa:hover{
+	color: #634d37;
 	font-size: 36px;
 	text-decoration: none;
 	font-style: bold;

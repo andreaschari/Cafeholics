@@ -11,7 +11,7 @@
 <h2> My Cafes </h2>
     {% if cafe_list %}
         {% for cafe in cafe_list %}
-            <div id ="cafesmain">
+            <div id ='reviewdescription'>
                 Cafe Name: <a class="aa" href="{% url 'chosen_cafe'  cafe.slug %}">{{ cafe.name }}</a> <br>
                 {% if cafe.pricepoint == 1 %}
                     Price Estimate: Cheap

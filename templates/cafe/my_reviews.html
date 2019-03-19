@@ -9,18 +9,17 @@
 
 {% block body_block %}
 <h2> My Reviews </h2>
+<div>
     {% if reviews_list %}
-        <div>
         {% for review in reviews_list %}
-        <div>
-            <div id = cafedescription>
+            <div id ='reviewdescription'>
                 Review for <a class="aa" href="{% url 'chosen_cafe'  review.cafe.slug %}">{{ review.cafe.name }}</a> <br>
-                Prices : {{ review.price }} <br>
-                Service :  {{ review.service }} <br>
-                Atmosphere : {{ review.price }} <br>
-                Quality :  {{ review.quality }} <br>
-                Waiting time :  {{ review.waiting_time }}<br>
-                Feedback Comments :<br>
+                <strong>Price:</strong> {{ review.price }} <br>
+                <strong>Service:</strong> {{ review.service }} <br>
+                <strong>Atmosphere:</strong> {{ review.price }} <br>
+                <strong>Quality:</strong> {{ review.quality }} <br>
+                <strong>Waiting time:</strong> {{ review.waiting_time }}<br>
+                <strong>Feedback Comments:</strong><br>
                 {{ review.comments }} <br>
                 <button onclick="window.location.href = '{% url 'edit_review' review.cafe.slug %}';">Edit</button>
                 <button onclick="window.location.href = '{% url 'delete_review' review.cafe.slug %}';">Delete</button>
@@ -30,6 +29,5 @@
     {% else %}
         <strong>No reviews to display </strong>
     {% endif %}
-</div>
 </div>
 {% endblock %}
