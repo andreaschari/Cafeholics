@@ -10,23 +10,22 @@
 {% block body_block %}
     <div>
         <nav class="navbar navbar-light bg-light">
-            <form class="form-inline">
-                <input class="form-control mr-sm-2"
+            <form>
+                <input class="form-control"
                    type="search"
                    placeholder="Search"
-                   aria-label="Search"
                    name="search"value="{{ request.GET.search }}"
                 >
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <button class="searchButton" type="submit">Search</button>
             </form>
         </nav>
     </div>
 <div>
-<div id="displayCafes">
+<h2> Cafes Found: </h2>
+<div id="cafesmain">
     {% if cafes %}
-        <h2> Cafes Found: </h2>
         {% for cafe in cafes %}
-            <a href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a> Opening Hours: {{ cafe.opening_hours }}<br><br>
+            <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a> Opening Hours: {{ cafe.opening_hours }}<br><br>
         {% endfor %}
     {% else %}
         <h2> These are not the Cafes you are looking for </h2>
