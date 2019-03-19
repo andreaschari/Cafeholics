@@ -212,8 +212,8 @@ def my_account(request):
 
 
 @login_required
-def delete_account(request):
-    UserProfile.objects.all().filter(username=request.user.get_username()).delete()
+def delete_account(request, username):
+    User.objects.all().filter(username=username).delete()
     return redirect('/')
 
 
@@ -268,11 +268,11 @@ def write_review(request, cafe_name_slug):
 @login_required
 def delete_review(request, cafe_name_slug):
     try:
-        cafe = Cafe.objects.get(slug=cafe_name_slug)
+        cafe = Cafe.objects.all().filter(slug=cafe_name_slug)
     except Cafe.DoesNotExist:
         cafe = None
     if cafe:
-        Review.objects.get(cafe=cafe, user=request.user).delete()
+        Review.objects.all().filter(cafe=cafe, user=request.user).delete()
     return redirect('/cafe/chosen_cafe.html')
 
 
