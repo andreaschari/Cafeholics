@@ -22,11 +22,11 @@ def populate():
                     {'username': 'caroline99' ,'first_name': 'Caroline' , 'last_name':'Mcdonald', 'email': 'carolinemacdonald99@outlook.com', 'password': '2p#mT@!d', 'owner':False},
                     {'username': 'johnson34' ,'first_name': 'Johnson' , 'last_name':'Hill', 'email': 'johnsonhill@outlook.com', 'password': '!2FgA@pm', 'owner':False}]
 
-    cafes = {'xeniaskotti': [{'cafe_name' : 'Free Spirit','pricepoint': 1, 'picture':ImageFile(open(MEDIA_DIR + r'\FreeSpirit.jpg','rb')), 'address': '66 Hyndland St, Glasgow G11 5PT', 'opening_hours': '9am to 5pm'},
-                            {'cafe_name': 'CoffeeRiver', 'pricepoint': 2, 'picture':ImageFile(open(MEDIA_DIR +r'\CoffeeRiver.jpg','rb')), 'address': '7 Keith St, Glasgow G11 6QQ', 'opening_hours': '9am to 5pm'}],
-            'alisonscott': [{'cafe_name' : 'Starbucks','pricepoint': 3,'picture': ImageFile(open(MEDIA_DIR +r'\Starbucks.jpg','rb')), 'address': '254 Byres Rd, Glasgow G12 8SH', 'opening_hours': '9am to 5pm'},
-                            {'cafe_name': 'Monza', 'pricepoint': 1, 'picture': ImageFile(open(MEDIA_DIR +r'\Monza.jpg','rb')), 'address': '13 Vine St, Glasgow G11 6BA', 'opening_hours': '9am to 5pm'}],
-            'jonathan23':[{'cafe_name' : 'Fika','pricepoint': 2, 'picture': ImageFile(open(MEDIA_DIR + r'\Fika.jpg','rb')), 'address': '579 Dumbarton Rd, Glasgow G11 6HY', 'opening_hours': '9am to 5pm'}]}
+    cafes = {'xeniaskotti': [{'cafe_name' : 'Free Spirit','pricepoint': 1, 'picture':ImageFile(open(MEDIA_DIR + r'/FreeSpirit.jpg','rb')), 'address': '66 Hyndland St, Glasgow G11 5PT', 'opening_hours': '9am to 5pm'},
+                            {'cafe_name': 'CoffeeRiver', 'pricepoint': 2, 'picture':ImageFile(open(MEDIA_DIR +r'/CoffeeRiver.jpg','rb')), 'address': '7 Keith St, Glasgow G11 6QQ', 'opening_hours': '9am to 5pm'}],
+            'alisonscott': [{'cafe_name' : 'Starbucks','pricepoint': 3,'picture': ImageFile(open(MEDIA_DIR +r'/Starbucks.jpg','rb')), 'address': '254 Byres Rd, Glasgow G12 8SH', 'opening_hours': '9am to 5pm'},
+                            {'cafe_name': 'Monza', 'pricepoint': 1, 'picture': ImageFile(open(MEDIA_DIR +r'/Monza.jpg','rb')), 'address': '13 Vine St, Glasgow G11 6BA', 'opening_hours': '9am to 5pm'}],
+            'jonathan23':[{'cafe_name' : 'Fika','pricepoint': 2, 'picture': ImageFile(open(MEDIA_DIR + r'/Fika.jpg','rb')), 'address': '579 Dumbarton Rd, Glasgow G11 6HY', 'opening_hours': '9am to 5pm'}]}
 
     reviews = {'Free Spirit': [{'customer_username':'jakehill', 'price': 1, 'service' : 2, 'atmosphere' : 3, 'quality': 3, 'waiting_time': 5},
                                 {'customer_username':'tomwalker', 'price': 3, 'service' : 3, 'atmosphere' : 3, 'quality': 5, 'waiting_time': 5},
