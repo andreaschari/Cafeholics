@@ -264,16 +264,20 @@ def write_review(request, cafe_name_slug):
     context_dict['form'] = form
     return render(request, 'cafe/write_review.html', context_dict)
 
-
 @login_required
 def delete_review(request, cafe_name_slug):
     try:
-        cafe = Cafe.objects.all().filter(slug=cafe_name_slug)
+        cafe = Cafe.objects.all().get(slug=cafe_name_slug)
+        current_user = UserProfile.objects.all().get(user=request.user)
+        cafe_reviews = Review.objects.all().filter(user=current_user)
+        cafe_reviews.get(cafe=cafe).delete()
     except Cafe.DoesNotExist:
         cafe = None
-    if cafe:
-        Review.objects.all().filter(cafe=cafe, user=request.user).delete()
-    return redirect('/cafe/chosen_cafe.html')
+    except Review.DoesNotExist:
+        cafe_reviews = None
+    finally:
+        return redirect('/cafe/my_account/my_reviews/')
+
 
 
 def search(request):
