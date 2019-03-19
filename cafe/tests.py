@@ -488,19 +488,6 @@ class TemplateTest(TestCase):
         response = self.client.get(reverse("home"))
         self.assertContains(response, """<button onclick="window.location.href = '/cafe/register/';">Sign Up</button>""", html=True)
 
-    def test_cafes_show__in_cafes_page(self):
-        populate_cafe.populate()
-        # get all Cafes
-        # create test user
-        self.user = User.objects.create_user(username='test_user', password='12345')
-        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
-        # login as test user
-        self.client.login(username='test_user', password='12345')
-        cafes = Cafe.objects.all()
-        for cafe in cafes:
-            response = self.client.get(reverse("chosen_cafe", kwargs={'cafe_name_slug': cafe.slug}))
-            self.assertContains(response, '<h2>{}</h2>'.format(cafe.name), html=True)
-
     def test_cafe_page_displays_error_for_non_existing_cafe(self):
         # create test user
         self.user = User.objects.create_user(username='test_user', password='12345')

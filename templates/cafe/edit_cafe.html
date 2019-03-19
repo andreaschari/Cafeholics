@@ -8,7 +8,7 @@
 
 {% block body_block %}
     <h2> Edit {{ cafe.name }} </h2>
-    <form id = 'mainform' method="post">
+    <form id = 'mainform' method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button class="submit" type="submit">Submit Changes</button><br/>
