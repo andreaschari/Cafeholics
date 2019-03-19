@@ -230,7 +230,7 @@ button.submit{
 
 /* Style for input boxes*/
 
-input[type=text], input[type=password], input[type=number], input[type=email]{
+input[type=text], input[type=password], input[type=number], input[type=email], input[type=file]{
     	font-size:24px;
 	width: 50%;
     	padding: 10px 20px;
@@ -319,7 +319,7 @@ input.mainforms{
 	overflow: auto;
 	opacity: 0.8;
 	text-align: center;
-	font-size: 38px;
+	font-size: 34px;
 	margin: 0 auto;
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
