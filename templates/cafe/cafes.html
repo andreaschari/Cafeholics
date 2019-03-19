@@ -4,7 +4,7 @@
 {% load staticfiles %}
 
 {% block some_js %}
-<script type="text/javascript" src="/static/scripts/sortby.js"></script>
+<script type="text/javascript" src="/static/scripts/sortByDropdown.js"></script>
 {% endblock some_js %}
 {% block title_block %}
 	Cafes
@@ -12,21 +12,29 @@
 
 {% block body_block %}
 
-	<form id="searchform" method="GET" action="">
-			<input class="searchButton" type="submit" value="Search"/>
-			<input class="searchbar" type="text" placeholder="What cafe are you looking for..">
-	</form>
+	<nav class="navbar navbar-light bg-light">
+        <form class="form-inline">
+            <input class="form-control mr-sm-2"
+                   type="search"
+                   placeholder="Search"
+                   aria-label="Search"
+                   name="search"
+            >
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </nav>
 	<h2>
 		All Cafes<br>
     <center>
     <h2>Sort by:</h2><br>
-        <p>
-          <button id = "Price">Price</button>
-          <button id= "Quality">Quality</button>
-          <button id="WaitingTimes">Waiting Time</button>
-          <button id="Service">Service</button>
-          <button id="Atmosphere">Atmosphere</button>
-        </p>
+        <select name="sort by" id="dropdown">
+            <option value="avg_rating">Average rating</option>
+            <option value="price">Price</option>
+            <option value="service">Service</option>
+            <option value="atmosphere">Atmosphere</option>
+            <option value="quality">Quality</option>
+            <option value="waiting_times">Waiting time</option>
+        </select>
     </center>
     </h2>
     </center>
@@ -35,54 +43,48 @@
     			<strong>These are not the Cafes you are looking for.</strong>
     {%  else %}
       		{% if cafes %}
-              <p id="byAverage">
+              <div id="avg_rating" class="group">
                   {% if byAverage %}
-                      Sorted by average:<br>
                       {% for cafe in byAverage %}
                           <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
                       {% endfor %}
                   {%  endif %}
-              </p>
-              <p id ="byPrice">
+              </div>
+              <div id="price" class="group">
                     {% if byPrice %}
-                        Sorted by price:<br>
         				        {% for cafe in byPrice %}
                               <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
                         {% endfor %}
                     {%  endif %}
-              </p>
-              <p id="byAtmosphere">
+              </div>
+              <div id="atmosphere" class="group">
                     {% if byAtmosphere %}
-                        Sorted by atmosphere:<br>
         				        {% for cafe in byAtmosphere %}
                               <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
         				        {% endfor %}
                     {%  endif %}
-              </p>
-              <p id="byQuality">
+              </div>
+               <div id="quality" class="group">
                     {% if byQuality %}
-                        Sorted by quality:<br>
         				        {% for cafe in byQuality %}
                             <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
         				        {% endfor %}
                     {%  endif %}
-              </p>
-              <p id="byService">
+              </div>
+              <div id="service" class="group">
                     {% if byService %}
-                        Sorted by service:<br>
         				        {% for cafe in byService %}
                             <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
         				        {% endfor %}
                     {%  endif %}
-              </p>
-              <p id="byWaitingTimes">
+              </div>
+              <div id="waiting_times" class="group">
                     {% if byWaitingTimes %}
-                        Sorted by waiting time:<br>
         				        {% for cafe in byWaitingTimes %}
                             <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
         				        {% endfor %}
                     {%  endif %}
-              </p>
+              </div>
       		{% else %}
       			<strong>There aren't any cafes registered.</strong>
       		{% endif %}

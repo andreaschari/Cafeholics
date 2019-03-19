@@ -34,11 +34,11 @@ def populate():
                                 {'customer_username':'tomwalker', 'price': 3, 'service' : 3, 'atmosphere' : 3, 'quality': 5, 'waiting_time': 5},
                                 {'customer_username':'caroline99', 'price': 4, 'service' : 4, 'atmosphere' : 2, 'quality': 2, 'waiting_time': 5},
                                 {'customer_username':'johnson34', 'price': 3, 'service' : 4, 'atmosphere' : 4, 'quality': 2, 'waiting_time': 5}],
-                'CoffeeRiver':[{'customer_username':'jakehill', 'price': 5, 'service' : 3, 'atmosphere' : 3, 'quality': 4, 'waiting_time': 5},
-                            {'customer_username':'caroline99', 'price': 4, 'service' : 4, 'atmosphere' : 2, 'quality': 2, 'waiting_time': 5},
-                            {'customer_username':'tomwalker', 'price': 3, 'service' : 3, 'atmosphere' : 3, 'quality': 4, 'waiting_time': 5},
-                            {'customer_username':'johnson34', 'price': 3, 'service' : 4, 'atmosphere' : 4, 'quality': 2, 'waiting_time': 5}],
-                'Monza': [{'customer_username':'tomwalker', 'price': 3, 'service' : 5, 'atmosphere' : 4, 'quality': 4, 'waiting_time': 5},
+                'CoffeeRiver':[{'customer_username':'jakehill', 'price': 2, 'service' : 3, 'atmosphere' : 3, 'quality': 2, 'waiting_time': 3},
+                            {'customer_username':'caroline99', 'price': 2, 'service' : 4, 'atmosphere' : 2, 'quality': 2, 'waiting_time': 3},
+                            {'customer_username':'tomwalker', 'price': 2, 'service' : 3, 'atmosphere' : 2, 'quality': 2, 'waiting_time': 3},
+                            {'customer_username':'johnson34', 'price': 2, 'service' : 2, 'atmosphere' : 2, 'quality': 2, 'waiting_time': 3}],
+                'Monza': [{'customer_username':'tomwalker', 'price': 2, 'service' : 2, 'atmosphere' : 4, 'quality': 2, 'waiting_time': 3},
                             {'customer_username':'caroline99', 'price': 4, 'service' : 4, 'atmosphere' : 2, 'quality': 2, 'waiting_time': 5},
                             {'customer_username':'johnson34', 'price': 3, 'service' : 4, 'atmosphere' : 4, 'quality': 2, 'waiting_time': 5}],
                 'Starbucks': [{'customer_username':'jakehill', 'price': 2, 'service' : 3, 'atmosphere' : 3, 'quality': 3, 'waiting_time': 5},
@@ -59,7 +59,7 @@ def populate():
     for owner_data in cafe_owners:
         o = add_user(owner_data["username"], owner_data["first_name"], owner_data["last_name"], owner_data["email"], owner_data["password"], owner_data["owner"])
         for cafe in cafes[owner_data["username"]]:
-            c = add_cafe(o, cafe["cafe_name"], cafe["pricepoint"], cafe['address'], cafe['opening_hours'])
+            c = add_cafe(o, cafe["cafe_name"], cafe["pricepoint"], cafe['address'], cafe['opening_hours'], cafe['picture'])
             for review in reviews[cafe["cafe_name"]]:
                 r = add_review(c, users[review["customer_username"]],review["price"],review["service"],review["atmosphere"],review["quality"], review["waiting_time"])
 
@@ -74,9 +74,9 @@ def add_user(username, first_name, last_name, email, password, owner):
     return up
 
 
-def add_cafe(owner,cafe_name,pricepoint,address, opening_hours):
+def add_cafe(owner,cafe_name,pricepoint,address, opening_hours,picture):
     c = Cafe.objects.get_or_create(owner = owner, name = cafe_name, pricepoint = pricepoint)[0]
-    # c.picture = picture
+    c.picture = picture
     c.opening_hours = opening_hours
     c.address = address
     c.save()
