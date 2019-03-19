@@ -2,17 +2,23 @@
 Cafeholics is a Django based web application that allows cafe owners to manage basic information about their cafes as well as allowing customers to find a cafe and/or review it.
 ## Getting Started
 ### Prerequisites
-Python 3.x <br/>
-Internet Connection?
+[Python 3.x](https://www.python.org/downloads/)
 ### Installation
 Clone the repository using [git](https://git-scm.com/).
 ```bash
 git clone https://github.com/andreaschari/Cafeholics.git
 ```
-Create Virtual Environment and install necessary Python modules
+Create Virtual Environment and install necessary Python modules <br/>
+Windows <br/>
+```bash
+py -m virtualenv env
+.\env\Scripts\activate
+pip install -r requirements.txt
+```
+Linux/MacOs <br/>
 ```bash
 python3 -m virtualenv env
-.\env\Scripts\activate
+source env/bin/activate
 pip install -r requirements.txt
 ```
 ### Running Web-App
