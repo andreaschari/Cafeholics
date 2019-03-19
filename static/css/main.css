@@ -195,15 +195,14 @@ button.submit{
 	/*background: -moz-linear-gradient( center top, rgb(255,255,255) 0%, rgb(235,235,235) 100%);*/
 
 	position: relative;
-	float: right;
 	border: 0;
 	color: #737373;
 	cursor: pointer;
 	font: 26px 'Raleway', sans-serif;
-	height: 60px;
+	height: 50px;
 	margin: 6px 6px 0;
 	text-shadow: 0 -1px 0 rgba(0,0,0,.3);
-	width: 200px;
+	width: 150px;
 	outline: none;
 
 	border-radius: 40px;
@@ -215,12 +214,12 @@ button.submit{
 	-webkit-box-shadow: -1px -1px 1px rgba(255,255,255,.5), 2px 2px 0 rgba(0,0,0,.4);
 }
 
-/*.searchButton:hover {*/
-	/*background: #fafafa;*/
+.searchButton:hover {
+	background: #fafafa;
 
-	/*!*background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(250,250,250)), color-stop(1, rgb(230,230,230)));*!*/
-	/*!*background: -moz-linear-gradient( center top, rgb(255,255,255) 0%, rgb(235,235,235) 100%);*!*/
-/*}*/
+	background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(250,250,250)), color-stop(1, rgb(230,230,230)));*!*/
+	background: -moz-linear-gradient( center top, rgb(255,255,255) 0%, rgb(235,235,235) 100%);*!*/
+}
 
 
 
