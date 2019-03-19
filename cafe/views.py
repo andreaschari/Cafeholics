@@ -49,7 +49,53 @@ def about(request):
 
     return render(request, 'cafe/about.html', context=context_dict)
 
+def sortByCategoryLists(cafe_list):
+    price_list, service_list, atmosphere_list, quality_list, waiting_times_list = [], [], [], [], []
+    byPrice, byService, byAtmosphere, byWaitingTimes, byQuality = [], [], [], [], []
+    for cafe in cafe_list:
+        reviews = Review.objects.filter(cafe=cafe)
+        sumPrice, sumQuality, sumWaitingTime, sumService, sumAtmosphere, count = 0, 0, 0, 0, 0 ,0
+        for review in reviews:
+            sumPrice += review.price
+            sumQuality += review.quality
+            sumWaitingTime += review.waiting_time
+            sumService += review.service
+            sumAtmosphere += review.atmosphere
+            count += 1
+        if (count>0):
+            price_list.append([sumPrice/count, cafe.name])
+            quality_list.append([sumQuality/count, cafe.name])
+            waiting_times_list.append([sumWaitingTime/count, cafe.name])
+            service_list.append([sumService/count, cafe.name])
+            atmosphere_list.append([sumAtmosphere/count, cafe.name])
+    price_list.sort()
+    quality_list.sort()
+    waiting_times_list.sort()
+    service_list.sort()
+    atmosphere_list.sort()
 
+
+    for i in range(len(price_list)):
+        byPrice.append(price_list[i][1])
+        byService.append(service_list[i][1])
+        byAtmosphere.append(atmosphere_list[i][1])
+        byQuality.append(quality_list[i][1])
+        byWaitingTimes.append(waiting_times_list[i][1])
+
+    for cafe in cafe_list:
+        for i in range(len(byPrice)):
+            if byPrice[i] == cafe.name:
+                byPrice[i] = cafe
+            if byQuality[i] ==cafe.name:
+                byQuality[i] = cafe
+            if byService[i] == cafe.name:
+                byService[i] = cafe
+            if byAtmosphere[i] == cafe.name:
+                byAtmosphere[i] = cafe
+            if byWaitingTimes[i] == cafe.name:
+                byWaitingTimes[i] =cafe
+
+    return byQuality, byService, byAtmosphere, byWaitingTimes, byPrice
 def cafes(request):
     context_dict = {}
     if 'search' in request.GET:
@@ -58,50 +104,7 @@ def cafes(request):
         context_dict['cafes'] = cafes_found
         return render(request, 'cafe/search_results.html', context=context_dict)
     cafe_list = Cafe.objects.all()
-    price_list = []
-    service_list =[]
-    atmosphere_list =[]
-    waiting_times_list = []
-    quality_list =[]
-    byPrice = []
-    byService =[]
-    byAtmosphere =[]
-    byWaitingTimes = []
-    byQuality = []
-    for cafe in cafe_list:
-        reviews = Review.objects.filter(cafe=cafe)
-        sumPrice = 0
-        sumQuality = 0
-        sumWaitingTime =0
-        sumService =0
-        sumAtmosphere =0
-        count = 0
-        for review in reviews:
-            sumPrice = sumPrice + review.price
-            sumQuality = sumQuality + review.quality
-            sumWaitingTime = sumWaitingTime + review.waiting_time
-            sumService = sumService + review.service
-            sumAtmosphere = sumAtmosphere + review.atmosphere
-            count = count + 1
-        if (count>0):
-            price_list.append([sumPrice/count, cafe.name])
-            quality_list.append([sumQuality/count, cafe.name])
-            waiting_times_list.append([sumWaitingTime/count, cafe.name])
-            service_list.append([sumService/count, cafe.name])
-            atmosphere_list.append([sumAtmosphere/count, cafe.name])
-            price_list.sort()
-            quality_list.sort()
-            waiting_times_list.sort()
-            service_list.sort()
-            atmosphere_list.sort()
-
-
-            for i in range(len(price_list)):
-                byPrice.append(price_list[i][1])
-                byService.append(service_list[i][1])
-                byAtmosphere.append(atmosphere_list[i][1])
-                byQuality.append(quality_list[i][1])
-                byWaitingTimes.append(waiting_times_list[i][1])
+    byQuality, byService, byAtmosphere, byWaitingTimes, byPrice = sortByCategoryLists(cafe_list)
     avg_rating_list = Cafe.objects.order_by('-avg_rating')
     context_dict = {'cafes': cafe_list, 'byPrice': byPrice, 'byService': byService,
                     'byAtmosphere': byAtmosphere, 'byQuality': byQuality,

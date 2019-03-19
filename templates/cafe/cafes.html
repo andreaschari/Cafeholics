@@ -2,7 +2,8 @@
 
 {% extends 'cafe/base.html' %}
 {% load staticfiles %}
-<!-- <script src="jquery-3.3.1.js"></script>
+
+{% block some_js %}
 <script>
     $(document).ready(function () {
        $('#byAverage').show();
@@ -55,23 +56,18 @@
         });
     });
 
-</script> -->
+</script>
+{% endblock some_js %}
 {% block title_block %}
 	Cafes
 {% endblock %}
 
 {% block body_block %}
-    <nav class="navbar navbar-light bg-light">
-        <form class="form-inline">
-            <input class="form-control mr-sm-2"
-                   type="search"
-                   placeholder="Search"
-                   aria-label="Search"
-                   name="search"
-            >
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </nav>
+
+	<form id="searchform" method="GET" action="">
+			<input class="searchButton" type="submit" value="Search"/>
+			<input class="searchbar" type="text" placeholder="What cafe are you looking for..">
+	</form>
 	<h2>
 		All Cafes<br>
     <center>
@@ -92,46 +88,52 @@
     {%  else %}
       		{% if cafes %}
               <p id="byAverage">
-                      {% if byAverage %}
-                          {% for cafe in byAverage %}
-                              <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
-                          {% endfor %}
-                      {%  endif %}
+                  {% if byAverage %}
+                      Sorted by average:<br>
+                      {% for cafe in byAverage %}
+                          <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
+                      {% endfor %}
+                  {%  endif %}
               </p>
               <p id ="byPrice">
-                        {% if byPrice %}
-            				        {% for cafe in byPrice %}
-            					           <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
-                            {% endfor %}
-                        {%  endif %}
+                    {% if byPrice %}
+                        Sorted by price:<br>
+        				        {% for cafe in byPrice %}
+                              <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
+                        {% endfor %}
+                    {%  endif %}
               </p>
               <p id="byAtmosphere">
-                          {% if byAtmosphere %}
-              				        {% for cafe in byAtmosphere %}
-              					           <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
-              				        {% endfor %}
-                          {%  endif %}
+                    {% if byAtmosphere %}
+                        Sorted by atmosphere:<br>
+        				        {% for cafe in byAtmosphere %}
+                              <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
+        				        {% endfor %}
+                    {%  endif %}
               </p>
               <p id="byQuality">
-                            {% if byQuality %}
-                				        {% for cafe in byQuality %}
-                					           <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
-                				        {% endfor %}
-                            {%  endif %}
+                    {% if byQuality %}
+                        Sorted by quality:<br>
+        				        {% for cafe in byQuality %}
+                            <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
+        				        {% endfor %}
+                    {%  endif %}
               </p>
               <p id="byService">
-                              {% if byService %}
-                  				        {% for cafe in byService %}
-                  					           <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
-                  				        {% endfor %}
-                              {%  endif %}
+                    {% if byService %}
+                        Sorted by service:<br>
+        				        {% for cafe in byService %}
+                            <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
+        				        {% endfor %}
+                    {%  endif %}
               </p>
               <p id="byWaitingTimes">
-                              {% if byWaitingTimes %}
-                  				        {% for cafe in byWaitingTimes %}
-                  					           <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a> <br>
-                  				        {% endfor %}
-                              {%  endif %}
+                    {% if byWaitingTimes %}
+                        Sorted by waiting time:<br>
+        				        {% for cafe in byWaitingTimes %}
+                            <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
+        				        {% endfor %}
+                    {%  endif %}
               </p>
       		{% else %}
       			<strong>There aren't any cafes registered.</strong>
