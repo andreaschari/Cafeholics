@@ -6,7 +6,7 @@ from cafe.models import UserProfile, Cafe, Review
 from django.contrib.auth.models import User
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-MEDIA_DIR = os.path.join(BASE_DIR, 'Cafeholics\\media\\cafe_images\\')
+MEDIA_DIR = os.path.join(BASE_DIR, r'Cafeholics\media')
 from django.core.files.images import ImageFile
 
 
@@ -24,11 +24,11 @@ def populate():
                     {'username': 'caroline99' ,'first_name': 'Caroline' , 'last_name':'Mcdonald', 'email': 'carolinemacdonald99@outlook.com', 'password': '2p#mT@!d', 'owner':False},
                     {'username': 'johnson34' ,'first_name': 'Johnson' , 'last_name':'Hill', 'email': 'johnsonhill@outlook.com', 'password': '!2FgA@pm', 'owner':False}]
 
-    cafes = {'xeniaskotti': [{'cafe_name' : 'Free Spirit','pricepoint': 1, 'picture':ImageFile(open(MEDIA_DIR + 'FreeSpirit.jpg','rb')), 'address': '66 Hyndland St, Glasgow G11 5PT', 'opening_hours': '9am to 5pm'},
-                            {'cafe_name': 'CoffeeRiver', 'pricepoint': 2, 'picture':ImageFile(open(MEDIA_DIR +'CoffeeRiver.jpg','rb')), 'address': '7 Keith St, Glasgow G11 6QQ', 'opening_hours': '9am to 5pm'}],
-            'alisonscott': [{'cafe_name' : 'Starbucks','pricepoint': 3,'picture': ImageFile(open(MEDIA_DIR +'Starbucks.jpg','rb')), 'address': '254 Byres Rd, Glasgow G12 8SH', 'opening_hours': '9am to 5pm'},
-                            {'cafe_name': 'Monza', 'pricepoint': 1, 'picture': ImageFile(open(MEDIA_DIR +'Monza.jpg','rb')), 'address': '13 Vine St, Glasgow G11 6BA', 'opening_hours': '9am to 5pm'}],
-            'jonathan23':[{'cafe_name' : 'Fika','pricepoint': 2, 'picture': ImageFile(open(MEDIA_DIR +'Fika.jpg','rb')), 'address': '579 Dumbarton Rd, Glasgow G11 6HY', 'opening_hours': '9am to 5pm'}]}
+    cafes = {'xeniaskotti': [{'cafe_name' : 'Free Spirit','pricepoint': 1, 'picture':ImageFile(open(MEDIA_DIR + r'\FreeSpirit.jpg','rb')), 'address': '66 Hyndland St, Glasgow G11 5PT', 'opening_hours': '9am to 5pm'},
+                            {'cafe_name': 'CoffeeRiver', 'pricepoint': 2, 'picture':ImageFile(open(MEDIA_DIR +r'\CoffeeRiver.jpg','rb')), 'address': '7 Keith St, Glasgow G11 6QQ', 'opening_hours': '9am to 5pm'}],
+            'alisonscott': [{'cafe_name' : 'Starbucks','pricepoint': 3,'picture': ImageFile(open(MEDIA_DIR +r'\Starbucks.jpg','rb')), 'address': '254 Byres Rd, Glasgow G12 8SH', 'opening_hours': '9am to 5pm'},
+                            {'cafe_name': 'Monza', 'pricepoint': 1, 'picture': ImageFile(open(MEDIA_DIR +r'\Monza.jpg','rb')), 'address': '13 Vine St, Glasgow G11 6BA', 'opening_hours': '9am to 5pm'}],
+            'jonathan23':[{'cafe_name' : 'Fika','pricepoint': 2, 'picture': ImageFile(open(MEDIA_DIR + r'\Fika.jpg','rb')), 'address': '579 Dumbarton Rd, Glasgow G11 6HY', 'opening_hours': '9am to 5pm'}]}
 
     reviews = {'Free Spirit': [{'customer_username':'jakehill', 'price': 1, 'service' : 2, 'atmosphere' : 3, 'quality': 3, 'waiting_time': 5},
                                 {'customer_username':'tomwalker', 'price': 3, 'service' : 3, 'atmosphere' : 3, 'quality': 5, 'waiting_time': 5},
@@ -76,7 +76,8 @@ def add_user(username, first_name, last_name, email, password, owner):
 
 def add_cafe(owner,cafe_name,pricepoint,address, opening_hours,picture):
     c = Cafe.objects.get_or_create(owner = owner, name = cafe_name, pricepoint = pricepoint)[0]
-    c.picture = picture
+    print(picture)
+    # c.picture = picture
     c.opening_hours = opening_hours
     c.address = address
     c.save()
@@ -101,18 +102,17 @@ def avg_rating_cafe(cafe):
     return avg
 
 if __name__ == '__main__':
-    print("Starting Cafe population script...")
-    print("Users created:")
-    for u in UserProfile.objects.all():
-        print(str(u))
-
-    print()
-    print("Cafes created:")
-    for c in Cafe.objects.all():
-        print(str(c))
-        print("Customers who left a review:")
-        for r in Review.objects.filter(cafe=c):
-            print(str(r))
-        print()
-
+    # print("Starting Cafe population script...")
+    # print("Users created:")
+    # for u in UserProfile.objects.all():
+    #     print(str(u))
+    #
+    # print()
+    # print("Cafes created:")
+    # for c in Cafe.objects.all():
+    #     print(str(c))
+    #     print("Customers who left a review:")
+    #     for r in Review.objects.filter(cafe=c):
+    #         print(str(r))
+    #     print()
     populate()
