@@ -21,7 +21,7 @@ class EditCafeView(UpdateView):
 
 class EditReviewView(UpdateView):
     model = Review
-    form_class = CafeForm
+    form_class = ReviewForm
     template_name = 'cafe/edit_review.html'
 
     def get_object(self, *args, **kwargs):
@@ -51,53 +51,54 @@ def about(request):
     return render(request, 'cafe/about.html', context=context_dict)
 
 
-def sortByCategoryLists(cafe_list):
+def sort_by_category_lists(cafe_list):
     price_list, service_list, atmosphere_list, quality_list, waiting_times_list = [], [], [], [], []
-    byPrice, byService, byAtmosphere, byWaitingTimes, byQuality = [], [], [], [], []
+    by_price, by_service, by_atmosphere, by_waiting_times, by_quality = [], [], [], [], []
     for cafe in cafe_list:
         reviews = Review.objects.filter(cafe=cafe)
-        sumPrice, sumQuality, sumWaitingTime, sumService, sumAtmosphere, count = 0, 0, 0, 0, 0 ,0
+        sum_price, sum_quality, sum_waiting_time, sum_service, sum_atmosphere, count = 0, 0, 0, 0, 0, 0
         for review in reviews:
-            sumPrice += review.price
-            sumQuality += review.quality
-            sumWaitingTime += review.waiting_time
-            sumService += review.service
-            sumAtmosphere += review.atmosphere
+            sum_price += review.price
+            sum_quality += review.quality
+            sum_waiting_time += review.waiting_time
+            sum_service += review.service
+            sum_atmosphere += review.atmosphere
             count += 1
-        if (count>0):
-            price_list.append([sumPrice/count, cafe.name])
-            quality_list.append([sumQuality/count, cafe.name])
-            waiting_times_list.append([sumWaitingTime/count, cafe.name])
-            service_list.append([sumService/count, cafe.name])
-            atmosphere_list.append([sumAtmosphere/count, cafe.name])
+        if count > 0:
+            price_list.append([sum_price/count, cafe.name])
+            quality_list.append([sum_quality/count, cafe.name])
+            waiting_times_list.append([sum_waiting_time/count, cafe.name])
+            service_list.append([sum_service/count, cafe.name])
+            atmosphere_list.append([sum_atmosphere/count, cafe.name])
     price_list.sort()
     quality_list.sort()
     waiting_times_list.sort()
     service_list.sort()
     atmosphere_list.sort()
 
-
     for i in range(len(price_list)):
-        byPrice.append(price_list[i][1])
-        byService.append(service_list[i][1])
-        byAtmosphere.append(atmosphere_list[i][1])
-        byQuality.append(quality_list[i][1])
-        byWaitingTimes.append(waiting_times_list[i][1])
+        by_price.append(price_list[i][1])
+        by_service.append(service_list[i][1])
+        by_atmosphere.append(atmosphere_list[i][1])
+        by_quality.append(quality_list[i][1])
+        by_waiting_times.append(waiting_times_list[i][1])
 
     for cafe in cafe_list:
-        for i in range(len(byPrice)):
-            if byPrice[i] == cafe.name:
-                byPrice[i] = cafe
-            if byQuality[i] ==cafe.name:
-                byQuality[i] = cafe
-            if byService[i] == cafe.name:
-                byService[i] = cafe
-            if byAtmosphere[i] == cafe.name:
-                byAtmosphere[i] = cafe
-            if byWaitingTimes[i] == cafe.name:
-                byWaitingTimes[i] =cafe
+        for i in range(len(by_price)):
+            if by_price[i] == cafe.name:
+                by_price[i] = cafe
+            if by_quality[i] == cafe.name:
+                by_quality[i] = cafe
+            if by_service[i] == cafe.name:
+                by_service[i] = cafe
+            if by_atmosphere[i] == cafe.name:
+                by_atmosphere[i] = cafe
+            if by_waiting_times[i] == cafe.name:
+                by_waiting_times[i] = cafe
 
-    return byQuality, byService, byAtmosphere, byWaitingTimes, byPrice
+    return by_quality, by_service, by_atmosphere, by_waiting_times, by_price
+
+
 def cafes(request):
     context_dict = {}
     if 'search' in request.GET:
@@ -106,11 +107,11 @@ def cafes(request):
         context_dict['cafes'] = cafes_found
         return render(request, 'cafe/search_results.html', context=context_dict)
     cafe_list = Cafe.objects.all()
-    byQuality, byService, byAtmosphere, byWaitingTimes, byPrice = sortByCategoryLists(cafe_list)
+    by_quality, by_service, by_atmosphere, by_waiting_times, by_price = sort_by_category_lists(cafe_list)
     avg_rating_list = Cafe.objects.order_by('-avg_rating')
-    context_dict = {'cafes': cafe_list, 'byPrice': byPrice, 'byService': byService,
-                    'byAtmosphere': byAtmosphere, 'byQuality': byQuality,
-                    'byWaitingTimes': byWaitingTimes, 'byAverage': avg_rating_list}
+    context_dict = {'cafes': cafe_list, 'by_price': by_price, 'by_service': by_service,
+                    'by_atmosphere': by_atmosphere, 'by_quality': by_quality,
+                    'by_waiting_times': by_waiting_times, 'by_average': avg_rating_list}
 
     return render(request, 'cafe/cafes.html', context=context_dict)
 
@@ -272,7 +273,7 @@ def delete_review(request, cafe_name_slug):
     except Cafe.DoesNotExist:
         cafe = None
     if cafe:
-        Review.objects.get(cafe=cafe,user=request.user).delete()
+        Review.objects.get(cafe=cafe, user=request.user).delete()
     return redirect('/cafe/chosen_cafe.html')
 
 

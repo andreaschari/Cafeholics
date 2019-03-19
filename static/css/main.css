@@ -15,6 +15,10 @@ form {
     margin: 0 auto;
 
 }
+.center_text{
+	text-align: center;
+    margin: 0 auto;
+}
 .login_button{
 	float: right;
 	padding: 20px 20px;
