@@ -9,8 +9,10 @@ Clone the repository using [git](https://git-scm.com/).
 ```bash
 git clone https://github.com/andreaschari/Cafeholics.git
 ```
-Install necessary Python modules(using a virtual environment is encouraged)
+Create Virtual Environment and install necessary Python modules
 ```bash
+python3 -m virtualenv env
+.\env\Scripts\activate
 pip install -r requirements.txt
 ```
 ### Running Web-App
