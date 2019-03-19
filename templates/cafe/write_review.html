@@ -12,7 +12,7 @@
 	<form id="mainform" method="post">
 		{% csrf_token %}
 		{% for field in form.visible_fields %}
-			<br>{{ field.label }}<br> {{ field }}
+            {{ field.label }}: <br>{{ field }}
 				{{ field.errors }}
 				 <br>
 		{% endfor %}

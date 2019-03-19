@@ -32,7 +32,7 @@ class CafeForm(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
-    CHOICES = ((1,'One'), (2,'Two'), (3,'Three'), (4,'Four'), (5,'Five'))
+    CHOICES = ((1, 'Terrible'), (2, 'Bad'), (3, 'Average'), (4, 'Good'), (5, 'Excellent'))
     price = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
     service = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
     atmosphere = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
