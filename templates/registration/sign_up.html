@@ -11,7 +11,7 @@
 {% block body_block %}
 
 	<h2>Register for Cafeholics</h2>
-		<form id="mainform" method="post" action="{% url 'sign_up' %}"
+		<form id="cafesmain" method="post" action="{% url 'sign_up' %}"
 			enctype="multipart/form-data">
 			<strong>Please sign up here!</strong><br />
 			{% csrf_token %}

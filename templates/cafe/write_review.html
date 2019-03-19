@@ -9,12 +9,12 @@
 
 {% block body_block %}
 	<h2>Write a review for {{cafe.name}}</h2>
-	<form id="mainform" method="post">
+	<form id="cafesmain" method="post">
 		{% csrf_token %}
 		{% for field in form.visible_fields %}
-            {{ field.label }}: <br>{{ field }}
+            {{ field.label }}</br>{{ field }}
 				{{ field.errors }}
-				 <br>
+				<br>
 		{% endfor %}
 		<button class="submit" type="submit">Submit review</button><br/>
 	</form>
