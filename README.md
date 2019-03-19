@@ -31,8 +31,9 @@ python3 manage.py runserver
 python3 manage.py test
 ```
 ## External Sources
-[JQuery](https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js) <br/>
-[Bootstrap Nav Bar Forms](https://getbootstrap.com/docs/4.0/components/navbar/#forms) <br/>
+[JQuery](http://jquery.com/download/) <br/>
+[Popper.js](https://popper.js.org/)<br/>
+[BootstrapCDN](https://getbootstrap.com/docs/4.3/getting-started/introduction/) <br/>
 [Google Maps URLs](https://developers.google.com/maps/documentation/urls/guide) <br/>
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
