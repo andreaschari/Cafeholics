@@ -121,11 +121,12 @@ button.submit{
 /* Using aa for the cafe links in the lists */
 .aa{
 	font-size: 34px;
-	color: #0132D2;
+	color: #634d37;
 	text-decoration: none;
 }
 
 .aa:hover{
+	font-size: 36px;
 	text-decoration: none;
 	font-style: bold;
 	text-shadow: -1px -1px 1px rgba(0,0,0,.2);
