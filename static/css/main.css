@@ -32,6 +32,7 @@ form {
 	/* background: #D9D6D2; */
 	top: 0px;
 	padding: 0px 0;
+	z-index: 1;
 }
 
 .sidenav a {
@@ -87,6 +88,7 @@ h3 {
 
 /* Buttons */
 button{
+
 	color: #737373;
 	font: 34px;
 	background-color: #eee;
@@ -132,6 +134,7 @@ button.submit{
 
 #login {
 	position: fixed;
+	z-index: 1;
 	top: 10px;
 	right: 10px;
 	padding: 10px 10px;
