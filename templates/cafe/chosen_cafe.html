@@ -43,10 +43,10 @@
 					<p><strong>{{ review.user }}</strong></p>
 
 					<strong>Price:</strong> <span class="fa fa-star checked">{{ review.price }}</span><br>
-					<strong>Service:</strong> {{ review.service }}<br>
-					<strong>Atmosphere:</strong> {{ review.atmosphere }}<br>
-					<strong>Quality:</strong> {{ review.quality }}<br>
-					<strong>Waiting time:</strong> {{ review.waiting_time }}<br>
+					<strong>Service:</strong> {{ review.service }} out of 5<br>
+					<strong>Atmosphere:</strong> {{ review.atmosphere }} out of 5<br>
+					<strong>Quality:</strong> {{ review.quality }} out of 5<br>
+					<strong>Waiting time:</strong> {{ review.waiting_time }} out of 5<br>
 
 					{% if review.comments %}
 						Review:
