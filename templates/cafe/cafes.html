@@ -12,8 +12,8 @@
 
 {% block body_block %}
 
-	<h2>
-		All Cafes<br>
+	<h2><strong>
+		All Cafes</strong><br>
     <h2>Sort by:
        <select name="sort by" id="dropdown">
             <option value="avg_rating">Average rating</option>
@@ -78,7 +78,7 @@
                     {%  endif %}
               </div>
       		{% else %}
-      			<strong>There aren't any cafes registered.</strong>
+      			<div class="about"><strong>There aren't any cafes registered.</strong></div>
       		{% endif %}
 
     {%  endif %}
