@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.views.generic import UpdateView
 from django.urls import reverse
 from cafe.forms import *
@@ -248,7 +248,7 @@ def write_review(request, cafe_name_slug):
     try:
         cafe = Cafe.objects.get(slug=cafe_name_slug)
     except Cafe.DoesNotExist:
-        return render(request, 'cafe/cafes.html', {'errors': 'One Does not simply review a non-existing page'})
+        return render(request, 'cafe/cafes.html', {'errors': 'One does not simply review a non-existing page.'})
     context_dict['cafe'] = cafe
     form = ReviewForm()
 
@@ -296,6 +296,36 @@ def search(request):
             status = Cafe.objects.filter(name__icontains=cafe_name)
             return render(request, 'cafe/search_results.html', {'cafes': status})
         except Cafe.DoesNotExist:
-            print("Can't get cafe names")
+            print("These are not the Cafes you are looking for.")
     else:
         return render(request, 'cafe/search_results.html', {})
+
+
+def edit_account(request):
+    if request.method == 'POST':
+        form = EditUserForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('accounts:view_profile'))
+    else:
+        form = EditUserForm(instance=request.user)
+        args = {'form': form}
+        return render(request, 'registration/edit_account.html', args)
+
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect(reverse('accounts:view_profile'))
+        else:
+            return redirect(reverse('accounts:change_password'))
+    else:
+        form = PasswordChangeForm(user=request.user)
+
+        args = {'form': form}
+        return render(request, 'registration/change_password.html', args)

@@ -22,6 +22,7 @@
                 {% endif %} <br>
                 Address: {{cafe.address}}  <br>
                 Description: {{ cafe.description }} <br>
+                Opening Hours: {{ cafe.opening_hours }} <br>
                 <button onclick="window.location.href = '{% url 'edit_cafe' cafe.slug %}';">Edit Cafe</button>
                 <button onclick="window.location.href = '{% url 'delete_cafe' cafe.slug %}';">Delete Cafe</button><br>
             </div>
