@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+{% extends 'cafe/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	My account
+{% endblock %}
+
+{% block body_block %}
+    <h2> My Account </h2>
+		<div id="cafesmain">
+
+       Username: {{ username }}<br>
+       First Name: {{ first_name }}<br>
+       Last Name: {{ last_name }}<br>
+       Email: {{ email }}<br><br>
+    <button onclick="window.location.href = '{% url 'delete_account' username %}';">Delete Account</button>
+    {% if is_owner %}
+		<button onclick="window.location.href = '{% url 'add_cafe'%}';">Add a Cafe</button>
+		<button onclick="window.location.href = '{% url 'my_cafes'%}';">My Cafes</button>
+	{% else %}
+		<button onclick="window.location.href = '{% url 'my_reviews'%}';">My Reviews</button>
+    {% endif %}
+	</div>
+{% endblock %}
