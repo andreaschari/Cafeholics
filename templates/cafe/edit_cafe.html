@@ -9,8 +9,10 @@
 {% block body_block %}
     <h2> Edit {{ cafe.name }} </h2>
     <form id="cafesmain" method="post" enctype="multipart/form-data">
+	<div class="formsdisplay">
         {% csrf_token %}
         {{ form.as_p }}
+		</div>
         <button class="submit" type="submit">Submit Changes</button><br/>
     </form>
 {% endblock %}

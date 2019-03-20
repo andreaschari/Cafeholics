@@ -239,18 +239,7 @@ input[type=text], input[type=password], input[type=number], input[type=email], i
 	outline: none;
 
 }
-fieldset.inlineLabels ul {
-	list-style:none;
-	display: inline-flex;
-}
 
-fieldset.inlineLabels li {
-	padding-left: 20px;
-}
-
-.radio_list{
-  margin-bottom: 4px;
-}
 input:focus{
 	background: #fff;
 
@@ -262,11 +251,21 @@ input:focus{
 	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
 }
 
-input.mainforms{
-	margin: 20px 20px;
-	padding: 10px 10px;
-	width: 250px;
-	height: 100px;
+.formsdisplay{
+	text-align: left;
+}
+
+fieldset.inlineLabels ul {
+	list-style:none;
+	display: inline-flex;
+}
+
+fieldset.inlineLabels li {
+	padding-left: 20px;
+}
+
+.radio_list{
+  margin-bottom: 4px;
 }
 
 #dropdown{
@@ -309,6 +308,26 @@ input.mainforms{
 	opacity: 0.8;
 	text-align: center;
 	font-size: 34px;
+	margin: 0 auto;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+
+
+	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
+	-webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
+
+}
+#cafesabout{
+	background:#FAF5E9;
+	padding: 20px 20px;
+	outline: none;
+	width: 1400px;
+	overflow: auto;
+	opacity: 0.8;
+	text-align: center;
+	font-size: 30px;
 	margin: 0 auto;
 	border-radius: 5px;
 	-webkit-border-radius: 5px;

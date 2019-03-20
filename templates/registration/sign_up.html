@@ -15,11 +15,10 @@
 			enctype="multipart/form-data">
 			<strong>Please sign up here!</strong><br />
 			{% csrf_token %}
-			<!-- Display each form -->
+			<div class="formsdisplay">
 			{{ user_form.as_p }}
 			{{ profile_form.as_p }}
-			<!-- Provide a button to click to submit the form. -->
+			</div>
 			<button class="submit" type="submit"/>Sign up</button><br/>
-			<!-- <input type="submit" name="submit" value="submit" />-->
 		</form>
 {% endblock %}
