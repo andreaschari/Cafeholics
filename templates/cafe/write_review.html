@@ -10,12 +10,19 @@
 {% block body_block %}
 	<h2>Write a review for {{cafe.name}}</h2>
 	<form id="cafesmain" method="post">
+    <fieldset class="inlineLabels">
 		{% csrf_token %}
 		{% for field in form.visible_fields %}
-            {{ field.label }}</br>{{ field }}
+                 <div class="radio_list">
+                     <strong>{{ field.label }}</strong>
+                 </div>
+           <span > {{ field }}
 				{{ field.errors }}
-				<br>
+           </span>
+           <br>
+
 		{% endfor %}
+    </fieldset>
 		<button class="submit" type="submit">Submit review</button><br/>
-	</form>
+    </form>
 {% endblock %}

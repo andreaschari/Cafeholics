@@ -254,7 +254,18 @@ input[type=text], input[type=password], input[type=number], input[type=email], i
 	outline: none;
 
 }
+fieldset.inlineLabels ul {
+	list-style:none;
+	display: inline-flex;
+}
 
+fieldset.inlineLabels li {
+	padding-left: 20px;
+}
+
+.radio_list{
+  margin-bottom: 4px;
+}
 input:focus{
 	background: #fff;
 
