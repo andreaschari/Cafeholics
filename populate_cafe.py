@@ -6,7 +6,7 @@ import django
 django.setup()
 from cafe.models import UserProfile, Cafe, Review
 from django.contrib.auth.models import User
-from cafeholics.settings import BASE_DIR, MEDIA_DIR
+from cafeholics.settings import BASE_DIR, MEDIA_DIR, MEDIA_URL
 from django.core.files.images import ImageFile
 
 
@@ -15,6 +15,7 @@ def populate():
     # the coffee shop owners and the users who rate cafes.
     # Then we will create a dictionary of dictionaries for
     # the coffee shops and their reviews.
+<<<<<<< HEAD
     cafe_owners = [
         {'username': 'xeniaskotti', 'first_name': 'Xenia', 'last_name': 'Skotti', 'email': 'xeniaskotti@gmail.com',
          'password': '1p2Qw#rT', 'owner': True},
@@ -88,6 +89,45 @@ def populate():
                }
 
     users = {}
+=======
+    cafe_owners = [{'username': 'xeniaskotti' ,'first_name': 'Xenia' , 'last_name':'Skotti', 'email': 'xeniaskotti@gmail.com', 'password': '1p2Qw#rT', 'owner': True},
+                    {'username': 'alisonscott' ,'first_name': 'Alison' , 'last_name':'Scott', 'email': 'alisonscott@outlook.com', 'password': '5tB@e7Pl', 'owner':True},
+                    {'username': 'jonathan23' ,'first_name': 'Jonathan' , 'last_name':'Holland', 'email': 'jonathan23@outlook.com', 'password': '!2FgA@pm', 'owner':True}]
+
+    customers = [ {'username': 'jakehill' ,'first_name': 'Jake' , 'last_name':'Hill', 'email': 'jakehill@gmail.com', 'password': 'Sm&4R8pA', 'owner':False},
+                    {'username': 'tomwalker' ,'first_name': 'Tom' , 'last_name':'Walker', 'email': 'tomwalker@gmail.com', 'password': '$pm%5td3', 'owner':False},
+                    {'username': 'caroline99' ,'first_name': 'Caroline' , 'last_name':'Mcdonald', 'email': 'carolinemacdonald99@outlook.com', 'password': '2p#mT@!d', 'owner':False},
+                    {'username': 'johnson34' ,'first_name': 'Johnson' , 'last_name':'Hill', 'email': 'johnsonhill@outlook.com', 'password': '!2FgA@pm', 'owner':False}]
+
+    cafes = {'xeniaskotti': [{'cafe_name' : 'Free Spirit','pricepoint': 1, 'picture':ImageFile(open(MEDIA_URL + r'FreeSpirit.jpg','rb')), 'address': '66 Hyndland St, Glasgow G11 5PT', 'opening_hours': '9am to 5pm'},
+                            {'cafe_name': 'CoffeeRiver', 'pricepoint': 2, 'picture':ImageFile(open(MEDIA_URL + r'CoffeeRiver.jpg','rb')), 'address': '7 Keith St, Glasgow G11 6QQ', 'opening_hours': '9am to 5pm'}],
+            'alisonscott': [{'cafe_name' : 'Starbucks','pricepoint': 3,'picture': ImageFile(open(MEDIA_URL + r'Starbucks.jpg','rb')), 'address': '254 Byres Rd, Glasgow G12 8SH', 'opening_hours': '9am to 5pm'},
+                            {'cafe_name': 'Monza', 'pricepoint': 1, 'picture': ImageFile(open(MEDIA_URL + r'Monza.jpg','rb')), 'address': '13 Vine St, Glasgow G11 6BA', 'opening_hours': '9am to 5pm'}],
+            'jonathan23':[{'cafe_name' : 'Fika','pricepoint': 2, 'picture': ImageFile(open(MEDIA_URL + r'Fika.jpg','rb')), 'address': '579 Dumbarton Rd, Glasgow G11 6HY', 'opening_hours': '9am to 5pm'}]}
+
+    reviews = {'Free Spirit': [{'customer_username':'jakehill', 'price': 1, 'service' : 2, 'atmosphere' : 3, 'quality': 3, 'waiting_time': 5},
+                                {'customer_username':'tomwalker', 'price': 3, 'service' : 3, 'atmosphere' : 3, 'quality': 5, 'waiting_time': 5},
+                                {'customer_username':'caroline99', 'price': 4, 'service' : 4, 'atmosphere' : 2, 'quality': 2, 'waiting_time': 5},
+                                {'customer_username':'johnson34', 'price': 3, 'service' : 4, 'atmosphere' : 4, 'quality': 2, 'waiting_time': 5}],
+                'CoffeeRiver':[{'customer_username':'jakehill', 'price': 2, 'service' : 3, 'atmosphere' : 3, 'quality': 2, 'waiting_time': 3},
+                            {'customer_username':'caroline99', 'price': 2, 'service' : 4, 'atmosphere' : 2, 'quality': 2, 'waiting_time': 3},
+                            {'customer_username':'tomwalker', 'price': 2, 'service' : 3, 'atmosphere' : 2, 'quality': 2, 'waiting_time': 3},
+                            {'customer_username':'johnson34', 'price': 2, 'service' : 2, 'atmosphere' : 2, 'quality': 2, 'waiting_time': 3}],
+                'Monza': [{'customer_username':'tomwalker', 'price': 2, 'service' : 2, 'atmosphere' : 4, 'quality': 2, 'waiting_time': 3},
+                            {'customer_username':'caroline99', 'price': 4, 'service' : 4, 'atmosphere' : 2, 'quality': 2, 'waiting_time': 5},
+                            {'customer_username':'johnson34', 'price': 3, 'service' : 4, 'atmosphere' : 4, 'quality': 2, 'waiting_time': 5}],
+                'Starbucks': [{'customer_username':'jakehill', 'price': 2, 'service' : 3, 'atmosphere' : 3, 'quality': 3, 'waiting_time': 5},
+                            {'customer_username':'tomwalker', 'price': 3, 'service' : 3, 'atmosphere' : 3, 'quality': 4, 'waiting_time': 5},
+                            {'customer_username':'caroline99', 'price': 4, 'service' : 4, 'atmosphere' : 2, 'quality': 2, 'waiting_time': 5},
+                            {'customer_username':'johnson34', 'price': 3, 'service' : 4, 'atmosphere' : 4, 'quality': 2, 'waiting_time': 5}],
+                'Fika': [{'customer_username':'jakehill', 'price': 5, 'service' : 5, 'atmosphere' : 5, 'quality': 5, 'waiting_time': 5},
+                            {'customer_username':'caroline99', 'price': 5, 'service' : 4, 'atmosphere' : 3, 'quality': 4, 'waiting_time': 5},
+                            {'customer_username':'tomwalker', 'price': 5, 'service' : 5, 'atmosphere' : 5, 'quality': 4, 'waiting_time': 5},
+                            {'customer_username':'johnson34', 'price': 5, 'service' : 4, 'atmosphere' : 4, 'quality': 5, 'waiting_time': 5}]
+                            }
+
+    users =  {}
+>>>>>>> 0476d4de4c75493a3c7c0816bc3679417cc4f0be
     for customer_data in customers:
         c = add_user(customer_data["username"], customer_data["first_name"], customer_data["last_name"],
                      customer_data["email"], customer_data["password"], customer_data["owner"])
