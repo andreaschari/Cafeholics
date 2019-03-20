@@ -35,6 +35,7 @@ python3 manage.py test
 [Popper.js](https://popper.js.org/)<br/>
 [BootstrapCDN](https://getbootstrap.com/docs/4.3/getting-started/introduction/) <br/>
 [Google Maps URLs](https://developers.google.com/maps/documentation/urls/guide) <br/>
+[Unit-test Inspiration](https://github.com/gerac83/rango_tests)<br/>
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 Please make sure to update tests as appropriate.
