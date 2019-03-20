@@ -15,7 +15,7 @@ def populate():
     # the coffee shop owners and the users who rate cafes.
     # Then we will create a dictionary of dictionaries for
     # the coffee shops and their reviews.
-<<<<<<< HEAD
+
     cafe_owners = [
         {'username': 'xeniaskotti', 'first_name': 'Xenia', 'last_name': 'Skotti', 'email': 'xeniaskotti@gmail.com',
          'password': '1p2Qw#rT', 'owner': True},
@@ -89,7 +89,7 @@ def populate():
                }
 
     users = {}
-=======
+
     cafe_owners = [{'username': 'xeniaskotti' ,'first_name': 'Xenia' , 'last_name':'Skotti', 'email': 'xeniaskotti@gmail.com', 'password': '1p2Qw#rT', 'owner': True},
                     {'username': 'alisonscott' ,'first_name': 'Alison' , 'last_name':'Scott', 'email': 'alisonscott@outlook.com', 'password': '5tB@e7Pl', 'owner':True},
                     {'username': 'jonathan23' ,'first_name': 'Jonathan' , 'last_name':'Holland', 'email': 'jonathan23@outlook.com', 'password': '!2FgA@pm', 'owner':True}]
@@ -127,7 +127,7 @@ def populate():
                             }
 
     users =  {}
->>>>>>> 0476d4de4c75493a3c7c0816bc3679417cc4f0be
+
     for customer_data in customers:
         c = add_user(customer_data["username"], customer_data["first_name"], customer_data["last_name"],
                      customer_data["email"], customer_data["password"], customer_data["owner"])
