@@ -14,11 +14,11 @@
         {% for review in reviews_list %}
             <div id ='reviewdescription'>
                 Review for <a class="aa" href="{% url 'chosen_cafe'  review.cafe.slug %}">{{ review.cafe.name }}</a> <br>
-                <strong>Price:</strong> {{ review.price }} <br>
-                <strong>Service:</strong> {{ review.service }} <br>
-                <strong>Atmosphere:</strong> {{ review.price }} <br>
-                <strong>Quality:</strong> {{ review.quality }} <br>
-                <strong>Waiting time:</strong> {{ review.waiting_time }}<br>
+                <strong>Price:</strong> {{ review.price }} out of 5<br>
+                <strong>Service:</strong> {{ review.service }} out of 5<br>
+                <strong>Atmosphere:</strong> {{ review.price }} out of 5<br>
+                <strong>Quality:</strong> {{ review.quality }} out of 5<br>
+                <strong>Waiting time:</strong> {{ review.waiting_time }} out of 5<br>
                 <strong>Feedback Comments:</strong><br>
                 {{ review.comments }} <br>
                 <button onclick="window.location.href = '{% url 'edit_review' review.cafe.slug %}';">Edit</button>

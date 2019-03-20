@@ -36,7 +36,7 @@ def populate():
     # print(open(os.path.join(MEDIA_DIR, 'FreeSpirit.jpg'), 'rb'))
 
     cafes = {'xeniaskotti': [
-        {'cafe_name': 'Free Spirit', 'pricepoint': 1, 'picture': os.path.join(MEDIA_DIR, 'FreeSpirit.jpg'),
+        {'cafe_name': 'Free Spirit', 'pricepoint': 1, 'picture': 'cafe_images/FreeSpirit.jpg',
          'address': '66 Hyndland St, Glasgow G11 5PT', 'opening_hours': '9am to 5pm'},
         {'cafe_name': 'CoffeeRiver', 'pricepoint': 2, 'picture': 'cafe_images/CoffeeRiver.jpg',
          'address': '7 Keith St, Glasgow G11 6QQ', 'opening_hours': '9am to 5pm'}],
