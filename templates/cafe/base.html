@@ -1,86 +1,85 @@
 <!DOCTYPE html>
-
-{% extends 'cafe/base.html' %}
 {% load staticfiles %}
 
-{% block some_js %}
-<script type="text/javascript" src="/static/scripts/sortByDropdown.js"></script>
-{% endblock some_js %}
-{% block title_block %}
-	Cafes
-{% endblock %}
+<html>
+	<head lang="en">
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
 
-{% block body_block %}
+		<link rel="stylesheet" href="/static/css/main.css">
+		<link rel="stylesheet" href="/static/css/cafes.css">
+		<link rel="stylesheet" href="/static/css/chosen_cafe.css">
 
-	<h2>
-		All Cafes<br>
-    <h2>Sort by:
-       <select name="sort by" id="dropdown">
-            <option value="avg_rating">Average rating</option>
-            <option value="price">Price</option>
-            <option value="service">Service</option>
-            <option value="atmosphere">Atmosphere</option>
-            <option value="quality">Quality</option>
-            <option value="waiting_times">Waiting time</option>
-        </select>
-    </h2>
- 	<div id="cafesmain">
-    {% if errors %}
-    			<strong>These are not the Cafes you are looking for.</strong>
-    {%  else %}
-      		{% if cafes %}
-              <div id="avg_rating" class="group">
-                  {% if by_average %}
-                      {% for cafe in by_average %}
-                          <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
-						  <p class = 'avg_rating'>Average rating: {{ cafe.avg_rating }} out of 5</p><br>
-                      {% endfor %}
-                  {%  endif %}
-              </div>
-              <div id="price" class="group">
-                    {% if by_price %}
-        				        {% for cafe in by_price %}
-                              <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
-							  <p class = 'avg_rating'>Average rating: {{ cafe.avg_rating }} out of 5</p><br>
-                        {% endfor %}
-                    {%  endif %}
-              </div>
-              <div id="atmosphere" class="group">
-                    {% if by_atmosphere %}
-        				        {% for cafe in by_atmosphere %}
-                              <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
-							  <p class = 'avg_rating'>Average rating: {{ cafe.avg_rating }} out of 5</p><br>
-        				        {% endfor %}
-                    {%  endif %}
-              </div>
-               <div id="quality" class="group">
-                    {% if by_quality %}
-        				        {% for cafe in by_quality %}
-                            <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
-							<p class = 'avg_rating'>Average rating: {{ cafe.avg_rating }} out of 5</p><br>
-        				        {% endfor %}
-                    {%  endif %}
-              </div>
-              <div id="service" class="group">
-                    {% if by_service %}
-        				        {% for cafe in by_service %}
-                            <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
-							<p class = 'avg_rating'>Average rating: {{ cafe.avg_rating }} out of 5</p><br>
-        				        {% endfor %}
-                    {%  endif %}
-              </div>
-              <div id="waiting_times" class="group">
-                    {% if by_waiting_times %}
-        				        {% for cafe in by_waiting_times %}
-                            <a class="aa" href="{% url 'chosen_cafe' cafe.slug %}">{{ cafe.name }}</a><br>
-							<p class = 'avg_rating'>Average rating: {{ cafe.avg_rating }} out of 5</p><br>
-        				        {% endfor %}
-                    {%  endif %}
-              </div>
-      		{% else %}
-      			<strong>There aren't any cafes registered.</strong>
-      		{% endif %}
 
-    {%  endif %}
-	</div>
-{% endblock %}
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" #
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous">
+</script>
+		{% block some_js %}
+
+		{% endblock some_js %}
+		<title>
+			{% block title_block %}
+			{% endblock %}
+		</title>
+
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    </head>
+    <body>
+
+       <!-- <div class="sidenav"> -->
+            {% block sidebar_block %}
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <h1>Cafeholics</h1>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
+                        <a class="nav-item nav-link" href="{% url 'cafes' %}">Cafes</a>
+
+                        {% if user.is_authenticated %}
+                            <a class="nav-item nav-link" href="{% url 'my_account' %}">My Account</a>
+                        {% endif %}
+                        <a class="nav-item nav-link" href="{% url 'about' %}">About</a>
+                        {% if user.is_authenticated %}
+                        <a class="nav-item nav-link" href="{% url 'logout' %}">Log Out</a>
+                        {% else %}
+                            <a class="nav-item nav-link" href="{% url 'login' %}">Log In</a>
+                            <a class="nav-item nav-link" href="{% url 'sign_up' %}">Sign Up</a>
+                        {% endif %}
+						<form class="form-inline">
+							<input class="form-control"
+								   type="search"
+								   placeholder="Search"
+								   name="search"
+							>
+							<button class="searchButton" type="submit">Search</button>
+						</form>
+                    </div>
+                </div>
+            </nav>
+            {% endblock %}
+
+		<div class="body">
+            {% block body_block %}
+			{% endblock %}
+        </div>
+
+	</body>
+</html>
