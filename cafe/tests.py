@@ -466,27 +466,6 @@ class ViewTest(TestCase):
 
 
 class TemplateTest(TestCase):
-    def test_home_shows_search_button(self):
-        response = self.client.get(reverse("home"))
-        self.assertContains(response, '<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>', html=True)
-
-    def test_home_shows_log_in_when_not_logged_in(self):
-        response = self.client.get(reverse("home"))
-        self.assertContains(response, """<button onclick="window.location.href = '/accounts/login/';">Log In</button>""", html=True)
-
-    def test_home_shows_log_out_when_logged_in(self):
-        # create test user
-        self.user = User.objects.create_user(username='test_user', password='12345')
-        self.user_profile = UserProfile.objects.create(user=self.user, is_owner=False)
-        # login as test user
-        self.client.login(username='test_user', password='12345')
-        response = self.client.get(reverse("home"))
-        self.assertContains(response, """<button onclick="window.location.href = '/accounts/logout/';">Log out</button>""", html=True)
-
-    def test_home_shows_sign_up_when_not_logged_in(self):
-        response = self.client.get(reverse("home"))
-        self.assertContains(response, """<button onclick="window.location.href = '/cafe/register/';">Sign Up</button>""", html=True)
-
     def test_cafe_page_displays_error_for_non_existing_cafe(self):
         # create test user
         self.user = User.objects.create_user(username='test_user', password='12345')
@@ -573,7 +552,7 @@ class FormTest(TestCase):
         self.client.login(username='test_owner', password='12345')
         # create form
         form = CafeForm({'name': 'New Cafe',
-                         'pricepoint': 3, 'address':
+                         'pricepoint': 3, 'opening_hours': '10am to 7pm', 'address':
                              '1600 Pennsylvania Avenue NW, Washington, DC 20500.'})
         # check if the form is valid
         self.assertTrue(form.is_valid())
@@ -583,9 +562,8 @@ class FormTest(TestCase):
         self.client.login(username='test_owner', password='12345')
         # create form
         form = CafeForm({'name': 'New Cafe',
-                         'pricepoint': 3, 'address':
+                         'pricepoint': 3, 'opening_hours': '10am to 7pm', 'address':
                              '1600 Pennsylvania Avenue NW, Washington, DC 20500.'})
-
         # save form
         cafe = form.save(commit=False)
         cafe.owner = UserProfile.objects.all().get(user=User.objects.get(username='test_owner'))
