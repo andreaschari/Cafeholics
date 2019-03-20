@@ -1,5 +1,6 @@
 from django import forms
 from cafe.models import *
+from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 
 
 class UserForm(forms.ModelForm):
@@ -24,11 +25,12 @@ class CafeForm(forms.ModelForm):
     name = forms.CharField(required=True)
     pricepoint = forms.IntegerField(help_text='Enter a price average for your cafe.')
     address = forms.CharField()
+    opening_hours = models.TextField()
 
     class Meta:
         model = Cafe
         # include the following fields in the form.
-        fields = ('name', 'picture', 'pricepoint', 'address', 'description')
+        fields = ('name', 'picture', 'pricepoint', 'address', 'description', 'opening_hours')
 
 
 class ReviewForm(forms.ModelForm):
@@ -40,8 +42,15 @@ class ReviewForm(forms.ModelForm):
     waiting_time = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
     comments = forms.CharField(required=False)
     avg_rating = forms.IntegerField(widget=forms.HiddenInput(), required=False)
-	
+
     class Meta:
         model = Review
         # include all fields in the form.
         exclude = ("user", "cafe", "pub_date",)
+
+
+class EditUserForm(UserChangeForm):
+    class Meta:
+        model = User
+        # include the following fields in the form.
+        fields = ('username', 'first_name', 'last_name', 'email')
