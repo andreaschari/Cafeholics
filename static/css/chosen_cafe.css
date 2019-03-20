@@ -6,6 +6,7 @@
 	padding: 20px 20px;
 	outline: none;
 	width: 1200px;
+	height: 600px;
 	overflow: auto;
 	opacity: 0.8;
 	text-align: left;
@@ -62,3 +63,4 @@ img.cafeimage{
 	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 8px rgba(0,0,0,.3);
 
 }
+

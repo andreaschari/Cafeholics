@@ -6,6 +6,10 @@ body {
 	overflow: auto;
 
 }
+.about{
+	margin-left: 20px;
+	font-size: 30px;
+}
 form {
 	  text-align: center;
 	  margin: 0 auto;
@@ -33,12 +37,12 @@ nav {
 	top: 0px;
 	padding: 5px 5px;
 	z-index: 1;
-	opacity: 0.7;
+	opacity: 0.8;
 }
 
 
 nav a {
-	padding: 16px 8px 6px 16px;
+	margin: 0px 16px 0px 16px;
 	text-decoration: none;
 	font-size: 34px;
 	color: #000000;
@@ -53,6 +57,7 @@ nav a:hover {
 }
 nav-item nav-link{
 	margin-left: 10px;
+	float: left;
 }
 
 /*main content*/
@@ -67,22 +72,23 @@ div.main {
 }
 
 h1 {
-	font-size: 50px;
-	text-align: left;
+	font-size: 100px;
+	text-align: center;
 	font-family: "Times New Roman", Times, serif;
 	font-weight: bold;
 	font-style: italic;
 	color: #010100;
 	display: block;
-	margin-right: 10%;
+	margin: 10px auto;
+	width: 100%;
 	float: none;
 }
 h2 {
 	width: 100%;
 	float: left;
-	font-size: 34px;
+	font-size: 38px;
 	text-align: center;
-	margin: 20px auto;
+	margin: 10px auto;
 }
 
 h3 {
@@ -141,44 +147,18 @@ button.submit{
 }
 
 
-#login {
-	position: fixed;
-	z-index: 1;
-	top: 10px;
-	right: 10px;
-	padding: 10px 10px;
-	width: 200x;
-	height: 40px;
-}
-
-
 /* Style of the search bar*/
 
-#searchform {
-	background: #e1e1e1;
-	width: 900px;
-	margin: 20px auto;
-	text-align: right;
+.formcontrol{
+	background: #fff;
 
-	border-radius: 30px;
-	-webkit-border-radius: 30px;
-	-moz-border-radius: 30px;
+	background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(250,250,250)), color-stop(1, rgb(230,230,230)));
+	background: -moz-linear-gradient( center top, rgb(250,250,250) 0%, rgb(230,230,230) 100%);
 
-	box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
-	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
-	-moz-box-shadow: 1px 1px 2px rgba(0,0,0,.3), 0 0 2px rgba(0,0,0,.3);
-}
-
-.form-control{
-	background: #fafafa;
-
-	/*background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(250,250,250)), color-stop(1, rgb(230,230,230)));*/
-	/*background: -moz-linear-gradient( center top, rgb(250,250,250) 0%, rgb(230,230,230) 100%);*/
-
+	width: 700px;
 	font-size: 30px;
 	margin: auto;
-	padding: 5px 5px;
-	width: 800px;
+	padding: 5px, 5px;
 	text-align: center;
 
 	outline: none;
@@ -192,13 +172,14 @@ button.submit{
 
 }
 
-.form-control:focus{
+.formcontrol:focus{
+	outline: none;
 	background: #fff;
 	margin: auto;
 	text-align: center;
-	/*background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(255,255,255)), color-stop(1, rgb(235,235,235)));*/
-	/*background: -moz-linear-gradient( center top, rgb(255,255,255) 0%, rgb(235,235,235) 100%);*/
-	outline: none;
+	background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(255,255,255)), color-stop(1, rgb(235,235,235)));
+	background: -moz-linear-gradient( center top, rgb(255,255,255) 0%, rgb(235,235,235) 100%);
+	
 }
 
 .searchButton{
@@ -206,7 +187,6 @@ button.submit{
 	background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(243,243,243)), color-stop(1, rgb(225,225,225)));
 	background: -moz-linear-gradient( center top, rgb(255,255,255) 0%, rgb(235,235,235) 100%);
 
-	position:relative;
 	border: 0;
 	color: #737373;
 	cursor: pointer;
@@ -214,7 +194,7 @@ button.submit{
 	height: 50px;
 	margin: 6px 6px 0;
 	text-shadow: 0 -1px 0 rgba(0,0,0,.3);
-	width: 150px;
+	width: 140px;
 	outline: none;
 	display: inline;
 
@@ -234,7 +214,12 @@ button.submit{
 	background: -moz-linear-gradient( center top, rgb(255,255,255) 0%, rgb(235,235,235) 100%);
 }
 
-
+.form-inline{
+	display: block;
+	float: center;
+	margin-left: 40px;
+	margin-right: 50px;
+}
 
 
 /* Style for input boxes*/
