@@ -129,15 +129,17 @@ def chosen_cafe(request, cafe_name_slug):
         if len(reviews) > 0:
             context_dict['reviews'] = reviews
             context_dict['avg rating'] = avg_rating_cafe(cafe_name_slug)
+            cafe.avg_rating = avg_rating_cafe(cafe_name_slug)
         else:
             context_dict['avg rating'] = 0
-        context_dict['opening_hours'] = cafe.opening_hours
-        context_dict['name'] = cafe.name
-        context_dict['pricepoint'] = cafe.pricepoint
-        context_dict['owner'] = cafe.owner
-        context_dict['picture'] = cafe.picture
-        context_dict['cafe'] = cafe
-        return render(request, 'cafe/chosen_cafe.html', context=context_dict)
+            cafe.avg_rating = 0
+            context_dict['opening_hours'] = cafe.opening_hours
+            context_dict['name'] = cafe.name
+            context_dict['pricepoint'] = cafe.pricepoint
+            context_dict['owner'] = cafe.owner
+            context_dict['picture'] = cafe.picture
+            context_dict['cafe'] = cafe
+            return render(request, 'cafe/chosen_cafe.html', context=context_dict)
     except Cafe.DoesNotExist:
         context_dict['errors'] = 'This Cafe Does Not Exist'
         return render(request, 'cafe/cafes.html', context=context_dict)
