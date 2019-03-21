@@ -20,7 +20,7 @@
                 {% elif cafe.pricepoint == 3 %}
                     Price Estimate: Deluxe
                 {% endif %} <br>
-                Address: {{cafe.address}}  <br>
+                Address:<a class="aa" href="https://www.google.com/maps/search/?api=1&query={{ cafe.address }}" target="_blank"> {{ cafe.address }}</a><br>
                 Description: {{ cafe.description }} <br>
                 Opening Hours: {{ cafe.opening_hours }} <br>
                 <button onclick="window.location.href = '{% url 'edit_cafe' cafe.slug %}';">Edit Cafe</button>
