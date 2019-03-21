@@ -133,13 +133,13 @@ def chosen_cafe(request, cafe_name_slug):
         else:
             context_dict['avg rating'] = 0
             cafe.avg_rating = 0
-            context_dict['opening_hours'] = cafe.opening_hours
-            context_dict['name'] = cafe.name
-            context_dict['pricepoint'] = cafe.pricepoint
-            context_dict['owner'] = cafe.owner
-            context_dict['picture'] = cafe.picture
-            context_dict['cafe'] = cafe
-            return render(request, 'cafe/chosen_cafe.html', context=context_dict)
+        context_dict['opening_hours'] = cafe.opening_hours
+        context_dict['name'] = cafe.name
+        context_dict['pricepoint'] = cafe.pricepoint
+        context_dict['owner'] = cafe.owner
+        context_dict['picture'] = cafe.picture
+        context_dict['cafe'] = cafe
+        return render(request, 'cafe/chosen_cafe.html', context=context_dict)
     except Cafe.DoesNotExist:
         context_dict['errors'] = 'This Cafe Does Not Exist'
         return render(request, 'cafe/cafes.html', context=context_dict)
@@ -237,9 +237,7 @@ def my_cafes(request):
 
 @login_required
 def delete_cafe(request, cafe_name_slug):
-    # if request.method == 'POST':
         cafe = Cafe.objects.all().filter(slug=cafe_name_slug)
-        # print(cafe.name)
         get_object_or_404(cafe, slug=cafe_name_slug).delete()
         return redirect('/cafe/my_account/my_cafes/')
 

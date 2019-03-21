@@ -4,15 +4,25 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	Edit a review
+	Write a review
 {% endblock %}
 
 {% block body_block %}
-	<h2>{{cafe.name}}</h2>
-    <form id="cafesmain" method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
+	<h2>Write a review for {{cafe.name}}</h2>
+	<form id="cafesmain" method="post">
+    <fieldset class="inlineLabels">
+		{% csrf_token %}
+		{% for field in form.visible_fields %}
+                 <div class="radio_list">
+                     <strong>{{ field.label }}</strong>
+                 </div>
+           <span > {{ field }}
+				{{ field.errors }}
+           </span>
+           <br>
 
-  <input type=submit value="submit" />
-</form>
+		{% endfor %}
+    </fieldset>
+		<button class="submit" type="submit">Submit review</button><br/>
+    </form>
 {% endblock %}
