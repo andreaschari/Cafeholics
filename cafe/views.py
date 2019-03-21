@@ -121,17 +121,11 @@ def cafes(request):
 def chosen_cafe(request, cafe_name_slug):
     context_dict = {}
     try:
+        if request.user.is_authenticated:
+            user = User.objects.get(username=request.user)
+            context_dict['user'] = user
         cafe = Cafe.objects.get(slug=cafe_name_slug)
         reviews = Review.objects.order_by('-pub_date').filter(cafe=cafe)
-
-        if request.user.is_authenticated:
-            user = UserProfile.objects.get(user=request.user)
-            context_dict['user'] = user
-            review_by_user = Review.objects.all().filter(cafe=cafe, user=user)
-            if len(review_by_user) != 0:
-                context_dict['reviewed'] = True
-            else:
-                context_dict['reviewed'] = False
         if len(reviews) > 0:
             context_dict['reviews'] = reviews
             context_dict['avg rating'] = avg_rating_cafe(cafe_name_slug)
@@ -243,7 +237,9 @@ def my_cafes(request):
 
 @login_required
 def delete_cafe(request, cafe_name_slug):
+    # if request.method == 'POST':
         cafe = Cafe.objects.all().filter(slug=cafe_name_slug)
+        # print(cafe.name)
         get_object_or_404(cafe, slug=cafe_name_slug).delete()
         return redirect('/cafe/my_account/my_cafes/')
 
@@ -253,6 +249,16 @@ def write_review(request, cafe_name_slug):
     context_dict = {}
     try:
         cafe = Cafe.objects.get(slug=cafe_name_slug)
+        user = UserProfile.objects.get(user=request.user)
+        reviewed = Review.objects.get(cafe=cafe, user=user)
+        # get user reviews
+        user = UserProfile.objects.get(user=request.user)
+        reviews_list = Review.objects.filter(user=user)
+        context_dict['reviews_list'] = reviews_list
+        if reviewed is not None:
+            context_dict['errors'] = 'You have already reviewed {}'.format(cafe.name)
+            return render(request, 'cafe/my_reviews.html', context_dict)
+
     except Cafe.DoesNotExist:
         return render(request, 'cafe/cafes.html', {'errors': 'One does not simply review a non-existing page.'})
     context_dict['cafe'] = cafe
@@ -264,7 +270,7 @@ def write_review(request, cafe_name_slug):
             review = form.save(commit=False)
             review.cafe = cafe
             review.avg_rating = int((review.price+review.quality+review.waiting_time+review.service+review.atmosphere)/5)
-            review.user = UserProfile.objects.get(user=request.user)
+            review.user = user
             review.save()
             return redirect('/cafe/my_account/my_reviews')
         else:

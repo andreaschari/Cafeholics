@@ -10,6 +10,9 @@
 {% block body_block %}
 <h2> My Reviews </h2>
 <div>
+{% if errors %}
+    <strong>{{ errors }} </strong>
+{%  endif %}
     {% if reviews_list %}
         {% for review in reviews_list %}
             <div id ='reviewdescription'>
