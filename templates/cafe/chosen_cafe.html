@@ -24,7 +24,9 @@
             <br>Address:<a class="aa" href="https://www.google.com/maps/search/?api=1&query={{ cafe.address }}" target="_blank"> {{ cafe.address }}</a><br><br>
         {% if user.is_authenticated %}
 			{% if  not user.userprofile.is_owner%}
+                {% if not reviewed %}
                 <button onclick="window.location.href = '{% url 'write_review' cafe.slug %}';">Review {{ cafe.name }}</button><br><br>
+                {%  endif %}
             {% elif user.username == owner.user.username %}
                 <button onclick="window.location.href = '{% url 'edit_cafe' cafe.slug %}';">Edit {{ cafe.name }}</button><br><br>
             {% endif %}

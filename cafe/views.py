@@ -121,11 +121,17 @@ def cafes(request):
 def chosen_cafe(request, cafe_name_slug):
     context_dict = {}
     try:
-        if request.user.is_authenticated:
-            user = User.objects.get(username=request.user)
-            context_dict['user'] = user
         cafe = Cafe.objects.get(slug=cafe_name_slug)
         reviews = Review.objects.order_by('-pub_date').filter(cafe=cafe)
+
+        if request.user.is_authenticated:
+            user = UserProfile.objects.get(user=request.user)
+            context_dict['user'] = user
+            review_by_user = Review.objects.all().filter(cafe=cafe, user=user)
+            if len(review_by_user) != 0:
+                context_dict['reviewed'] = True
+            else:
+                context_dict['reviewed'] = False
         if len(reviews) > 0:
             context_dict['reviews'] = reviews
             context_dict['avg rating'] = avg_rating_cafe(cafe_name_slug)
